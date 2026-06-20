@@ -160,6 +160,16 @@
     let currentSelectedMonth = standardMonthsMap[mNum];
     if(!months.includes(currentSelectedMonth)) currentSelectedMonth = "Eylül";
 
+    // YENİ EKLENEN KISIM: Google'dan Dönüşü Yakalama (Catcher)
+    auth.getRedirectResult().then((result) => {
+        if (result.credential) {
+            document.getElementById('auth-title').innerText = "Giriş Başarılı, Yükleniyor...";
+        }
+    }).catch((error) => {
+        document.getElementById('auth-error').innerText = "Bağlantı Hatası: " + error.message;
+        document.getElementById('auth-error').style.display = 'block';
+    });
+
     // --- KİMLİK DOĞRULAMA (AUTH) İŞLEMLERİ ---
     
     function toggleAuthMode() {
@@ -170,17 +180,13 @@
         document.getElementById('auth-error').style.display = 'none';
     }
 
-    // Google İle Giriş Fonksiyonu
     function signInWithGoogle() {
+        document.getElementById('auth-error').style.display = 'none';
+        document.getElementById('auth-title').innerText = "Google'a Bağlanıyor...";
         const provider = new firebase.auth.GoogleAuthProvider();
-        auth.signInWithRedirect(provider).catch(err => {
-            const errEl = document.getElementById('auth-error');
-            errEl.innerText = "Google Giriş Hatası: Lütfen tarayıcı engelleyicilerini (pop-up blocker) kontrol edin veya yetkiyi Firebase'den açtığınızdan emin olun. (" + err.message + ")";
-            errEl.style.display = 'block';
-        });
+        auth.signInWithRedirect(provider);
     }
 
-    // Klasik E-Posta Giriş Fonksiyonu
     function handleAuth() {
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
@@ -203,7 +209,6 @@
         auth.signOut();
     }
 
-    // Kullanıcı Durum Dinleyicisi
     auth.onAuthStateChanged(user => {
         if (user) {
             currentUser = user;
