@@ -173,7 +173,7 @@
     // Google İle Giriş Fonksiyonu
     function signInWithGoogle() {
         const provider = new firebase.auth.GoogleAuthProvider();
-        auth.signInWithPopup(provider).catch(err => {
+        auth.signInWithRedirect(provider).catch(err => {
             const errEl = document.getElementById('auth-error');
             errEl.innerText = "Google Giriş Hatası: Lütfen tarayıcı engelleyicilerini (pop-up blocker) kontrol edin veya yetkiyi Firebase'den açtığınızdan emin olun. (" + err.message + ")";
             errEl.style.display = 'block';
