@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-width=1.0">
     <title>İdari Çalışma Planı Yönetim Sistemi (SaaS)</title>
-    <!-- Firebase v8 SDK'ları -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
@@ -47,6 +46,22 @@
         .month-tab { background: white; border: 1px solid var(--border); padding: 10px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 13px; color: var(--text-sub); transition: 0.2s; }
         .month-tab.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 4px 6px rgba(30, 58, 138, 0.15);}
 
+        /* Bilgi Tablosu ve Takvim */
+        .upper-layout { display: table; width: 100%; margin-bottom: 24px; border-collapse: separate; border-spacing: 16px 0; margin-left: -16px; margin-right: -16px; }
+        .upper-left { display: table-cell; width: 70%; vertical-align: top; background: white; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 18px; }
+        .upper-right { display: table-cell; width: 30%; vertical-align: top; background: white; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 18px; }
+        .info-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; }
+        .info-table th { background: #f8fafc; color: var(--text-main); font-weight: 700; padding: 12px 14px; border-bottom: 2px solid var(--border); }
+        .info-table td { padding: 14px; border-bottom: 1px solid var(--border); color: var(--text-sub); vertical-align: top; line-height: 1.6; }
+        .info-table tr:last-child td { border-bottom: none; }
+
+        .calendar-title { font-size: 15px; font-weight: 700; color: var(--primary); text-align: center; margin-bottom: 12px; text-transform: uppercase; }
+        .calendar-grid { width: 100%; border-collapse: collapse; text-align: center; }
+        .calendar-grid th { font-size: 11px; font-weight: 700; color: var(--text-sub); padding: 6px 0; border-bottom: 1px solid var(--border); }
+        .calendar-grid td { font-size: 12px; padding: 8px 0; color: var(--text-main); font-weight: 500; }
+        .calendar-grid td.weekend, .calendar-grid th.weekend { color: #ef4444; }
+        .calendar-grid td.today { background-color: var(--primary-light); color: white !important; font-weight: 700; border-radius: 4px; }
+
         .controls-row { display: flex; gap: 15px; margin-bottom: 20px; }
         .search-input { flex: 1; padding: 12px 16px; border-radius: 8px; border: 1px solid var(--border); font-size: 14px; outline: none;}
         .search-input:focus { border-color: var(--primary-light); }
@@ -61,8 +76,10 @@
         .task-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
         .task-card.state-islemde { background: var(--islemde-bg); border-left-color: var(--islemde-border); }
         .task-card.state-tamamlandi { background: var(--bitti-bg); border-left-color: var(--bitti-border); }
+        .task-card.state-gecikmis { background: var(--gecikmis-bg) !important; border-left-color: var(--gecikmis-border) !important; }
         .task-title { font-weight: 600; font-size: 14px; margin-bottom: 10px; line-height: 1.5;}
         .task-meta { font-size: 12px; color: var(--text-sub); margin-bottom: 12px; background: rgba(0,0,0,0.02); padding: 8px; border-radius: 4px; }
+        .task-notes { font-size: 11px; color: #b91c1c; margin-top: 6px; font-weight: 600; }
         
         .btn-group { display: flex; gap: 6px; }
         button.action-btn { cursor: pointer; padding: 6px 12px; border: 1px solid #cbd5e1; background: white; border-radius: 6px; font-size: 12px; font-weight: 600; transition: 0.15s; }
@@ -73,11 +90,9 @@
 </head>
 <body>
 
-    <!-- GİRİŞ / KAYIT EKRANI -->
     <div id="auth-container">
         <h2 id="auth-title">İdari Panele Giriş Yap</h2>
         
-        <!-- Google ile Giriş Butonu -->
         <button class="auth-btn google-btn" onclick="signInWithGoogle()">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -90,16 +105,15 @@
 
         <div class="divider">VEYA E-POSTA İLE</div>
 
-        <!-- Klasik E-Posta Girişi -->
         <input type="email" id="email" class="auth-input" placeholder="Okul E-posta Adresiniz">
         <input type="password" id="password" class="auth-input" placeholder="Şifreniz (En az 6 hane)">
         <button id="auth-submit-btn" class="auth-btn" onclick="handleAuth()">Giriş Yap</button>
         
         <div class="toggle-auth" onclick="toggleAuthMode()">Hesabınız yok mu? E-Posta ile Kayıt Olun</div>
-        <p id="auth-error" style="color: red; font-size: 13px; display: none; margin-top: 15px;"></p>
+        
+        <div id="auth-error" style="background: #fee2e2; color: #b91c1c; padding: 12px; border-radius: 6px; font-size: 13px; display: none; margin-top: 15px; border: 1px solid #ef4444;"></div>
     </div>
 
-    <!-- ANA YÖNETİM PANOSU -->
     <div id="app-container">
         <div class="header">
             <h1>Okul İdari Çalışma Planı Yönetim Sistemi</h1>
@@ -110,6 +124,16 @@
         </div>
 
         <div class="month-tabs" id="monthTabs"></div>
+
+        <div class="upper-layout">
+            <div class="upper-left">
+                <table class="info-table">
+                    <thead><tr><th style="width: 20%;">Seçili Ay</th><th style="width: 20%;">İş Günü Süresi</th><th style="width: 60%;">Kutlanacak Belirli Gün ve Haftalar</th></tr></thead>
+                    <tbody><tr><td id="info-month-name" style="font-weight: 700; color: var(--primary); font-size: 16px;">Eylül</td><td id="info-work-days" style="font-weight: 600;">17 İşgünü</td><td id="info-celebrations">-</td></tr></tbody>
+                </table>
+            </div>
+            <div class="upper-right"><div id="calendar-container"></div></div>
+        </div>
 
         <div class="controls-row">
             <input type="text" id="searchInput" class="search-input" placeholder="Görev veya Sorumlu Ara..." onkeyup="renderBoard()">
@@ -133,7 +157,7 @@
     </div>
 
 <script>
-    // KENDİ BİLGİLERİNİZ BURAYA OTOMATİK EKLENMİŞTİR! DOKUNMANIZA GEREK YOK.
+    // DÜZELTİLMİŞ ŞİFRENİZ EKLENDİ
     const firebaseConfig = {
         apiKey: "AIzaSyCcJuZ6GCZIuhpvBjZqNrQOmnYiYxVmeHM",
         authDomain: "idaritakip-416fb.firebaseapp.com",
@@ -148,27 +172,37 @@
     const auth = firebase.auth();
     const db = firebase.firestore();
 
-    // SİSTEM DEĞİŞKENLERİ
     let isLoginMode = true;
     let currentUser = null;
     let allTasks = [];
-    const months = ["Eylül", "Ekim", "Kasım", "Aralık", "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos"];
     
-    const d = new Date();
-    const mNum = d.getMonth();
-    const standardMonthsMap = {0:"Ocak", 1:"Şubat", 2:"Mart", 3:"Nisan", 4:"Mayıs", 5:"Haziran", 6:"Temmuz", 7:"Ağustos", 8:"Eylül", 9:"Ekim", 10:"Kasım", 11:"Aralık"};
-    let currentSelectedMonth = standardMonthsMap[mNum];
-    if(!months.includes(currentSelectedMonth)) currentSelectedMonth = "Eylül";
+    // Metadata ve Takvim Verileri
+    const months = ["Eylül", "Ekim", "Kasım", "Aralık", "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos"];
+    const monthMeta = {
+        "Eylül": { days: "17 İşgünü", info: "08 Eylül 2025 ÖĞRETİM YILININ BAŞLAMASI, 19 Eylül Gaziler Günü, 15 Temmuz Demokrasi ve Millî Birlik Günü (2. Hafta), Eylül 3. Haftası İlköğretim Haftası" },
+        "Ekim": { days: "21 İşgünü", info: "Dünya Çocuk Günü, 04 Ekim Hayvanları Koruma Günü, 05 Ekim Uluslararası Öğretmenler Günü, 8-12 Ekim Ahilik Kültür Haftası, 29 Ekim Cumhuriyet Bayramı" },
+        "Kasım": { days: "20 İşgünü", info: "2-8 Kasım Lösemili Çocuklar Haftası, 10-16 Kasım Atatürk Haftası, 24 Kasım Öğretmenler Günü, 10-14 Kasım 2025 ARA TATİL" },
+        "Aralık": { days: "23 İşgünü", info: "03 Aralık Dünya Engelliler Günü, 7-17 Aralık Mevlana Haftası, 12-18 Aralık Tutum ve Türk Malları Haftası" },
+        "Ocak": { days: "11 İşgünü", info: "Ocak ayının 2. haftası Enerji Tasarrufu Haftası, 16 Ocak 1. Dönem Sonu" },
+        "Şubat": { days: "20 İşgünü", info: "02 Şubat 2. Dönem Başlangıcı, 19 Şubat MEV Kuruluş Günü, Şubat son haftası Vergi Haftası" },
+        "Mart": { days: "19 İşgünü", info: "1-7 Mart Deprem Haftası, 12 Mart İstiklâl Marşı'nın Kabulü, 18 Mart Çanakkale Zaferi, 16-20 Mart 2026 ARA TATİL, 18-21 Mart Ramazan Bayramı" },
+        "Nisan": { days: "21 İşgünü", info: "23 Nisan Ulusal Egemenlik ve Çocuk Bayramı, Kutül Amare Zaferi (29 Nisan), 01 Nisan Ramazan Bayramı" },
+        "Mayıs": { days: "15 İşgünü", info: "Anneler Günü, 10-16 Mayıs Engelliler Haftası, 19 Mayıs Atatürk'ü Anma Gençlik ve Spor Bayramı, 29 Mayıs İstanbul'un Fethi, 26-30 Mayıs Kurban Bayramı" },
+        "Haziran": { days: "20 İşgünü", info: "Hayat Boyu Öğrenme Haftası, Babalar Günü, 26 Haziran 2. Dönem Bitişi" },
+        "Temmuz": { days: "- İşgünü", info: "15 Temmuz Demokrasi ve Millî Birlik Günü, 24 Temmuz Basın Bayramı" },
+        "Ağustos": { days: "- İşgünü", info: "25-30 Ağustos Zafer Haftası, 30 Ağustos Zafer Bayramı" }
+    };
 
-    // YENİ EKLENEN KISIM: Google'dan Dönüşü Yakalama (Catcher)
-    auth.getRedirectResult().then((result) => {
-        if (result.credential) {
-            document.getElementById('auth-title').innerText = "Giriş Başarılı, Yükleniyor...";
-        }
-    }).catch((error) => {
-        document.getElementById('auth-error').innerText = "Bağlantı Hatası: " + error.message;
-        document.getElementById('auth-error').style.display = 'block';
-    });
+    const calendarDateMap = {
+        "Eylül": { m: 8, y: 2025 }, "Ekim": { m: 9, y: 2025 }, "Kasım": { m: 10, y: 2025 }, "Aralık": { m: 11, y: 2025 },
+        "Ocak": { m: 0, y: 2026 }, "Şubat": { m: 1, y: 2026 }, "Mart": { m: 2, y: 2026 }, "Nisan": { m: 3, y: 2026 },
+        "Mayıs": { m: 4, y: 2026 }, "Haziran": { m: 5, y: 2026 }, "Temmuz": { m: 6, y: 2026 }, "Ağustos": { m: 7, y: 2026 }
+    };
+
+    const d = new Date();
+    const standardMonthsMap = {0:"Ocak", 1:"Şubat", 2:"Mart", 3:"Nisan", 4:"Mayıs", 5:"Haziran", 6:"Temmuz", 7:"Ağustos", 8:"Eylül", 9:"Ekim", 10:"Kasım", 11:"Aralık"};
+    let currentSelectedMonth = standardMonthsMap[d.getMonth()];
+    if(!months.includes(currentSelectedMonth)) currentSelectedMonth = "Eylül";
 
     // --- KİMLİK DOĞRULAMA (AUTH) İŞLEMLERİ ---
     
@@ -180,11 +214,33 @@
         document.getElementById('auth-error').style.display = 'none';
     }
 
+    // YENİDEN POPUP KULLANIMI VE AKILLI HATA YAKALAMA
     function signInWithGoogle() {
         document.getElementById('auth-error').style.display = 'none';
         document.getElementById('auth-title').innerText = "Google'a Bağlanıyor...";
+        
         const provider = new firebase.auth.GoogleAuthProvider();
-        auth.signInWithRedirect(provider);
+        
+        auth.signInWithPopup(provider).then((result) => {
+            // Başarılı giriş
+            document.getElementById('auth-title').innerText = "Giriş Başarılı, Yükleniyor...";
+        }).catch((err) => {
+            document.getElementById('auth-title').innerText = "İdari Panele Giriş Yap";
+            const errEl = document.getElementById('auth-error');
+            
+            // Eğer tarayıcı pop-up'ı engellediyse:
+            if(err.code === 'auth/popup-blocked') {
+                errEl.innerHTML = `⚠️ <b>Güvenlik Duvarı: Açılır Pencere Engellendi!</b><br><br>
+                Sistem Google'ın güvenli penceresini açmaya çalıştı ancak tarayıcınız bunu engelledi.<br><br>
+                <b>Çözüm:</b><br>
+                1. Lütfen adres çubuğunun <b>en sağında</b> veya <b>en solundaki kilit simgesine</b> tıklayın.<br>
+                2. <i>'Açılır pencerelere (Pop-up) izin ver'</i> seçeneğini seçin.<br>
+                3. Bitti'ye basıp bu butona tekrar tıklayın.`;
+            } else {
+                errEl.innerText = "Bağlantı Hatası: " + err.message;
+            }
+            errEl.style.display = 'block';
+        });
     }
 
     function handleAuth() {
@@ -225,7 +281,7 @@
         }
     });
 
-    // --- KANBAN VE VERİTABANI İŞLEMLERİ ---
+    // --- KANBAN, TAKVİM VE VERİTABANI İŞLEMLERİ ---
 
     function buildMonthTabs() {
         const container = document.getElementById('monthTabs');
@@ -238,26 +294,58 @@
                 document.querySelectorAll('.month-tab').forEach(el => el.classList.remove('active'));
                 btn.classList.add('active');
                 currentSelectedMonth = m;
+                updateUpperPanel();
                 renderBoard();
             };
             container.appendChild(btn);
         });
+        updateUpperPanel();
+    }
+
+    function updateUpperPanel() {
+        const meta = monthMeta[currentSelectedMonth] || { days: "-", info: "-" };
+        document.getElementById('info-month-name').innerText = currentSelectedMonth;
+        document.getElementById('info-work-days').innerText = meta.days;
+        document.getElementById('info-celebrations').innerText = meta.info;
+        generateMiniCalendar(currentSelectedMonth);
+    }
+
+    function generateMiniCalendar(monthName) {
+        const dateInfo = calendarDateMap[monthName];
+        if (!dateInfo) return;
+
+        const year = dateInfo.y;
+        const monthIdx = dateInfo.m;
+        const firstDay = new Date(year, monthIdx, 1);
+        let startDayIndex = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1;
+        const totalDays = new Date(year, monthIdx + 1, 0).getDate();
+        const today = new Date();
+
+        let calHtml = `<div class="calendar-title">${monthName} ${year}</div>
+            <table class="calendar-grid"><thead><tr><th>Pt</th><th>Sa</th><th>Ça</th><th>Pe</th><th>Cu</th><th class="weekend">Ct</th><th class="weekend">Pz</th></tr></thead><tbody><tr>`;
+
+        let j = 0;
+        for (; j < startDayIndex; j++) calHtml += '<td></td>';
+
+        for (let dayCounter = 1; dayCounter <= totalDays; dayCounter++, j++) {
+            if (j === 7) { j = 0; calHtml += '</tr><tr>'; }
+            const isWeekend = (j === 5 || j === 6);
+            const isToday = (today.getDate() === dayCounter && today.getMonth() === monthIdx && today.getFullYear() === year);
+            let classes = (isWeekend ? 'weekend ' : '') + (isToday ? 'today' : '');
+            calHtml += `<td class="${classes}">${dayCounter}</td>`;
+        }
+        for (; j < 7 && j !== 0; j++) calHtml += '<td></td>';
+        calHtml += '</tr></tbody></table>';
+        document.getElementById('calendar-container').innerHTML = calHtml;
     }
 
     function listenToMyTasks() {
         if(!currentUser) return;
-        
-        db.collection("gorevler")
-          .where("okul_uid", "==", currentUser.uid)
-          .onSnapshot(snapshot => {
-              allTasks = [];
-              snapshot.forEach(doc => {
-                  allTasks.push({ id: doc.id, ...doc.data() });
-              });
-              renderBoard();
-          }, err => {
-              console.error("Yetki veya bağlantı hatası:", err);
-          });
+        db.collection("gorevler").where("okul_uid", "==", currentUser.uid).onSnapshot(snapshot => {
+            allTasks = [];
+            snapshot.forEach(doc => allTasks.push({ id: doc.id, ...doc.data() }));
+            renderBoard();
+        });
     }
 
     function renderBoard() {
@@ -268,34 +356,38 @@
         document.getElementById('list-tamamlandi').innerHTML = '';
         let counts = { "Yapılacak": 0, "İşlemde": 0, "Tamamlandı": 0 };
 
+        const currentMonthIndex = months.indexOf(standardMonthsMap[new Date().getMonth()]);
+
         allTasks.forEach(task => {
             if(task.Ay !== currentSelectedMonth) return;
             if(!task.Gorev.toLowerCase().includes(searchText) && !task.Sorumlu.toLowerCase().includes(searchText)) return;
 
-            let stateClass = task.Durum === 'İşlemde' ? 'state-islemde' : (task.Durum === 'Tamamlandı' ? 'state-tamamlandi' : '');
-            
-            let btnHtml = '';
-            if(task.Durum === 'Yapılacak') {
-                btnHtml = `<button class="action-btn btn-next" onclick="updateTask('${task.id}', 'İşlemde')">Başlat ⏳</button>`;
-            } else if(task.Durum === 'İşlemde') {
-                btnHtml = `
-                    <button class="action-btn" onclick="updateTask('${task.id}', 'Yapılacak')">◀ Geri</button>
-                    <button class="action-btn btn-next" onclick="updateTask('${task.id}', 'Tamamlandı')">Bitir ✅</button>`;
-            } else {
-                btnHtml = `<button class="action-btn" onclick="updateTask('${task.id}', 'İşlemde')">↩ Geri Çek</button>
-                           <button class="action-btn" style="color:red; border-color:red;" onclick="deleteTask('${task.id}')">Sil</button>`;
+            let stateClass = ''; let alertHtml = '';
+            if (task.Durum === 'İşlemde') { stateClass = 'state-islemde'; counts["İşlemde"]++; }
+            else if (task.Durum === 'Tamamlandı') { stateClass = 'state-tamamlandi'; counts["Tamamlandı"]++; }
+            else {
+                counts["Yapılacak"]++;
+                const taskMonthIndex = months.indexOf(task.Ay);
+                if (currentMonthIndex !== -1 && taskMonthIndex < currentMonthIndex) {
+                    stateClass = 'state-gecikmis'; alertHtml = '<div class="task-notes">⚠️ Bu görevin süresi geçti!</div>';
+                }
             }
+
+            let btnHtml = '';
+            if(task.Durum === 'Yapılacak') btnHtml = `<button class="action-btn btn-next" onclick="updateTask('${task.id}', 'İşlemde')">Başlat ⏳</button>`;
+            else if(task.Durum === 'İşlemde') btnHtml = `<button class="action-btn" onclick="updateTask('${task.id}', 'Yapılacak')">◀ Geri</button> <button class="action-btn btn-next" onclick="updateTask('${task.id}', 'Tamamlandı')">Bitir ✅</button>`;
+            else btnHtml = `<button class="action-btn" onclick="updateTask('${task.id}', 'İşlemde')">↩ Geri Çek</button> <button class="action-btn" style="color:red; border-color:red;" onclick="deleteTask('${task.id}')">Sil</button>`;
 
             const card = `
                 <div class="task-card ${stateClass}">
                     <div class="task-title">${task.Gorev}</div>
-                    <div class="task-meta">👤 Sorumlu: ${task.Sorumlu}</div>
+                    <div class="task-meta">👤 Sorumlu: ${task.Sorumlu} ${alertHtml}</div>
                     <div class="btn-group">${btnHtml}</div>
                 </div>`;
 
-            if(task.Durum === 'Yapılacak') { document.getElementById('list-yapilacak').innerHTML += card; counts["Yapılacak"]++; }
-            if(task.Durum === 'İşlemde') { document.getElementById('list-islemde').innerHTML += card; counts["İşlemde"]++; }
-            if(task.Durum === 'Tamamlandı') { document.getElementById('list-tamamlandi').innerHTML += card; counts["Tamamlandı"]++; }
+            if(task.Durum === 'Yapılacak') document.getElementById('list-yapilacak').innerHTML += card;
+            if(task.Durum === 'İşlemde') document.getElementById('list-islemde').innerHTML += card;
+            if(task.Durum === 'Tamamlandı') document.getElementById('list-tamamlandi').innerHTML += card;
         });
 
         document.getElementById('count-yapilacak').innerText = counts['Yapılacak'];
@@ -303,32 +395,15 @@
         document.getElementById('count-tamamlandi').innerText = counts['Tamamlandı'];
     }
 
-    function updateTask(taskId, newStatus) {
-        db.collection("gorevler").doc(taskId).update({ Durum: newStatus });
-    }
-
-    function deleteTask(taskId) {
-        if(confirm("Bu görevi silmek istediğinize emin misiniz?")) {
-            db.collection("gorevler").doc(taskId).delete();
-        }
-    }
+    function updateTask(taskId, newStatus) { db.collection("gorevler").doc(taskId).update({ Durum: newStatus }); }
+    function deleteTask(taskId) { if(confirm("Bu görevi silmek istediğinize emin misiniz?")) db.collection("gorevler").doc(taskId).delete(); }
 
     function addNewTask() {
         const taskName = prompt(`${currentSelectedMonth} ayına eklenecek yeni görevi yazın:`);
         if(!taskName) return;
-        
         const assignee = prompt("Sorumlu kişiyi/birimi yazın (Örn: Okul Müdürü):") || "Belirtilmedi";
-
-        db.collection("gorevler").add({
-            Gorev: taskName,
-            Sorumlu: assignee,
-            Ay: currentSelectedMonth,
-            Durum: "Yapılacak",
-            okul_uid: currentUser.uid,
-            olusturulmaTarihi: firebase.firestore.FieldValue.serverTimestamp()
-        });
+        db.collection("gorevler").add({ Gorev: taskName, Sorumlu: assignee, Ay: currentSelectedMonth, Durum: "Yapılacak", okul_uid: currentUser.uid, olusturulmaTarihi: firebase.firestore.FieldValue.serverTimestamp() });
     }
-
 </script>
 </body>
 </html>
