@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-width=1.0">
+    <title>İdari Çalışma Planı Yönetim Sistemi (SaaS)</title>
+    <!-- Firebase v8 SDK'ları -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <style>
+        :root {
+            --primary: #1e3a8a; --primary-light: #3b82f6; --bg: #f8fafc;
+            --text-main: #0f172a; --text-sub: #475569; --border: #e2e8f0;
+            --yapilacak-bg: #ffffff; --yapilacak-border: #cbd5e1;
+            --islemde-bg: #fef08a; --islemde-border: #eab308;
+            --bitti-bg: #dcfce7; --bitti-border: #22c55e;
+            --gecikmis-bg: #fee2e2; --gecikmis-border: #ef4444;
+        }
+
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--bg); color: var(--text-main); margin: 0; padding: 20px; }
+        
+        /* Auth (Giriş) Ekranı */
+        #auth-container { max-width: 420px; margin: 80px auto; background: white; padding: 35px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
+        #auth-container h2 { color: var(--primary); margin-top: 0; margin-bottom: 25px;}
+        .auth-input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid var(--border); border-radius: 6px; box-sizing: border-box; font-size: 14px;}
+        .auth-btn { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; margin-bottom: 10px; font-size: 14px; transition: background 0.2s;}
+        .auth-btn:hover { background: var(--primary-light); }
+        .google-btn { background: #db4437; display: flex; align-items: center; justify-content: center; gap: 10px;}
+        .google-btn:hover { background: #c53929; }
+        .divider { margin: 20px 0; color: var(--text-sub); font-size: 13px; position: relative; }
+        .divider::before, .divider::after { content: ""; position: absolute; top: 50%; width: 35%; height: 1px; background: var(--border); }
+        .divider::before { left: 0; }
+        .divider::after { right: 0; }
+        .toggle-auth { color: var(--primary-light); cursor: pointer; font-size: 14px; text-decoration: underline; margin-top: 15px;}
+
+        /* Ana Uygulama */
+        #app-container { display: none; max-width: 1500px; margin: 0 auto; }
+        
+        .header { background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%); color: white; padding: 20px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; box-shadow: 0 4px 10px rgba(30, 58, 138, 0.15);}
+        .header h1 { margin: 0; font-size: 22px; }
+        .user-info { font-size: 14px; display: flex; align-items: center; gap: 15px; }
+        .logout-btn { background: #ef4444; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+
+        .month-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 20px; border-bottom: 2px solid var(--border);}
+        .month-tab { background: white; border: 1px solid var(--border); padding: 10px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 13px; color: var(--text-sub); transition: 0.2s; }
+        .month-tab.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 4px 6px rgba(30, 58, 138, 0.15);}
+
+        .controls-row { display: flex; gap: 15px; margin-bottom: 20px; }
+        .search-input { flex: 1; padding: 12px 16px; border-radius: 8px; border: 1px solid var(--border); font-size: 14px; outline: none;}
+        .search-input:focus { border-color: var(--primary-light); }
+        .add-task-btn { background: #10b981; color: white; border: none; padding: 0 20px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+
+        .board { display: table; width: 100%; table-layout: fixed; border-spacing: 16px 0; margin-left: -16px; margin-right: -16px; }
+        .column { display: table-cell; background: #f1f5f9; padding: 16px; border-radius: 12px; vertical-align: top; }
+        .column h3 { margin-top: 0; border-bottom: 2px solid #cbd5e1; padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; color: var(--text-main);}
+        .task-count { background: #cbd5e1; padding: 2px 8px; border-radius: 20px; font-size: 12px; color: var(--text-main);}
+
+        .task-card { padding: 16px; margin-bottom: 14px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.04); border-left: 5px solid var(--yapilacak-border); background: var(--yapilacak-bg); transition: transform 0.15s;}
+        .task-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .task-card.state-islemde { background: var(--islemde-bg); border-left-color: var(--islemde-border); }
+        .task-card.state-tamamlandi { background: var(--bitti-bg); border-left-color: var(--bitti-border); }
+        .task-title { font-weight: 600; font-size: 14px; margin-bottom: 10px; line-height: 1.5;}
+        .task-meta { font-size: 12px; color: var(--text-sub); margin-bottom: 12px; background: rgba(0,0,0,0.02); padding: 8px; border-radius: 4px; }
+        
+        .btn-group { display: flex; gap: 6px; }
+        button.action-btn { cursor: pointer; padding: 6px 12px; border: 1px solid #cbd5e1; background: white; border-radius: 6px; font-size: 12px; font-weight: 600; transition: 0.15s; }
+        button.action-btn:hover { background: #f8fafc; border-color: #94a3b8; }
+        button.btn-next { background: var(--primary); color: white; border-color: var(--primary); }
+        button.btn-next:hover { background: var(--primary-light); }
+    </style>
+</head>
+<body>
+
+    <!-- GİRİŞ / KAYIT EKRANI -->
+    <div id="auth-container">
+        <h2 id="auth-title">İdari Panele Giriş Yap</h2>
+        
+        <!-- Google ile Giriş Butonu -->
+        <button class="auth-btn google-btn" onclick="signInWithGoogle()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+            </svg>
+            Google ile Giriş Yap
+        </button>
+
+        <div class="divider">VEYA E-POSTA İLE</div>
+
+        <!-- Klasik E-Posta Girişi -->
+        <input type="email" id="email" class="auth-input" placeholder="Okul E-posta Adresiniz">
+        <input type="password" id="password" class="auth-input" placeholder="Şifreniz (En az 6 hane)">
+        <button id="auth-submit-btn" class="auth-btn" onclick="handleAuth()">Giriş Yap</button>
+        
+        <div class="toggle-auth" onclick="toggleAuthMode()">Hesabınız yok mu? E-Posta ile Kayıt Olun</div>
+        <p id="auth-error" style="color: red; font-size: 13px; display: none; margin-top: 15px;"></p>
+    </div>
+
+    <!-- ANA YÖNETİM PANOSU -->
+    <div id="app-container">
+        <div class="header">
+            <h1>Okul İdari Çalışma Planı Yönetim Sistemi</h1>
+            <div class="user-info">
+                <span id="user-email"></span>
+                <button class="logout-btn" onclick="logout()">Çıkış Yap</button>
+            </div>
+        </div>
+
+        <div class="month-tabs" id="monthTabs"></div>
+
+        <div class="controls-row">
+            <input type="text" id="searchInput" class="search-input" placeholder="Görev veya Sorumlu Ara..." onkeyup="renderBoard()">
+            <button class="add-task-btn" onclick="addNewTask()">+ Bu Aya Yeni Görev Ekle</button>
+        </div>
+
+        <div class="board">
+            <div class="column">
+                <h3>📌 Yapılacaklar <span class="task-count" id="count-yapilacak">0</span></h3>
+                <div id="list-yapilacak"></div>
+            </div>
+            <div class="column">
+                <h3>⏳ İşlemde <span class="task-count" id="count-islemde">0</span></h3>
+                <div id="list-islemde"></div>
+            </div>
+            <div class="column">
+                <h3>✅ Tamamlandı <span class="task-count" id="count-tamamlandi">0</span></h3>
+                <div id="list-tamamlandi"></div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    // KENDİ BİLGİLERİNİZ BURAYA OTOMATİK EKLENMİŞTİR! DOKUNMANIZA GEREK YOK.
+    const firebaseConfig = {
+        apiKey: "AIzaSyCcJuZ6GCZIuhpvBjZqNrQOmnYiYxVmeHM",
+        authDomain: "idaritakip-416fb.firebaseapp.com",
+        projectId: "idaritakip-416fb",
+        storageBucket: "idaritakip-416fb.firebasestorage.app",
+        messagingSenderId: "200643373609",
+        appId: "1:200643373609:web:7f7fa28016920ecb9aca38",
+        measurementId: "G-VEFDBJVH41"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // SİSTEM DEĞİŞKENLERİ
+    let isLoginMode = true;
+    let currentUser = null;
+    let allTasks = [];
+    const months = ["Eylül", "Ekim", "Kasım", "Aralık", "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos"];
+    
+    const d = new Date();
+    const mNum = d.getMonth();
+    const standardMonthsMap = {0:"Ocak", 1:"Şubat", 2:"Mart", 3:"Nisan", 4:"Mayıs", 5:"Haziran", 6:"Temmuz", 7:"Ağustos", 8:"Eylül", 9:"Ekim", 10:"Kasım", 11:"Aralık"};
+    let currentSelectedMonth = standardMonthsMap[mNum];
+    if(!months.includes(currentSelectedMonth)) currentSelectedMonth = "Eylül";
+
+    // --- KİMLİK DOĞRULAMA (AUTH) İŞLEMLERİ ---
+    
+    function toggleAuthMode() {
+        isLoginMode = !isLoginMode;
+        document.getElementById('auth-title').innerText = isLoginMode ? "İdari Panele Giriş Yap" : "Yeni Okul Kaydı Oluştur";
+        document.getElementById('auth-submit-btn').innerText = isLoginMode ? "Giriş Yap" : "E-Posta ile Kayıt Ol";
+        document.querySelector('.toggle-auth').innerText = isLoginMode ? "Hesabınız yok mu? E-Posta ile Kayıt Olun" : "Zaten hesabınız var mı? Giriş Yapın";
+        document.getElementById('auth-error').style.display = 'none';
+    }
+
+    // Google İle Giriş Fonksiyonu
+    function signInWithGoogle() {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        auth.signInWithPopup(provider).catch(err => {
+            const errEl = document.getElementById('auth-error');
+            errEl.innerText = "Google Giriş Hatası: Lütfen tarayıcı engelleyicilerini (pop-up blocker) kontrol edin veya yetkiyi Firebase'den açtığınızdan emin olun. (" + err.message + ")";
+            errEl.style.display = 'block';
+        });
+    }
+
+    // Klasik E-Posta Giriş Fonksiyonu
+    function handleAuth() {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const errEl = document.getElementById('auth-error');
+
+        if(isLoginMode) {
+            auth.signInWithEmailAndPassword(email, password).catch(err => {
+                errEl.innerText = "Giriş hatası: Lütfen e-posta ve şifrenizi kontrol edin.";
+                errEl.style.display = 'block';
+            });
+        } else {
+            auth.createUserWithEmailAndPassword(email, password).catch(err => {
+                errEl.innerText = "Kayıt hatası: " + err.message;
+                errEl.style.display = 'block';
+            });
+        }
+    }
+
+    function logout() {
+        auth.signOut();
+    }
+
+    // Kullanıcı Durum Dinleyicisi
+    auth.onAuthStateChanged(user => {
+        if (user) {
+            currentUser = user;
+            document.getElementById('auth-container').style.display = 'none';
+            document.getElementById('app-container').style.display = 'block';
+            document.getElementById('user-email').innerText = "👤 " + (user.displayName || user.email);
+            
+            buildMonthTabs();
+            listenToMyTasks();
+        } else {
+            currentUser = null;
+            document.getElementById('auth-container').style.display = 'block';
+            document.getElementById('app-container').style.display = 'none';
+        }
+    });
+
+    // --- KANBAN VE VERİTABANI İŞLEMLERİ ---
+
+    function buildMonthTabs() {
+        const container = document.getElementById('monthTabs');
+        container.innerHTML = '';
+        months.forEach(m => {
+            const btn = document.createElement('div');
+            btn.className = `month-tab ${m === currentSelectedMonth ? 'active' : ''}`;
+            btn.innerText = m;
+            btn.onclick = () => {
+                document.querySelectorAll('.month-tab').forEach(el => el.classList.remove('active'));
+                btn.classList.add('active');
+                currentSelectedMonth = m;
+                renderBoard();
+            };
+            container.appendChild(btn);
+        });
+    }
+
+    function listenToMyTasks() {
+        if(!currentUser) return;
+        
+        db.collection("gorevler")
+          .where("okul_uid", "==", currentUser.uid)
+          .onSnapshot(snapshot => {
+              allTasks = [];
+              snapshot.forEach(doc => {
+                  allTasks.push({ id: doc.id, ...doc.data() });
+              });
+              renderBoard();
+          }, err => {
+              console.error("Yetki veya bağlantı hatası:", err);
+          });
+    }
+
+    function renderBoard() {
+        const searchText = document.getElementById('searchInput').value.toLowerCase();
+        
+        document.getElementById('list-yapilacak').innerHTML = '';
+        document.getElementById('list-islemde').innerHTML = '';
+        document.getElementById('list-tamamlandi').innerHTML = '';
+        let counts = { "Yapılacak": 0, "İşlemde": 0, "Tamamlandı": 0 };
+
+        allTasks.forEach(task => {
+            if(task.Ay !== currentSelectedMonth) return;
+            if(!task.Gorev.toLowerCase().includes(searchText) && !task.Sorumlu.toLowerCase().includes(searchText)) return;
+
+            let stateClass = task.Durum === 'İşlemde' ? 'state-islemde' : (task.Durum === 'Tamamlandı' ? 'state-tamamlandi' : '');
+            
+            let btnHtml = '';
+            if(task.Durum === 'Yapılacak') {
+                btnHtml = `<button class="action-btn btn-next" onclick="updateTask('${task.id}', 'İşlemde')">Başlat ⏳</button>`;
+            } else if(task.Durum === 'İşlemde') {
+                btnHtml = `
+                    <button class="action-btn" onclick="updateTask('${task.id}', 'Yapılacak')">◀ Geri</button>
+                    <button class="action-btn btn-next" onclick="updateTask('${task.id}', 'Tamamlandı')">Bitir ✅</button>`;
+            } else {
+                btnHtml = `<button class="action-btn" onclick="updateTask('${task.id}', 'İşlemde')">↩ Geri Çek</button>
+                           <button class="action-btn" style="color:red; border-color:red;" onclick="deleteTask('${task.id}')">Sil</button>`;
+            }
+
+            const card = `
+                <div class="task-card ${stateClass}">
+                    <div class="task-title">${task.Gorev}</div>
+                    <div class="task-meta">👤 Sorumlu: ${task.Sorumlu}</div>
+                    <div class="btn-group">${btnHtml}</div>
+                </div>`;
+
+            if(task.Durum === 'Yapılacak') { document.getElementById('list-yapilacak').innerHTML += card; counts["Yapılacak"]++; }
+            if(task.Durum === 'İşlemde') { document.getElementById('list-islemde').innerHTML += card; counts["İşlemde"]++; }
+            if(task.Durum === 'Tamamlandı') { document.getElementById('list-tamamlandi').innerHTML += card; counts["Tamamlandı"]++; }
+        });
+
+        document.getElementById('count-yapilacak').innerText = counts['Yapılacak'];
+        document.getElementById('count-islemde').innerText = counts['İşlemde'];
+        document.getElementById('count-tamamlandi').innerText = counts['Tamamlandı'];
+    }
+
+    function updateTask(taskId, newStatus) {
+        db.collection("gorevler").doc(taskId).update({ Durum: newStatus });
+    }
+
+    function deleteTask(taskId) {
+        if(confirm("Bu görevi silmek istediğinize emin misiniz?")) {
+            db.collection("gorevler").doc(taskId).delete();
+        }
+    }
+
+    function addNewTask() {
+        const taskName = prompt(`${currentSelectedMonth} ayına eklenecek yeni görevi yazın:`);
+        if(!taskName) return;
+        
+        const assignee = prompt("Sorumlu kişiyi/birimi yazın (Örn: Okul Müdürü):") || "Belirtilmedi";
+
+        db.collection("gorevler").add({
+            Gorev: taskName,
+            Sorumlu: assignee,
+            Ay: currentSelectedMonth,
+            Durum: "Yapılacak",
+            okul_uid: currentUser.uid,
+            olusturulmaTarihi: firebase.firestore.FieldValue.serverTimestamp()
+        });
+    }
+
+</script>
+</body>
+</html>
