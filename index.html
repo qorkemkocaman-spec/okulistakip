@@ -34,6 +34,11 @@
         .divider::after { right: 0; }
         .toggle-auth { color: var(--primary-light); cursor: pointer; font-size: 14px; text-decoration: underline; margin-top: 15px;}
 
+        /* Okul Türü Seçim Ekranı */
+        #school-select-container { max-width: 500px; margin: 50px auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; display: none; }
+        #school-select-container h2 { color: var(--primary); }
+        #school-select-container select { width: 100%; padding: 12px; margin: 15px 0; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; }
+
         /* Ana Uygulama */
         #app-container { display: none; max-width: 1500px; margin: 0 auto; }
         
@@ -46,7 +51,6 @@
         .month-tab { background: white; border: 1px solid var(--border); padding: 10px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 13px; color: var(--text-sub); transition: 0.2s; }
         .month-tab.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 4px 6px rgba(30, 58, 138, 0.15);}
 
-        /* Bilgi Tablosu ve Takvim */
         .upper-layout { display: table; width: 100%; margin-bottom: 24px; border-collapse: separate; border-spacing: 16px 0; margin-left: -16px; margin-right: -16px; }
         .upper-left { display: table-cell; width: 70%; vertical-align: top; background: white; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 18px; }
         .upper-right { display: table-cell; width: 30%; vertical-align: top; background: white; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 18px; }
@@ -90,6 +94,7 @@
 </head>
 <body>
 
+    <!-- GİRİŞ EKRANI -->
     <div id="auth-container">
         <h2 id="auth-title">İdari Panele Giriş Yap</h2>
         
@@ -114,6 +119,26 @@
         <div id="auth-error" style="background: #fee2e2; color: #b91c1c; padding: 12px; border-radius: 6px; font-size: 13px; display: none; margin-top: 15px; border: 1px solid #ef4444;"></div>
     </div>
 
+    <!-- OKUL TÜRÜ SEÇİM EKRANI -->
+    <div id="school-select-container">
+        <h2>🏫 Okul Türünüzü Seçin</h2>
+        <p>Hangi okul türü için idari çalışma planını takip edeceksiniz?</p>
+        <select id="schoolTypeSelect">
+            <option value="">-- Seçiniz --</option>
+            <option value="İlkokul">İlkokul</option>
+            <option value="Ortaokul">Ortaokul</option>
+            <option value="Anadolu Lisesi">Anadolu Lisesi</option>
+            <option value="Fen Lisesi">Fen Lisesi</option>
+            <option value="Mesleki ve Teknik Anadolu Lisesi">Mesleki ve Teknik Anadolu Lisesi</option>
+            <option value="Çok Programlı Anadolu Lisesi">Çok Programlı Anadolu Lisesi</option>
+            <option value="Halk Eğitim Merkezi">Halk Eğitim Merkezi</option>
+            <option value="Mesleki Eğitim Merkezi">Mesleki Eğitim Merkezi</option>
+            <option value="Anaokulu">Anaokulu</option>
+        </select>
+        <button class="auth-btn" onclick="saveSchoolType()">Seçimi Kaydet ve Devam Et</button>
+    </div>
+
+    <!-- ANA UYGULAMA -->
     <div id="app-container">
         <div class="header">
             <h1>Okul İdari Çalışma Planı Yönetim Sistemi</h1>
@@ -157,7 +182,7 @@
     </div>
 
 <script>
-    // DÜZELTİLMİŞ ŞİFRENİZ EKLENDİ
+    // --- FIREBASE YAPILANDIRMA ---
     const firebaseConfig = {
         apiKey: "AIzaSyCcJuZ6GCZIuhpvBjZqNrQOmnYiYxVmeHM",
         authDomain: "idaritakip-416fb.firebaseapp.com",
@@ -174,9 +199,10 @@
 
     let isLoginMode = true;
     let currentUser = null;
+    let currentUserSchoolType = null;
     let allTasks = [];
     
-    // Metadata ve Takvim Verileri
+    // --- METADATA VE TAKVİM ---
     const months = ["Eylül", "Ekim", "Kasım", "Aralık", "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos"];
     const monthMeta = {
         "Eylül": { days: "17 İşgünü", info: "08 Eylül 2025 ÖĞRETİM YILININ BAŞLAMASI, 19 Eylül Gaziler Günü, 15 Temmuz Demokrasi ve Millî Birlik Günü (2. Hafta), Eylül 3. Haftası İlköğretim Haftası" },
@@ -204,8 +230,51 @@
     let currentSelectedMonth = standardMonthsMap[d.getMonth()];
     if(!months.includes(currentSelectedMonth)) currentSelectedMonth = "Eylül";
 
-    // --- KİMLİK DOĞRULAMA (AUTH) İŞLEMLERİ ---
-    
+    // --- GÖREV ŞABLONLARI (ÖRNEK) ---
+    const gorevSablonlari = {
+        "İlkokul": {
+            "Eylül": [
+                { gorev: "Öğrenci kayıtlarını tamamlama", sorumlu: "Müdür Yardımcısı" },
+                { gorev: "Sınıf listelerini oluşturma", sorumlu: "Sınıf Öğretmenleri" },
+                { gorev: "Veli toplantısı planlama", sorumlu: "Okul Müdürü" }
+            ],
+            "Ekim": [
+                { gorev: "29 Ekim Cumhuriyet Bayramı etkinlikleri", sorumlu: "Müdür Yardımcısı" }
+            ],
+            "Kasım": [
+                { gorev: "24 Kasım Öğretmenler Günü kutlama", sorumlu: "Okul Müdürü" }
+            ]
+        },
+        "Ortaokul": {
+            "Eylül": [
+                { gorev: "Öğrenci kayıtları", sorumlu: "Müdür Yardımcısı" },
+                { gorev: "Ders programı hazırlama", sorumlu: "Müdür Yardımcısı" }
+            ],
+            "Ekim": [
+                { gorev: "Cumhuriyet Bayramı etkinlikleri", sorumlu: "Müdür Yardımcısı" }
+            ]
+        },
+        "Anadolu Lisesi": {
+            "Eylül": [
+                { gorev: "Kayıt yenileme", sorumlu: "Müdür Yardımcısı" },
+                { gorev: "Sınıf rehberlik planları", sorumlu: "Rehber Öğretmen" }
+            ],
+            "Ekim": [
+                { gorev: "Cumhuriyet Bayramı töreni", sorumlu: "Müdür Yardımcısı" }
+            ],
+            "Kasım": [
+                { gorev: "Öğretmenler Günü etkinliği", sorumlu: "Okul Müdürü" }
+            ]
+        }
+        // Diğer okul türleri için benzer yapıda ekleyebilirsiniz.
+    };
+
+    // --- YARDIMCI FONKSİYONLAR ---
+    function getUserDocRef(uid) {
+        return db.collection("users").doc(uid);
+    }
+
+    // --- KİMLİK DOĞRULAMA (AUTH) ---
     function toggleAuthMode() {
         isLoginMode = !isLoginMode;
         document.getElementById('auth-title').innerText = isLoginMode ? "İdari Panele Giriş Yap" : "Yeni Okul Kaydı Oluştur";
@@ -214,21 +283,13 @@
         document.getElementById('auth-error').style.display = 'none';
     }
 
-    // YENİDEN POPUP KULLANIMI VE AKILLI HATA YAKALAMA
     function signInWithGoogle() {
         document.getElementById('auth-error').style.display = 'none';
         document.getElementById('auth-title').innerText = "Google'a Bağlanıyor...";
-        
         const provider = new firebase.auth.GoogleAuthProvider();
-        
-        auth.signInWithPopup(provider).then((result) => {
-            // Başarılı giriş
-            document.getElementById('auth-title').innerText = "Giriş Başarılı, Yükleniyor...";
-        }).catch((err) => {
+        auth.signInWithPopup(provider).catch((err) => {
             document.getElementById('auth-title').innerText = "İdari Panele Giriş Yap";
             const errEl = document.getElementById('auth-error');
-            
-            // Eğer tarayıcı pop-up'ı engellediyse:
             if(err.code === 'auth/popup-blocked') {
                 errEl.innerHTML = `⚠️ <b>Güvenlik Duvarı: Açılır Pencere Engellendi!</b><br><br>
                 Sistem Google'ın güvenli penceresini açmaya çalıştı ancak tarayıcınız bunu engelledi.<br><br>
@@ -265,24 +326,98 @@
         auth.signOut();
     }
 
+    // --- OKUL TÜRÜ SEÇİMİ ---
+    function saveSchoolType() {
+        const select = document.getElementById('schoolTypeSelect');
+        const schoolType = select.value;
+        if (!schoolType) {
+            alert('Lütfen bir okul türü seçin.');
+            return;
+        }
+        if (!currentUser) return;
+        const userRef = getUserDocRef(currentUser.uid);
+        userRef.set({ okulTuru: schoolType, email: currentUser.email, displayName: currentUser.displayName || '' }, { merge: true })
+        .then(() => {
+            currentUserSchoolType = schoolType;
+            document.getElementById('school-select-container').style.display = 'none';
+            document.getElementById('app-container').style.display = 'block';
+            document.getElementById('user-email').innerText = "👤 " + (currentUser.displayName || currentUser.email);
+            // Şablon görevleri oluştur (eğer hiç görev yoksa)
+            createTasksFromTemplate(schoolType);
+            // Dinlemeyi başlat
+            listenToMyTasks();
+            buildMonthTabs();
+        }).catch(err => {
+            alert('Kayıt hatası: ' + err.message);
+        });
+    }
+
+    // --- ŞABLON GÖREVLERİ OLUŞTUR ---
+    function createTasksFromTemplate(schoolType) {
+        // Kullanıcının mevcut görevlerini kontrol et, eğer hiç yoksa şablondan ekle.
+        db.collection("gorevler").where("okul_uid", "==", currentUser.uid).get().then(snapshot => {
+            if (snapshot.empty) {
+                const template = gorevSablonlari[schoolType];
+                if (!template) return;
+                const batch = db.batch();
+                for (const [ay, gorevler] of Object.entries(template)) {
+                    gorevler.forEach(item => {
+                        const newTaskRef = db.collection("gorevler").doc();
+                        batch.set(newTaskRef, {
+                            Gorev: item.gorev,
+                            Sorumlu: item.sorumlu,
+                            Ay: ay,
+                            Durum: "Yapılacak",
+                            okul_uid: currentUser.uid,
+                            sablon: true,
+                            olusturulmaTarihi: firebase.firestore.FieldValue.serverTimestamp()
+                        });
+                    });
+                }
+                return batch.commit();
+            } else {
+                console.log('Görevler zaten var, şablon eklenmedi.');
+                return Promise.resolve();
+            }
+        }).then(() => {
+            console.log('Şablon görevler eklendi.');
+        }).catch(err => {
+            console.error('Şablon görev ekleme hatası:', err);
+        });
+    }
+
+    // --- AUTH STATE DEĞİŞİKLİĞİ ---
     auth.onAuthStateChanged(user => {
         if (user) {
             currentUser = user;
             document.getElementById('auth-container').style.display = 'none';
-            document.getElementById('app-container').style.display = 'block';
-            document.getElementById('user-email').innerText = "👤 " + (user.displayName || user.email);
-            
-            buildMonthTabs();
-            listenToMyTasks();
+            const userRef = getUserDocRef(user.uid);
+            userRef.get().then(doc => {
+                if (doc.exists && doc.data().okulTuru) {
+                    currentUserSchoolType = doc.data().okulTuru;
+                    document.getElementById('school-select-container').style.display = 'none';
+                    document.getElementById('app-container').style.display = 'block';
+                    document.getElementById('user-email').innerText = "👤 " + (user.displayName || user.email);
+                    listenToMyTasks();
+                    buildMonthTabs();
+                } else {
+                    // Okul türü seçilmemiş
+                    document.getElementById('school-select-container').style.display = 'block';
+                    document.getElementById('app-container').style.display = 'none';
+                }
+            }).catch(err => {
+                console.error('Kullanıcı bilgisi alınamadı:', err);
+            });
         } else {
             currentUser = null;
+            currentUserSchoolType = null;
             document.getElementById('auth-container').style.display = 'block';
             document.getElementById('app-container').style.display = 'none';
+            document.getElementById('school-select-container').style.display = 'none';
         }
     });
 
-    // --- KANBAN, TAKVİM VE VERİTABANI İŞLEMLERİ ---
-
+    // --- AYLIK SEKMELER VE TAKVİM ---
     function buildMonthTabs() {
         const container = document.getElementById('monthTabs');
         container.innerHTML = '';
@@ -313,7 +448,6 @@
     function generateMiniCalendar(monthName) {
         const dateInfo = calendarDateMap[monthName];
         if (!dateInfo) return;
-
         const year = dateInfo.y;
         const monthIdx = dateInfo.m;
         const firstDay = new Date(year, monthIdx, 1);
@@ -339,6 +473,7 @@
         document.getElementById('calendar-container').innerHTML = calHtml;
     }
 
+    // --- GÖREV DİNLEME VE RENDER ---
     function listenToMyTasks() {
         if(!currentUser) return;
         db.collection("gorevler").where("okul_uid", "==", currentUser.uid).onSnapshot(snapshot => {
@@ -395,6 +530,7 @@
         document.getElementById('count-tamamlandi').innerText = counts['Tamamlandı'];
     }
 
+    // --- GÖREV İŞLEMLERİ (GÜNCELLE, SİL, EKLE) ---
     function updateTask(taskId, newStatus) { db.collection("gorevler").doc(taskId).update({ Durum: newStatus }); }
     function deleteTask(taskId) { if(confirm("Bu görevi silmek istediğinize emin misiniz?")) db.collection("gorevler").doc(taskId).delete(); }
 
