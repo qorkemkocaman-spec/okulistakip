@@ -22,14 +22,13 @@
         
         #auth-container { max-width: 420px; margin: 80px auto; background: white; padding: 35px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
         #auth-container h2 { color: var(--primary); margin-top: 0; margin-bottom: 25px;}
-        .auth-input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid var(--border); border-radius: 6px; box-sizing: border-box; font-size: 14px;}
+        .auth-input, .auth-select { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid var(--border); border-radius: 6px; box-sizing: border-box; font-size: 14px;}
         .auth-btn { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; margin-bottom: 15px; font-size: 14px; transition: background 0.2s;}
         .auth-btn:hover { background: var(--primary-light); }
         
         .auth-links { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
         .toggle-auth { color: var(--primary-light); cursor: pointer; font-size: 14px; text-decoration: underline; }
         .forgot-password { color: var(--text-sub); cursor: pointer; font-size: 13px; text-decoration: underline; }
-        .forgot-password:hover { color: var(--text-main); }
 
         #app-container { display: none; max-width: 1500px; margin: 0 auto; }
         
@@ -37,6 +36,7 @@
         .header h1 { margin: 0; font-size: 22px; }
         .user-info { font-size: 14px; display: flex; align-items: center; gap: 15px; }
         .logout-btn { background: #ef4444; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .admin-btn { background: #f59e0b; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-weight: bold; display: none; }
 
         .month-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 20px; border-bottom: 2px solid var(--border);}
         .month-tab { background: white; border: 1px solid var(--border); padding: 10px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 13px; color: var(--text-sub); transition: 0.2s; }
@@ -48,7 +48,6 @@
         .info-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; }
         .info-table th { background: #f8fafc; color: var(--text-main); font-weight: 700; padding: 12px 14px; border-bottom: 2px solid var(--border); }
         .info-table td { padding: 14px; border-bottom: 1px solid var(--border); color: var(--text-sub); vertical-align: top; line-height: 1.6; }
-        .info-table tr:last-child td { border-bottom: none; }
 
         .calendar-title { font-size: 15px; font-weight: 700; color: var(--primary); text-align: center; margin-bottom: 12px; text-transform: uppercase; }
         .calendar-grid { width: 100%; border-collapse: collapse; text-align: center; }
@@ -59,7 +58,6 @@
 
         .controls-row { display: flex; gap: 15px; margin-bottom: 20px; }
         .search-input { flex: 1; padding: 12px 16px; border-radius: 8px; border: 1px solid var(--border); font-size: 14px; outline: none;}
-        .search-input:focus { border-color: var(--primary-light); }
         .add-task-btn { background: #10b981; color: white; border: none; padding: 0 20px; border-radius: 8px; cursor: pointer; font-weight: bold; }
 
         .board { display: table; width: 100%; table-layout: fixed; border-spacing: 16px 0; margin-left: -16px; margin-right: -16px; }
@@ -67,8 +65,7 @@
         .column h3 { margin-top: 0; border-bottom: 2px solid #cbd5e1; padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; color: var(--text-main);}
         .task-count { background: #cbd5e1; padding: 2px 8px; border-radius: 20px; font-size: 12px; color: var(--text-main);}
 
-        .task-card { padding: 16px; margin-bottom: 14px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.04); border-left: 5px solid var(--yapilacak-border); background: var(--yapilacak-bg); transition: transform 0.15s;}
-        .task-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .task-card { padding: 16px; margin-bottom: 14px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.04); border-left: 5px solid var(--yapilacak-border); background: var(--yapilacak-bg); }
         .task-card.state-islemde { background: var(--islemde-bg); border-left-color: var(--islemde-border); }
         .task-card.state-tamamlandi { background: var(--bitti-bg); border-left-color: var(--bitti-border); }
         .task-card.state-gecikmis { background: var(--gecikmis-bg) !important; border-left-color: var(--gecikmis-border) !important; }
@@ -77,10 +74,7 @@
         .task-notes { font-size: 11px; color: #b91c1c; margin-top: 6px; font-weight: 600; }
         
         .btn-group { display: flex; gap: 6px; }
-        button.action-btn { cursor: pointer; padding: 6px 12px; border: 1px solid #cbd5e1; background: white; border-radius: 6px; font-size: 12px; font-weight: 600; transition: 0.15s; }
-        button.action-btn:hover { background: #f8fafc; border-color: #94a3b8; }
-        button.btn-next { background: var(--primary); color: white; border-color: var(--primary); }
-        button.btn-next:hover { background: var(--primary-light); }
+        button.action-btn { cursor: pointer; padding: 6px 12px; border: 1px solid #cbd5e1; background: white; border-radius: 6px; font-size: 12px; font-weight: 600; }
     </style>
 </head>
 <body>
@@ -90,6 +84,20 @@
         
         <input type="email" id="email" class="auth-input" placeholder="Okul E-posta Adresiniz">
         <input type="password" id="password" class="auth-input" placeholder="Şifreniz (En az 6 hane)">
+        
+        <select id="schoolType" class="auth-select" style="display: none;">
+            <option value="">-- Okul Türünüzü Seçin --</option>
+            <option value="Anaokulu">Anaokulu</option>
+            <option value="İlkokul">İlkokul</option>
+            <option value="Ortaokul">Ortaokul</option>
+            <option value="Anadolu Lisesi">Anadolu Lisesi</option>
+            <option value="Fen Lisesi">Fen Lisesi</option>
+            <option value="Mesleki ve Teknik Anadolu Lisesi">Mesleki ve Teknik Anadolu Lisesi</option>
+            <option value="Çok Programlı Anadolu Lisesi">Çok Programlı Anadolu Lisesi</option>
+            <option value="Halk Eğitim Merkezi">Halk Eğitim Merkezi</option>
+            <option value="Mesleki Eğitim Merkezi">Mesleki Eğitim Merkezi</option>
+        </select>
+
         <button id="auth-submit-btn" class="auth-btn" onclick="handleAuth()">Giriş Yap</button>
         
         <div class="auth-links">
@@ -102,8 +110,9 @@
 
     <div id="app-container">
         <div class="header">
-            <h1>Okul İdari Çalışma Planı Yönetim Sistemi</h1>
+            <h1>Okul İdari Çalışma Planı Yönetim Sistemi <span id="display-school-type" style="font-size:14px; background:rgba(255,255,255,0.2); padding:4px 8px; border-radius:4px; margin-left:10px;"></span></h1>
             <div class="user-info">
+                <button id="admin-panel-btn" class="admin-btn" onclick="alert('Admin Paneli Çok Yakında Ekleniyor!')">⚙️ Şablon Yönetimi (Admin)</button>
                 <span id="user-email"></span>
                 <button class="logout-btn" onclick="logout()">Çıkış Yap</button>
             </div>
@@ -143,7 +152,7 @@
     </div>
 
 <script>
-    // Şifreniz düzeltilmiş QO haliyle günceldir.
+    // DÜZELTİLMİŞ ŞİFRENİZ KORUNDU
     const firebaseConfig = {
         apiKey: "AIzaSyCcJuZ6GCZIuhpvBjZqNrQOmnYiYxVmeHM",
         authDomain: "idaritakip-416fb.firebaseapp.com",
@@ -158,25 +167,28 @@
     const auth = firebase.auth();
     const db = firebase.firestore();
 
+    // 🌟 BURAYA KENDİ E-POSTA ADRESİNİZİ YAZIN (ADMIN PANELİNİ AÇMAK İÇİN)
+    const ADMIN_EMAIL = "gorkemkocaman@gmail.com";
+
     let isLoginMode = true;
     let currentUser = null;
+    let currentUserProfile = null;
     let allTasks = [];
     
-    // Metadata ve Takvim Verileri
     const months = ["Eylül", "Ekim", "Kasım", "Aralık", "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos"];
     const monthMeta = {
-        "Eylül": { days: "17 İşgünü", info: "08 Eylül 2025 ÖĞRETİM YILININ BAŞLAMASI, 19 Eylül Gaziler Günü, 15 Temmuz Demokrasi ve Millî Birlik Günü, Eylül 3. Haftası İlköğretim Haftası" },
-        "Ekim": { days: "21 İşgünü", info: "Dünya Çocuk Günü, 04 Ekim Hayvanları Koruma Günü, 05 Ekim Uluslararası Öğretmenler Günü, 8-12 Ekim Ahilik Kültür Haftası, 29 Ekim Cumhuriyet Bayramı" },
-        "Kasım": { days: "20 İşgünü", info: "2-8 Kasım Lösemili Çocuklar Haftası, 10-16 Kasım Atatürk Haftası, 24 Kasım Öğretmenler Günü, 10-14 Kasım 2025 ARA TATİL" },
-        "Aralık": { days: "23 İşgünü", info: "03 Aralık Dünya Engelliler Günü, 7-17 Aralık Mevlana Haftası, 12-18 Aralık Tutum ve Türk Malları Haftası" },
-        "Ocak": { days: "11 İşgünü", info: "Ocak ayının 2. haftası Enerji Tasarrufu Haftası, 16 Ocak 1. Dönem Sonu" },
-        "Şubat": { days: "20 İşgünü", info: "02 Şubat 2. Dönem Başlangıcı, 19 Şubat MEV Kuruluş Günü, Şubat son haftası Vergi Haftası" },
-        "Mart": { days: "19 İşgünü", info: "1-7 Mart Deprem Haftası, 12 Mart İstiklâl Marşı'nın Kabulü, 18 Mart Çanakkale Zaferi, 16-20 Mart 2026 ARA TATİL, 18-21 Mart Ramazan Bayramı" },
-        "Nisan": { days: "21 İşgünü", info: "23 Nisan Ulusal Egemenlik ve Çocuk Bayramı, Kutül Amare Zaferi (29 Nisan), 01 Nisan Ramazan Bayramı" },
-        "Mayıs": { days: "15 İşgünü", info: "Anneler Günü, 10-16 Mayıs Engelliler Haftası, 19 Mayıs Atatürk'ü Anma Gençlik ve Spor Bayramı, 29 Mayıs İstanbul'un Fethi, 26-30 Mayıs Kurban Bayramı" },
-        "Haziran": { days: "20 İşgünü", info: "Hayat Boyu Öğrenme Haftası, Babalar Günü, 26 Haziran 2. Dönem Bitişi" },
-        "Temmuz": { days: "- İşgünü", info: "15 Temmuz Demokrasi ve Millî Birlik Günü, 24 Temmuz Basın Bayramı" },
-        "Ağustos": { days: "- İşgünü", info: "25-30 Ağustos Zafer Haftası, 30 Ağustos Zafer Bayramı" }
+        "Eylül": { days: "17 İşgünü", info: "08 Eylül 2025 ÖĞRETİM YILININ BAŞLAMASI, İlköğretim Haftası" },
+        "Ekim": { days: "21 İşgünü", info: "29 Ekim Cumhuriyet Bayramı, Okul Aile Birliği Toplantıları" },
+        "Kasım": { days: "20 İşgünü", info: "24 Kasım Öğretmenler Günü, 10-14 Kasım 2025 ARA TATİL" },
+        "Aralık": { days: "23 İşgünü", info: "1. Dönem Sınavlarının Yoğunlaşması, Yerli Malı Haftası" },
+        "Ocak": { days: "11 İşgünü", info: "16 Ocak 1. Dönem Sonu, Karne İşlemleri" },
+        "Şubat": { days: "20 İşgünü", info: "02 Şubat 2. Dönem Başlangıcı, Sene Başı Öğretmenler Kurulu" },
+        "Mart": { days: "19 İşgünü", info: "12 Mart İstiklâl Marşı'nın Kabulü, 18 Mart Çanakkale Zaferi, 16-20 Mart ARA TATİL" },
+        "Nisan": { days: "21 İşgünü", info: "23 Nisan Ulusal Egemenlik ve Çocuk Bayramı, LGS/YKS Hazırlık Yoğunlaşması" },
+        "Mayıs": { days: "15 İşgünü", info: "19 Mayis Atatürk'ü Anma Gençlik ve Spor Bayramı, Yıl Sonu Sosyal Etkinlikleri" },
+        "Haziran": { days: "20 İşgünü", info: "26 Haziran 2. Dönem Bitişi, Sene Sonu Kapanış Kurulları, Karne Alımı" },
+        "Temmuz": { days: "- İşgünü", info: "Yaz Tatili Dönemi, Tercih Danışmanlığı Süreçleri" },
+        "Ağustos": { days: "- İşgünü", info: "30 Ağustos Zafer Bayramı, Yeni Dönem Hazırlıkları ve Kayıtlar" }
     };
 
     const calendarDateMap = {
@@ -190,27 +202,19 @@
     let currentSelectedMonth = standardMonthsMap[d.getMonth()];
     if(!months.includes(currentSelectedMonth)) currentSelectedMonth = "Eylül";
 
-    // --- KİMLİK DOĞRULAMA (AUTH) İŞLEMLERİ ---
-    
     function showMessage(text, isError) {
         const msgBox = document.getElementById('auth-message');
-        msgBox.innerText = text;
-        msgBox.style.display = 'block';
-        if (isError) {
-            msgBox.style.background = '#fee2e2';
-            msgBox.style.color = '#b91c1c';
-            msgBox.style.border = '1px solid #ef4444';
-        } else {
-            msgBox.style.background = '#dcfce7';
-            msgBox.style.color = '#15803d';
-            msgBox.style.border = '1px solid #22c55e';
-        }
+        msgBox.innerText = text; msgBox.style.display = 'block';
+        msgBox.style.background = isError ? '#fee2e2' : '#dcfce7';
+        msgBox.style.color = isError ? '#b91c1c' : '#15803d';
+        msgBox.style.border = isError ? '1px solid #ef4444' : '1px solid #22c55e';
     }
 
     function toggleAuthMode() {
         isLoginMode = !isLoginMode;
         document.getElementById('auth-title').innerText = isLoginMode ? "İdari Panele Giriş Yap" : "Yeni Okul Kaydı Oluştur";
         document.getElementById('auth-submit-btn').innerText = isLoginMode ? "Giriş Yap" : "Kayıt Ol";
+        document.getElementById('schoolType').style.display = isLoginMode ? "none" : "block";
         document.querySelector('.toggle-auth').innerText = isLoginMode ? "Hesabınız yok mu? Yeni Kayıt Oluşturun" : "Zaten hesabınız var mı? Giriş Yapın";
         document.querySelector('.forgot-password').style.display = isLoginMode ? "block" : "none";
         document.getElementById('auth-message').style.display = 'none';
@@ -219,6 +223,7 @@
     function handleAuth() {
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
+        const schoolType = document.getElementById('schoolType').value;
         document.getElementById('auth-message').style.display = 'none';
 
         if(isLoginMode) {
@@ -226,7 +231,15 @@
                 showMessage("Giriş hatası: Lütfen e-posta ve şifrenizi kontrol edin.", true);
             });
         } else {
-            auth.createUserWithEmailAndPassword(email, password).catch(err => {
+            if(!schoolType) { showMessage("⚠️ Lütfen okul türünüzü seçin.", true); return; }
+            
+            auth.createUserWithEmailAndPassword(email, password).then((userCredential) => {
+                // Kayıt başarılı olunca okul türünü Firestore'a gizli profil olarak kaydet
+                return db.collection("profiller").doc(userCredential.user.uid).set({
+                    okul_turu: schoolType,
+                    kayit_tarihi: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            }).catch(err => {
                 showMessage("Kayıt hatası: Şifreniz en az 6 haneli olmalıdır.", true);
             });
         }
@@ -234,60 +247,57 @@
 
     function resetPassword() {
         const email = document.getElementById('email').value;
-        if (!email) {
-            showMessage("⚠️ Lütfen şifresini sıfırlamak istediğiniz e-posta adresini üstteki kutuya yazıp tekrar 'Şifremi Unuttum'a tıklayın.", true);
-            return;
-        }
-
+        if (!email) { showMessage("⚠️ Lütfen e-posta adresinizi yazıp tekrar tıklayın.", true); return; }
         auth.sendPasswordResetEmail(email).then(() => {
-            showMessage("✅ Şifre sıfırlama bağlantısı gönderildi! Lütfen e-posta kutunuzu (ve Spam klasörünü) kontrol edin.", false);
-        }).catch((err) => {
-            if (err.code === 'auth/user-not-found') {
-                showMessage("Bu e-posta adresiyle kayıtlı bir hesap bulunamadı.", true);
-            } else {
-                showMessage("Hata: " + err.message, true);
-            }
-        });
+            showMessage("✅ Şifre sıfırlama bağlantısı gönderildi!", false);
+        }).catch(() => showMessage("E-posta adresi bulunamadı.", true));
     }
 
-    function logout() {
-        auth.signOut();
-    }
+    function logout() { auth.signOut(); }
 
     auth.onAuthStateChanged(user => {
         if (user) {
             currentUser = user;
-            document.getElementById('auth-container').style.display = 'none';
-            document.getElementById('app-container').style.display = 'block';
-            document.getElementById('user-email').innerText = "👤 " + user.email;
-            
-            buildMonthTabs();
-            listenToMyTasks();
+            // Kullanıcının okul türü profilini Firestore'dan çek
+            db.collection("profiller").doc(user.uid).get().then(doc => {
+                let okulTuru = "Belirlenmedi";
+                if(doc.exists) {
+                    okulTuru = doc.data().okul_turu;
+                }
+                document.getElementById('display-school-type').innerText = okulTuru;
+                
+                // Eğer giren kişi ADMIN ise özel butonu göster
+                if(user.email === ADMIN_EMAIL) {
+                    document.getElementById('admin-panel-btn').style.display = 'block';
+                } else {
+                    document.getElementById('admin-panel-btn').style.display = 'none';
+                }
+
+                document.getElementById('auth-container').style.display = 'none';
+                document.getElementById('app-container').style.display = 'block';
+                document.getElementById('user-email').innerText = "👤 " + user.email;
+                
+                buildMonthTabs();
+                listenToMyTasks();
+            });
         } else {
             currentUser = null;
             document.getElementById('auth-container').style.display = 'block';
             document.getElementById('app-container').style.display = 'none';
-            document.getElementById('auth-message').style.display = 'none';
-            document.getElementById('email').value = '';
-            document.getElementById('password').value = '';
         }
     });
 
-    // --- KANBAN, TAKVİM VE VERİTABANI İŞLEMLERİ ---
+    // --- KANBAN VE VERİTABANI İŞLEMLERİ ---
 
     function buildMonthTabs() {
-        const container = document.getElementById('monthTabs');
-        container.innerHTML = '';
+        const container = document.getElementById('monthTabs'); container.innerHTML = '';
         months.forEach(m => {
             const btn = document.createElement('div');
-            btn.className = `month-tab ${m === currentSelectedMonth ? 'active' : ''}`;
-            btn.innerText = m;
+            btn.className = `month-tab ${m === currentSelectedMonth ? 'active' : ''}`; btn.innerText = m;
             btn.onclick = () => {
                 document.querySelectorAll('.month-tab').forEach(el => el.classList.remove('active'));
-                btn.classList.add('active');
-                currentSelectedMonth = m;
-                updateUpperPanel();
-                renderBoard();
+                btn.classList.add('active'); currentSelectedMonth = m;
+                updateUpperPanel(); renderBoard();
             };
             container.appendChild(btn);
         });
@@ -303,32 +313,22 @@
     }
 
     function generateMiniCalendar(monthName) {
-        const dateInfo = calendarDateMap[monthName];
-        if (!dateInfo) return;
-
-        const year = dateInfo.y;
-        const monthIdx = dateInfo.m;
+        const dateInfo = calendarDateMap[monthName]; if (!dateInfo) return;
+        const year = dateInfo.y; const monthIdx = dateInfo.m;
         const firstDay = new Date(year, monthIdx, 1);
         let startDayIndex = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1;
-        const totalDays = new Date(year, monthIdx + 1, 0).getDate();
-        const today = new Date();
+        const totalDays = new Date(year, monthIdx + 1, 0).getDate(); const today = new Date();
 
-        let calHtml = `<div class="calendar-title">${monthName} ${year}</div>
-            <table class="calendar-grid"><thead><tr><th>Pt</th><th>Sa</th><th>Ça</th><th>Pe</th><th>Cu</th><th class="weekend">Ct</th><th class="weekend">Pz</th></tr></thead><tbody><tr>`;
-
-        let j = 0;
-        for (; j < startDayIndex; j++) calHtml += '<td></td>';
-
+        let calHtml = `<div class="calendar-title">${monthName} ${year}</div><table class="calendar-grid"><thead><tr><th>Pt</th><th>Sa</th><th>Ça</th><th>Pe</th><th>Cu</th><th class="weekend">Ct</th><th class="weekend">Pz</th></tr></thead><tbody><tr>`;
+        let j = 0; for (; j < startDayIndex; j++) calHtml += '<td></td>';
         for (let dayCounter = 1; dayCounter <= totalDays; dayCounter++, j++) {
             if (j === 7) { j = 0; calHtml += '</tr><tr>'; }
             const isWeekend = (j === 5 || j === 6);
             const isToday = (today.getDate() === dayCounter && today.getMonth() === monthIdx && today.getFullYear() === year);
-            let classes = (isWeekend ? 'weekend ' : '') + (isToday ? 'today' : '');
-            calHtml += `<td class="${classes}">${dayCounter}</td>`;
+            calHtml += `<td class="${(isWeekend ? 'weekend ' : '') + (isToday ? 'today' : '')}">${dayCounter}</td>`;
         }
         for (; j < 7 && j !== 0; j++) calHtml += '<td></td>';
-        calHtml += '</tr></tbody></table>';
-        document.getElementById('calendar-container').innerHTML = calHtml;
+        document.getElementById('calendar-container').innerHTML = calHtml + '</tr></tbody></table>';
     }
 
     function listenToMyTasks() {
@@ -342,12 +342,10 @@
 
     function renderBoard() {
         const searchText = document.getElementById('searchInput').value.toLowerCase();
-        
         document.getElementById('list-yapilacak').innerHTML = '';
         document.getElementById('list-islemde').innerHTML = '';
         document.getElementById('list-tamamlandi').innerHTML = '';
         let counts = { "Yapılacak": 0, "İşlemde": 0, "Tamamlandı": 0 };
-
         const currentMonthIndex = months.indexOf(standardMonthsMap[new Date().getMonth()]);
 
         allTasks.forEach(task => {
@@ -358,25 +356,18 @@
             if (task.Durum === 'İşlemde') { stateClass = 'state-islemde'; counts["İşlemde"]++; }
             else if (task.Durum === 'Tamamlandı') { stateClass = 'state-tamamlandi'; counts["Tamamlandı"]++; }
             else {
-                counts["Yapılacak"]++;
-                const taskMonthIndex = months.indexOf(task.Ay);
+                counts["Yapılacak"]++; const taskMonthIndex = months.indexOf(task.Ay);
                 if (currentMonthIndex !== -1 && taskMonthIndex < currentMonthIndex) {
                     stateClass = 'state-gecikmis'; alertHtml = '<div class="task-notes">⚠️ Bu görevin süresi geçti!</div>';
                 }
             }
 
             let btnHtml = '';
-            if(task.Durum === 'Yapılacak') btnHtml = `<button class="action-btn btn-next" onclick="updateTask('${task.id}', 'İşlemde')">Başlat ⏳</button>`;
-            else if(task.Durum === 'İşlemde') btnHtml = `<button class="action-btn" onclick="updateTask('${task.id}', 'Yapılacak')">◀ Geri</button> <button class="action-btn btn-next" onclick="updateTask('${task.id}', 'Tamamlandı')">Bitir ✅</button>`;
+            if(task.Durum === 'Yapılacak') btnHtml = `<button class="action-btn" style="background:var(--primary); color:white;" onclick="updateTask('${task.id}', 'İşlemde')">Başlat ⏳</button>`;
+            else if(task.Durum === 'İşlemde') btnHtml = `<button class="action-btn" onclick="updateTask('${task.id}', 'Yapılacak')">◀ Geri</button> <button class="action-btn" style="background:var(--primary); color:white;" onclick="updateTask('${task.id}', 'Tamamlandı')">Bitir ✅</button>`;
             else btnHtml = `<button class="action-btn" onclick="updateTask('${task.id}', 'İşlemde')">↩ Geri Çek</button> <button class="action-btn" style="color:red; border-color:red;" onclick="deleteTask('${task.id}')">Sil</button>`;
 
-            const card = `
-                <div class="task-card ${stateClass}">
-                    <div class="task-title">${task.Gorev}</div>
-                    <div class="task-meta">👤 Sorumlu: ${task.Sorumlu} ${alertHtml}</div>
-                    <div class="btn-group">${btnHtml}</div>
-                </div>`;
-
+            const card = `<div class="task-card ${stateClass}"><div class="task-title">${task.Gorev}</div><div class="task-meta">👤 Sorumlu: ${task.Sorumlu} ${alertHtml}</div><div class="btn-group">${btnHtml}</div></div>`;
             if(task.Durum === 'Yapılacak') document.getElementById('list-yapilacak').innerHTML += card;
             if(task.Durum === 'İşlemde') document.getElementById('list-islemde').innerHTML += card;
             if(task.Durum === 'Tamamlandı') document.getElementById('list-tamamlandi').innerHTML += card;
@@ -391,9 +382,8 @@
     function deleteTask(taskId) { if(confirm("Bu görevi silmek istediğinize emin misiniz?")) db.collection("gorevler").doc(taskId).delete(); }
 
     function addNewTask() {
-        const taskName = prompt(`${currentSelectedMonth} ayına eklenecek yeni görevi yazın:`);
-        if(!taskName) return;
-        const assignee = prompt("Sorumlu kişiyi/birimi yazın (Örn: Okul Müdürü):") || "Belirtilmedi";
+        const taskName = prompt(`${currentSelectedMonth} ayına eklenecek yeni görevi yazın:`); if(!taskName) return;
+        const assignee = prompt("Sorumlu kişiyi/birimi yazın:") || "Belirtilmedi";
         db.collection("gorevler").add({ Gorev: taskName, Sorumlu: assignee, Ay: currentSelectedMonth, Durum: "Yapılacak", okul_uid: currentUser.uid, olusturulmaTarihi: firebase.firestore.FieldValue.serverTimestamp() });
     }
 </script>
