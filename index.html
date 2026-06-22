@@ -112,18 +112,12 @@
                 <h2 style="margin:0; color:var(--primary); font-size: 20px;">⚙️ Merkezi Şablon Yönetimi</h2>
                 <button onclick="document.getElementById('admin-modal').style.display='none'" style="background:none; border:none; font-size:24px; cursor:pointer; color:#64748b;">✖</button>
             </div>
-            
             <div style="display:flex; gap:10px; margin-bottom:15px;">
                 <select id="admin-school-type" class="auth-select" style="margin-bottom:0;" onchange="loadTemplates()">
-                    <option value="Anaokulu">Anaokulu</option>
-                    <option value="İlkokul">İlkokul</option>
-                    <option value="Ortaokul">Ortaokul</option>
-                    <option value="Anadolu Lisesi">Anadolu Lisesi</option>
-                    <option value="Fen Lisesi">Fen Lisesi</option>
-                    <option value="Mesleki ve Teknik Anadolu Lisesi">Mesleki ve Teknik Anadolu Lisesi</option>
+                    <option value="Anaokulu">Anaokulu</option><option value="İlkokul">İlkokul</option><option value="Ortaokul">Ortaokul</option>
+                    <option value="Anadolu Lisesi">Anadolu Lisesi</option><option value="Fen Lisesi">Fen Lisesi</option><option value="Mesleki ve Teknik Anadolu Lisesi">Mesleki ve Teknik Anadolu Lisesi</option>
                     <option value="Çok Programlı Anadolu Lisesi" selected>Çok Programlı Anadolu Lisesi</option>
-                    <option value="Halk Eğitim Merkezi">Halk Eğitim Merkezi</option>
-                    <option value="Mesleki Eğitim Merkezi">Mesleki Eğitim Merkezi</option>
+                    <option value="Halk Eğitim Merkezi">Halk Eğitim Merkezi</option><option value="Mesleki Eğitim Merkezi">Mesleki Eğitim Merkezi</option>
                 </select>
                 <select id="admin-month" class="auth-select" style="margin-bottom:0;" onchange="loadTemplates()">
                     <option value="Eylül">Eylül</option><option value="Ekim">Ekim</option><option value="Kasım">Kasım</option><option value="Aralık">Aralık</option>
@@ -131,22 +125,23 @@
                     <option value="Mayıs">Mayıs</option><option value="Haziran">Haziran</option><option value="Temmuz">Temmuz</option><option value="Ağustos">Ağustos</option>
                 </select>
             </div>
-            
             <div style="display:flex; gap:10px; margin-bottom:20px; align-items: center;">
                 <input type="text" id="admin-task-name" class="auth-input" style="margin-bottom:0; flex:2;" placeholder="Görev Adı (Örn: Sorumluluk Sınavları)">
                 <input type="text" id="admin-assignee" class="auth-input" style="margin-bottom:0; flex:1;" placeholder="Sorumlu (Örn: Md. Yrd.)">
                 <button onclick="saveTemplate()" class="add-task-btn" style="height: 42px; border-radius: 6px;">Şablon Ekle</button>
             </div>
-            
             <h4 style="margin-top: 0; color: var(--text-sub); border-bottom: 1px solid var(--border); padding-bottom: 8px;">Kayıtlı Şablonlar (Bu Ay ve Okul İçin)</h4>
-            <div id="admin-template-list" style="min-height: 100px;">
-                </div>
+            <div id="admin-template-list" style="min-height: 100px;"></div>
         </div>
     </div>
 
     <div id="app-container">
         <div class="header">
-            <h1>Okul İdari Çalışma Planı <span id="display-school-type" style="font-size:14px; background:rgba(255,255,255,0.2); padding:4px 8px; border-radius:4px; margin-left:10px;"></span></h1>
+            <h1>Okul İdari Çalışma Planı 
+                <span id="display-school-type" onclick="changeSchoolType()" title="Okul türünüzü değiştirmek için tıklayın" style="font-size:14px; background:rgba(255,255,255,0.2); padding:4px 8px; border-radius:4px; margin-left:10px; cursor:pointer; text-decoration:underline;">
+                    Yükleniyor...
+                </span>
+            </h1>
             <div class="user-info">
                 <button id="admin-panel-btn" class="admin-btn" onclick="openAdminPanel()">⚙️ Şablon Yönetimi</button>
                 <span id="user-email"></span>
@@ -245,21 +240,13 @@
             auth.signInWithEmailAndPassword(email, password).catch(err => { showMessage("Giriş hatası: Lütfen bilgilerinizi kontrol edin.", true); });
         } else {
             if(!schoolType) { showMessage("⚠️ Lütfen okul türünüzü seçin.", true); return; }
-            
             auth.createUserWithEmailAndPassword(email, password).then((userCredential) => {
                 const uid = userCredential.user.uid;
-                
-                // 1. Profil Kaydı
                 db.collection("profiller").doc(uid).set({ okul_turu: schoolType, kayit_tarihi: firebase.firestore.FieldValue.serverTimestamp() });
-                
-                // 2. OTOMATİK ŞABLON ATAMASI (Sihirli Kısım)
                 db.collection("sablon_gorevler").where("okul_turu", "==", schoolType).get().then(snapshot => {
                     snapshot.forEach(doc => {
                         const t = doc.data();
-                        db.collection("gorevler").add({
-                            Gorev: t.Gorev, Sorumlu: t.Sorumlu, Ay: t.Ay, Durum: "Yapılacak",
-                            okul_uid: uid, olusturulmaTarihi: firebase.firestore.FieldValue.serverTimestamp()
-                        });
+                        db.collection("gorevler").add({ Gorev: t.Gorev, Sorumlu: t.Sorumlu, Ay: t.Ay, Durum: "Yapılacak", okul_uid: uid, olusturulmaTarihi: firebase.firestore.FieldValue.serverTimestamp() });
                     });
                 });
             }).catch(err => { showMessage("Kayıt hatası: " + err.message, true); });
@@ -278,7 +265,7 @@
         if (user) {
             currentUser = user;
             db.collection("profiller").doc(user.uid).get().then(doc => {
-                document.getElementById('display-school-type').innerText = doc.exists ? doc.data().okul_turu : "Belirlenmedi";
+                document.getElementById('display-school-type').innerText = doc.exists ? doc.data().okul_turu : "Belirlenmedi (Değiştirmek için tıklayın)";
                 document.getElementById('admin-panel-btn').style.display = (user.email === ADMIN_EMAIL) ? 'block' : 'none';
                 document.getElementById('auth-container').style.display = 'none';
                 document.getElementById('app-container').style.display = 'block';
@@ -292,11 +279,31 @@
         }
     });
 
+    // --- YENİ EKLENEN: PROFİL (OKUL TÜRÜ) DEĞİŞTİRME ---
+    function changeSchoolType() {
+        const typesList = "1: Anaokulu\n2: İlkokul\n3: Ortaokul\n4: Anadolu Lisesi\n5: Fen Lisesi\n6: Mesleki ve Teknik Anadolu Lisesi\n7: Çok Programlı Anadolu Lisesi\n8: Halk Eğitim Merkezi\n9: Mesleki Eğitim Merkezi";
+        const choice = prompt("Okul türünüzü güncellemek için aşağıdaki listeden size uygun olanın NUMARASINI (Örn: 7) yazın:\n\n" + typesList);
+
+        const typeMap = { "1":"Anaokulu", "2":"İlkokul", "3":"Ortaokul", "4":"Anadolu Lisesi", "5":"Fen Lisesi", "6":"Mesleki ve Teknik Anadolu Lisesi", "7":"Çok Programlı Anadolu Lisesi", "8":"Halk Eğitim Merkezi", "9":"Mesleki Eğitim Merkezi" };
+
+        if(choice && typeMap[choice]) {
+            const newType = typeMap[choice];
+            // "merge: true" komutu çok önemlidir. Belge yoksa yaratır, varsa sadece okul türünü günceller.
+            db.collection("profiller").doc(currentUser.uid).set({
+                okul_turu: newType,
+                guncelleme_tarihi: firebase.firestore.FieldValue.serverTimestamp()
+            }, {merge: true}).then(() => {
+                document.getElementById('display-school-type').innerText = newType;
+                alert("✅ Okul türünüz başarıyla '" + newType + "' olarak güncellendi!");
+            });
+        } else if (choice) {
+            alert("❌ Hatalı veya geçersiz bir numara girdiniz. Lütfen sadece 1 ile 9 arasında bir rakam yazın.");
+        }
+    }
+
     // --- ADMİN (ŞABLON) PANELİ FONKSİYONLARI ---
-    
     function openAdminPanel() {
         document.getElementById('admin-modal').style.display = 'flex';
-        // Paneli açtığında sistemin şu anki ayını seçili getir
         document.getElementById('admin-month').value = currentSelectedMonth;
         loadTemplates();
     }
@@ -347,7 +354,7 @@
         }
     }
 
-    // --- KANBAN VE TAKVİM İŞLEMLERİ (Özetlenmiş) ---
+    // --- KANBAN VE TAKVİM İŞLEMLERİ ---
     function buildMonthTabs() {
         const container = document.getElementById('monthTabs'); container.innerHTML = '';
         months.forEach(m => {
