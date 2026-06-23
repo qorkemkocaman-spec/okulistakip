@@ -139,7 +139,7 @@
                 <select id="admin-month" class="auth-select" style="margin-bottom:0;" onchange="loadTemplates()"><option value="Eylül">Eylül</option><option value="Ekim">Ekim</option><option value="Kasım">Kasım</option><option value="Aralık">Aralık</option><option value="Ocak">Ocak</option><option value="Şubat">Şubat</option><option value="Mart">Mart</option><option value="Nisan">Nisan</option><option value="Mayıs">Mayıs</option><option value="Haziran">Haziran</option><option value="Temmuz">Temmuz</option><option value="Ağustos">Ağustos</option></select>
             </div>
             <div style="display:flex; gap:10px; margin-bottom:20px; align-items: center;">
-                <input type="text" id="admin-task-name" class="auth-input" style="margin-bottom:0; flex:2;" placeholder="Görev Adı"><input type="text" id="admin-assignee" class="auth-input" style="margin-bottom:0; flex:1;" placeholder="Sorumlu"><button onclick="saveTemplate()" class="add-task-btn" style="height: 42px; border-radius: 6px;">Ekle</button>
+                <input type="text" id="admin-task-name" class="auth-input" style="margin-bottom:0; flex:2;" placeholder="Görev Adı"><input type="text" id="admin-assignee" class="auth-input" style="margin-bottom:0; flex:1;" placeholder="Sorumlu"><button onclick="saveTemplate()" class="add-task-btn" style="height: 42px; border-radius: 6px;">Şablon Ekle</button>
             </div>
             <div id="admin-template-list" style="min-height: 100px;"></div>
         </div>
@@ -202,7 +202,7 @@
             <div class="menu-item" onclick="switchView('view-commissions', this)">🏛️ Kurul & Komisyonlar</div>
             <div class="menu-item" onclick="switchView('view-inventory', this)">📦 Demirbaş Takibi</div>
             <div class="menu-item" onclick="switchView('view-tools', this)">🧮 Hesaplama Araçları</div>
-            <div class="sidebar-footer"><div style="font-size: 11px; color:#64748b;">Versiyon 3.0 (Raporlama)</div></div>
+            <div class="sidebar-footer"><div style="font-size: 11px; color:#64748b;">Versiyon 3.0 (PDF Desteği)</div></div>
         </div>
 
         <!-- SAĞ İÇERİK ALANI -->
@@ -216,6 +216,7 @@
                 </div>
             </div>
 
+            <!-- GÖRÜNÜM 1: DASHBOARD -->
             <div id="view-dashboard" class="view-section active">
                 <h2 class="dash-title" id="main-app-title">Okul İdari Çalışma Planı</h2>
                 <div class="dashboard-grid">
@@ -225,6 +226,7 @@
                 </div>
             </div>
 
+            <!-- GÖRÜNÜM 2: KURUMSAL BİLGİLER -->
             <div id="view-school-info" class="view-section">
                 <h2 class="dash-title">🏢 Kurumsal Bilgiler ve Antet Ayarları</h2>
                 <div class="dash-card" style="max-width: 750px; margin-bottom: 20px;">
@@ -244,6 +246,7 @@
                 </div>
             </div>
 
+            <!-- GÖRÜNÜM 3: GÖREV TAKİBİ -->
             <div id="view-tasks" class="view-section">
                 <div class="month-tabs" id="monthTabs"></div>
                 <div class="upper-layout">
@@ -261,13 +264,12 @@
                 </div>
             </div>
 
-            <!-- GÖRÜNÜM 4: PERSONEL (PDF BUTONU EKLENDİ) -->
+            <!-- GÖRÜNÜM 4: PERSONEL -->
             <div id="view-personnel" class="view-section">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                     <h2 class="dash-title" style="margin: 0;">Okul Personel Veritabanı</h2>
                     <div style="display:flex;">
                         <button class="add-task-btn" onclick="document.getElementById('personnel-modal').style.display='flex'">+ Yeni Personel</button>
-                        <!-- YENİ: PDF / Yazdır Butonu -->
                         <button class="print-btn" onclick="printReport('Okul Personel Listesi', 'table-personnel')">🖨️ Yazdır / PDF Al</button>
                     </div>
                 </div>
@@ -280,6 +282,7 @@
                 </div>
             </div>
             
+            <!-- GÖRÜNÜM 5: KOMİSYONLAR -->
             <div id="view-commissions" class="view-section">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                     <h2 class="dash-title" style="margin: 0;">Kurul ve Komisyonlar</h2>
@@ -288,18 +291,16 @@
                 <div id="commissions-list-container" class="dashboard-grid"></div>
             </div>
 
-            <!-- GÖRÜNÜM 6: DEMİRBAŞ (PDF BUTONU EKLENDİ) -->
+            <!-- GÖRÜNÜM 6: DEMİRBAŞ -->
             <div id="view-inventory" class="view-section">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                     <h2 class="dash-title" style="margin: 0;">📦 Demirbaş ve Taşınır Takibi</h2>
                     <div style="display:flex;">
                         <button class="add-task-btn" onclick="openInventoryModal()">+ Yeni Demirbaş</button>
-                        <!-- YENİ: PDF / Yazdır Butonu -->
                         <button class="print-btn" onclick="printReport('Demirbaş ve Zimmet Listesi', 'table-inventory')">🖨️ Yazdır / PDF Al</button>
                     </div>
                 </div>
                 <div style="margin-bottom: 15px; color: var(--text-sub); font-size: 14px;">Kayıtlı Demirbaş Kalemi: <strong id="inventory-count">0</strong></div>
-                
                 <div class="data-table-container">
                     <table class="data-table" id="table-inventory">
                         <thead><tr><th>Malzeme Adı</th><th>Adet</th><th>Marka/Model</th><th>Bulunduğu Yer</th><th>Zimmetli Personel</th><th class="no-print" style="width: 60px;">İşlem</th></tr></thead>
@@ -308,6 +309,7 @@
                 </div>
             </div>
 
+            <!-- GÖRÜNÜM 7: HESAPLAMA ARAÇLARI -->
             <div id="view-tools" class="view-section">
                 <h2 class="dash-title">🧮 İdari Hesaplama Araçları</h2>
                 <div class="dashboard-grid">
@@ -344,17 +346,22 @@
         document.getElementById('page-title').innerText = titleMap[viewId];
     }
 
-    // --- YENİ EKLENEN: PDF / YAZDIRMA MOTORU ---
+    // --- YENİ EKLENEN (UNUTULAN) PDF / YAZDIRMA FONKSİYONU ---
     function printReport(title, tableId) {
-        // 1. Okul adını alıyoruz (Önce kurumsal bilgilerden, yoksa sistem profilinden)
-        let schoolName = document.getElementById('school-info-name').value || document.getElementById('display-school-type').innerText;
-        // 2. Çıktı alınacak tabloyu (butonlar hariç) kopyalıyoruz
-        let tableContent = document.getElementById(tableId).outerHTML;
+        // Okul ismini tespit et
+        let schoolName = document.getElementById('school-info-name').value;
+        if(!schoolName) schoolName = document.getElementById('display-school-type').innerText;
         
-        // 3. Yazdırma penceresi oluşturuyoruz
+        let tableEl = document.getElementById(tableId);
+        if(!tableEl) { alert("Yazdırılacak tablo bulunamadı!"); return; }
+        
+        // Tabloyu kopyala
+        let tableContent = tableEl.outerHTML;
+        
+        // Yeni bir pencere aç
         let printWindow = window.open('', '', 'height=800,width=1000');
         
-        // 4. Profesyonel Antet ve CSS Stillerini basıyoruz
+        // Anteti ve HTML iskeletini oluştur
         printWindow.document.write('<html><head><title>' + title + '</title>');
         printWindow.document.write('<style>');
         printWindow.document.write('body { font-family: "Segoe UI", Arial, sans-serif; padding: 20px; color: #000; }');
@@ -364,10 +371,11 @@
         printWindow.document.write('.header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #000; padding-bottom: 10px; }');
         printWindow.document.write('.header h2 { margin: 0; font-size: 22px; text-transform: uppercase; }');
         printWindow.document.write('.header p { margin: 8px 0 0 0; font-size: 16px; font-weight: bold; color: #333; }');
-        printWindow.document.write('.no-print { display: none !important; }'); // "SİL" Butonlarını çıktıda gizle
+        // SİL butonlarını çıktıda gizle
+        printWindow.document.write('.no-print { display: none !important; }'); 
         printWindow.document.write('</style></head><body>');
         
-        // 5. Anteti ve Tabloyu ekle
+        // Başlıkları ve Tabloyu gövdeye bas
         printWindow.document.write(`
             <div class="header">
                 <h2>T.C.<br>${schoolName}</h2>
@@ -377,11 +385,11 @@
         printWindow.document.write(tableContent);
         printWindow.document.write('</body></html>');
         
-        // 6. Pencereyi yükle ve yazdır
+        // Dokümanı kapatıp yazdırma komutunu tetikle
         printWindow.document.close();
         setTimeout(function() {
             printWindow.print();
-        }, 500); // Tablonun yüklenmesi için yarım saniye bekle
+        }, 500); 
     }
 
     // --- 4. AUTH & PROFiL ---
@@ -444,7 +452,7 @@
     function saveInventory() { const iName = document.getElementById('inv-name').value; const iQty = document.getElementById('inv-qty').value; const iBrand = document.getElementById('inv-brand').value; const iLoc = document.getElementById('inv-location').value; const iPers = document.getElementById('inv-personnel').value || "Ortak Kullanım"; if(!iName || !iQty) { alert("Malzeme Adı ve Adet alanları zorunludur."); return; } db.collection("demirbaslar").add({ ad: iName, adet: iQty, marka: iBrand, yer: iLoc, zimmetli_kisi: iPers, okul_uid: currentUser.uid, eklenme_tarihi: firebase.firestore.FieldValue.serverTimestamp() }).then(() => { document.getElementById('inventory-modal').style.display = 'none'; }).catch(err => alert("Hata: " + err.message)); }
     function deleteInventory(id) { if(confirm("Silmek istediğinize emin misiniz?")) db.collection("demirbaslar").doc(id).delete(); }
 
-    // --- 6. DİĞER MODÜLLER (Araçlar, Personel, Komisyon) ---
+    // --- 6. DİĞER MODÜLLER ---
     function calcDateAddSub() { const d1 = document.getElementById('tool-add-date').value; const days = parseInt(document.getElementById('tool-add-days').value); const resBox = document.getElementById('res-date-add'); if(!d1 || isNaN(days)) { alert("Lütfen geçerli bir tarih ve gün sayısı girin."); return; } const date = new Date(d1); date.setDate(date.getDate() + days); resBox.style.display = 'block'; resBox.innerHTML = `Hesaplanan Yeni Tarih:<br><span style="font-size:18px; color:var(--primary);">${date.toLocaleDateString('tr-TR')}</span>`; }
     function calcDateDiff() { const endVal = document.getElementById('tool-diff-end').value; const startVal = document.getElementById('tool-diff-start').value; const resBox = document.getElementById('res-date-diff'); if(!endVal || !startVal) { alert("Lütfen her iki tarihi de seçin."); return; } const dEnd = new Date(endVal); const dStart = new Date(startVal); if(dEnd < dStart) { alert("Büyük tarih küçük tarihten eski olamaz."); return; } let years = dEnd.getFullYear() - dStart.getFullYear(); let months = dEnd.getMonth() - dStart.getMonth(); let days = dEnd.getDate() - dStart.getDate(); if(days < 0) { months--; const prevMonth = new Date(dEnd.getFullYear(), dEnd.getMonth(), 0); days += prevMonth.getDate(); } if(months < 0) { years--; months += 12; } resBox.style.display = 'block'; resBox.innerHTML = `Toplam Süre:<br><span style="font-size:18px; color:var(--primary);">${years} Yıl, ${months} Ay, ${days} Gün</span>`; }
     function calcMaternity() { const matVal = document.getElementById('tool-mat-date').value; const typeVal = document.getElementById('tool-mat-type').value; const resBox = document.getElementById('res-mat'); if(!matVal) { alert("Lütfen muhtemel doğum tarihini seçin."); return; } const expectedDate = new Date(matVal); const preDays = (typeVal === 'tek') ? 56 : 70; const leaveStart = new Date(expectedDate); leaveStart.setDate(leaveStart.getDate() - preDays); const leaveEnd = new Date(expectedDate); leaveEnd.setDate(leaveEnd.getDate() + 56); resBox.style.display = 'block'; resBox.innerHTML = `<strong>Kanuni Doğum İzni Takvimi</strong><br>⏳ İzne Ayrılma Zorunluluğu: <span style="color:#eab308;">${leaveStart.toLocaleDateString('tr-TR')}</span><br>👶 Beklenen Doğum: <span style="color:var(--primary);">${expectedDate.toLocaleDateString('tr-TR')}</span><br>✅ İzin Bitişi: <span style="color:#10b981;">${leaveEnd.toLocaleDateString('tr-TR')}</span>`; }
