@@ -21,7 +21,6 @@
 
         body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--bg); color: var(--text-main); margin: 0; overflow: hidden; height: 100vh; }
         
-        /* GİRİŞ EKRANI */
         #auth-container { max-width: 420px; margin: 80px auto; background: white; padding: 35px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
         #auth-container h2 { color: var(--primary); margin-top: 0; margin-bottom: 25px;}
         .auth-input, .auth-select { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid var(--border); border-radius: 6px; box-sizing: border-box; font-size: 14px;}
@@ -31,7 +30,6 @@
         .toggle-auth { color: var(--primary-light); cursor: pointer; font-size: 14px; text-decoration: underline; }
         .forgot-password { color: var(--text-sub); cursor: pointer; font-size: 13px; text-decoration: underline; }
 
-        /* UYGULAMA İSKELETİ */
         #app-container { display: none; height: 100vh; width: 100vw; display: flex; }
         .sidebar { width: 260px; background: var(--sidebar-bg); color: #cbd5e1; display: flex; flex-direction: column; flex-shrink: 0; }
         .sidebar-header { padding: 25px 20px; font-size: 18px; font-weight: bold; color: white; border-bottom: 1px solid #334155; line-height: 1.4; }
@@ -49,7 +47,6 @@
         .view-section { display: none; }
         .view-section.active { display: block; }
 
-        /* DASHBOARD KARTLARI */
         .dash-title { font-size: 24px; color: var(--primary); margin-top: 0; margin-bottom: 20px; }
         .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
         .dash-card { background: white; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 2px 5px rgba(0,0,0,0.02); overflow: hidden; }
@@ -57,7 +54,6 @@
         .dash-card-body { padding: 20px; font-size: 14px; color: var(--text-sub); line-height: 1.6; min-height: 120px; }
         .empty-state { text-align: center; color: #94a3b8; font-style: italic; margin-top: 20px; }
 
-        /* KANBAN (GÖREVLER) */
         .month-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 20px; border-bottom: 2px solid var(--border);}
         .month-tab { background: white; border: 1px solid var(--border); padding: 10px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 13px; color: var(--text-sub); transition: 0.2s; }
         .month-tab.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 4px 6px rgba(30, 58, 138, 0.15);}
@@ -94,14 +90,12 @@
         .btn-group { display: flex; gap: 6px; }
         button.action-btn { cursor: pointer; padding: 6px 12px; border: 1px solid #cbd5e1; background: white; border-radius: 6px; font-size: 12px; font-weight: 600; }
 
-        /* VERİ TABLOLARI (Personel vs) */
         .data-table-container { background: white; border-radius: 12px; border: 1px solid var(--border); overflow: hidden; margin-top: 20px; }
         .data-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; }
         .data-table th { background: #f8fafc; color: var(--text-main); font-weight: 700; padding: 14px 20px; border-bottom: 2px solid var(--border); }
         .data-table td { padding: 14px 20px; border-bottom: 1px solid var(--border); color: var(--text-sub); }
         .data-table tr:hover td { background: #f1f5f9; }
 
-        /* MODALLAR */
         .modal-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:1000; align-items:center; justify-content:center; }
         .modal-content { background:white; width:90%; max-width:600px; border-radius:12px; padding:25px; max-height:90vh; overflow-y:auto; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
         .modal-header { display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid var(--border); padding-bottom:15px; margin-bottom:20px; }
@@ -110,7 +104,6 @@
 </head>
 <body>
 
-    <!-- GİRİŞ EKRANI -->
     <div id="auth-container">
         <h2 id="auth-title">İdari Panele Giriş Yap</h2>
         <input type="email" id="email" class="auth-input" placeholder="Okul E-posta Adresiniz">
@@ -131,7 +124,6 @@
         <div id="auth-message" style="padding: 12px; border-radius: 6px; font-size: 13px; display: none; margin-top: 15px;"></div>
     </div>
 
-    <!-- ADMIN MODAL -->
     <div id="admin-modal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
@@ -161,7 +153,6 @@
         </div>
     </div>
 
-    <!-- PERSONEL EKLEME MODALI -->
     <div id="personnel-modal" class="modal-overlay">
         <div class="modal-content" style="max-width: 500px;">
             <div class="modal-header">
@@ -184,10 +175,8 @@
         </div>
     </div>
 
-    <!-- ANA UYGULAMA İSKELETİ -->
     <div id="app-container">
         
-        <!-- SOL MENÜ -->
         <div class="sidebar">
             <div class="sidebar-header">
                 İdari Takip Sistemi
@@ -201,7 +190,6 @@
             <div class="sidebar-footer"><div style="font-size: 11px; color:#64748b;">Versiyon 2.1 (SaaS)</div></div>
         </div>
 
-        <!-- SAĞ İÇERİK ALANI -->
         <div class="main-content">
             <div class="top-bar">
                 <div style="font-size: 18px; font-weight: bold; color: var(--primary);" id="page-title">Yönetici Özeti</div>
@@ -212,7 +200,6 @@
                 </div>
             </div>
 
-            <!-- GÖRÜNÜM 1: DASHBOARD -->
             <div id="view-dashboard" class="view-section active">
                 <h2 class="dash-title">Hoş Geldiniz!</h2>
                 <div class="dashboard-grid">
@@ -223,7 +210,6 @@
                 </div>
             </div>
 
-            <!-- GÖRÜNÜM 2: GÖREV TAKİBİ -->
             <div id="view-tasks" class="view-section">
                 <div class="month-tabs" id="monthTabs"></div>
                 <div class="upper-layout">
@@ -241,7 +227,6 @@
                 </div>
             </div>
 
-            <!-- GÖRÜNÜM 3: PERSONEL LİSTESİ -->
             <div id="view-personnel" class="view-section">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                     <h2 class="dash-title" style="margin: 0;">Okul Personel Veritabanı</h2>
@@ -262,13 +247,11 @@
                             </tr>
                         </thead>
                         <tbody id="personnel-list-tbody">
-                            <!-- Personeller buraya JS ile eklenecek -->
-                        </tbody>
+                            </tbody>
                     </table>
                 </div>
             </div>
             
-            <!-- DİĞER MODÜLLER -->
             <div id="view-commissions" class="view-section">
                 <h2 class="dash-title">Kurul ve Komisyonlar</h2>
                 <div class="dash-card"><div class="dash-card-body">🚀 Aşama 3'te eklenecektir. Personel sekmesine eklediğiniz öğretmenleri buradan komisyonlara dağıtabileceksiniz.</div></div>
@@ -351,12 +334,18 @@
         } else if (choice) { alert("❌ Geçersiz numara."); }
     }
 
-    // --- PERSONEL MODÜLÜ (YENİ) ---
+    // --- PERSONEL MODÜLÜ (GÜNCELLENDİ) ---
     function listenToPersonnel() {
         if(!currentUser) return;
-        db.collection("personeller").where("okul_uid", "==", currentUser.uid).orderBy("ad_soyad", "asc").onSnapshot(snapshot => {
+        
+        // DİKKAT: Firebase 'orderBy' komutu Index(Dizin) hatasına yol açtığı için kaldırıldı.
+        db.collection("personeller").where("okul_uid", "==", currentUser.uid).onSnapshot(snapshot => {
             allPersonnel = [];
             snapshot.forEach(doc => allPersonnel.push({ id: doc.id, ...doc.data() }));
+            
+            // Sıralamayı Firebase yerine doğrudan tarayıcıya (Türkçe karakter destekli) yaptırıyoruz:
+            allPersonnel.sort((a, b) => a.ad_soyad.localeCompare(b.ad_soyad, 'tr'));
+            
             renderPersonnel();
         });
     }
@@ -392,6 +381,8 @@
         }).then(() => {
             document.getElementById('pers-name').value = ''; document.getElementById('pers-branch').value = ''; document.getElementById('pers-phone').value = '';
             document.getElementById('personnel-modal').style.display = 'none';
+        }).catch(err => {
+            alert("❌ Firebase Hatası! Lütfen 1. Adımdaki veritabanı kurallarını güncellediğinizden emin olun.\nDetay: " + err.message);
         });
     }
 
@@ -401,7 +392,7 @@
         }
     }
 
-    // --- ADMİN PANELİ FONKSİYONLARI ---
+    // --- ADMİN PANELİ ---
     function openAdminPanel() { document.getElementById('admin-modal').style.display = 'flex'; document.getElementById('admin-month').value = currentSelectedMonth; loadTemplates(); }
     function saveTemplate() { const sType = document.getElementById('admin-school-type').value; const sMonth = document.getElementById('admin-month').value; const tName = document.getElementById('admin-task-name').value; const tAssignee = document.getElementById('admin-assignee').value || "Belirtilmedi"; if(!tName) { alert("Lütfen bir görev adı yazın."); return; } db.collection("sablon_gorevler").add({ okul_turu: sType, Ay: sMonth, Gorev: tName, Sorumlu: tAssignee, ekleyici: currentUser.email, eklenme_tarihi: firebase.firestore.FieldValue.serverTimestamp() }).then(() => { document.getElementById('admin-task-name').value = ''; document.getElementById('admin-assignee').value = ''; loadTemplates(); }); }
     function loadTemplates() { const sType = document.getElementById('admin-school-type').value; const sMonth = document.getElementById('admin-month').value; const listEl = document.getElementById('admin-template-list'); listEl.innerHTML = '<span style="color:#64748b; font-size:13px;">Yükleniyor...</span>'; db.collection("sablon_gorevler").where("okul_turu", "==", sType).where("Ay", "==", sMonth).get().then(snapshot => { listEl.innerHTML = ''; if(snapshot.empty) { listEl.innerHTML = '<div style="color:#64748b; font-size:13px; text-align:center; padding: 20px;">Bu ay ve bu okul türü için şablon bulunamadı.</div>'; return; } snapshot.forEach(doc => { const data = doc.data(); listEl.innerHTML += `<div class="template-item"><div><div style="font-weight:bold; font-size:14px;">📌 ${data.Gorev}</div><div style="font-size:12px; color:#475569; margin-top:4px;">👤 Sorumlu: ${data.Sorumlu}</div></div><button onclick="deleteTemplate('${doc.id}')" style="background:#ef4444; color:white; border:none; padding:6px 12px; border-radius:4px; cursor:pointer; font-size:12px; font-weight:bold;">SİL</button></div>`; }); }); }
