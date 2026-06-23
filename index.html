@@ -102,7 +102,6 @@
         .template-item { background:#f8fafc; padding:12px 15px; border:1px solid var(--border); border-radius:8px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; }
         
         .tool-result { margin-top:15px; padding: 12px; background: #e0f2fe; border-left: 4px solid var(--primary-light); border-radius: 4px; font-size: 14px; font-weight: 500; display: none; }
-        
         .commission-member-row { display:flex; justify-content:space-between; padding:8px 12px; border-bottom:1px solid #e2e8f0; background:white; margin-bottom:4px; border-radius:4px; }
     </style>
 </head>
@@ -191,7 +190,6 @@
                 <div style="display:flex; gap:10px; margin-bottom:10px;">
                     <select id="comm-member-select" class="auth-select" style="margin-bottom:0; flex:2;">
                         <option value="">-- Kayıtlı Personeller --</option>
-                        <!-- Personeller JS ile buraya gelecek -->
                     </select>
                     <input type="text" id="comm-member-role" class="auth-input" style="margin-bottom:0; flex:1;" placeholder="Görevi (Başkan, Üye vb.)">
                     <button onclick="addMemberToTempList()" class="action-btn" style="background:var(--primary-light); color:white; border:none; height:42px;">Ekle</button>
@@ -219,7 +217,7 @@
             <div class="menu-item" onclick="switchView('view-personnel', this)">👥 Personel Listesi</div>
             <div class="menu-item" onclick="switchView('view-commissions', this)">🏛️ Kurul & Komisyonlar</div>
             <div class="menu-item" onclick="switchView('view-tools', this)">🧮 Hesaplama Araçları</div>
-            <div class="sidebar-footer"><div style="font-size: 11px; color:#64748b;">Versiyon 2.3 (Komisyon Modülü)</div></div>
+            <div class="sidebar-footer"><div style="font-size: 11px; color:#64748b;">Versiyon 2.3 (Final)</div></div>
         </div>
 
         <!-- SAĞ İÇERİK ALANI -->
@@ -380,11 +378,21 @@
             db.collection("profiller").doc(user.uid).get().then(doc => {
                 document.getElementById('display-school-type').innerText = doc.exists ? doc.data().okul_turu : "Belirlenmedi (Değiştir)";
                 document.getElementById('admin-panel-btn').style.display = (user.email === ADMIN_EMAIL) ? 'block' : 'none';
-                document.getElementById('auth-container').style.display = 'none'; document.getElementById('app-container').style.display = 'flex'; document.getElementById('user-email').innerText = "👤 " + user.email;
-                buildMonthTabs(); listenToMyTasks(); listenToPersonnel(); listenToCommissions();
+                
+                document.getElementById('auth-container').style.display = 'none'; 
+                document.getElementById('app-container').style.display = 'flex'; 
+                document.getElementById('user-email').innerText = "👤 " + user.email;
+                
+                // Bütün fonksiyonları sırasıyla çalıştırıyoruz
+                buildMonthTabs(); 
+                listenToMyTasks(); 
+                listenToPersonnel(); 
+                listenToCommissions(); 
             });
         } else {
-            currentUser = null; document.getElementById('auth-container').style.display = 'block'; document.getElementById('app-container').style.display = 'none';
+            currentUser = null; 
+            document.getElementById('auth-container').style.display = 'block'; 
+            document.getElementById('app-container').style.display = 'none';
         }
     });
 
@@ -424,7 +432,7 @@
     }
     function deletePersonnel(id) { if(confirm("Bu personeli silmek istediğinize emin misiniz?")) { db.collection("personeller").doc(id).delete(); } }
 
-    // --- 7. KOMİSYON VE KURULLAR MODÜLÜ (YENİ) ---
+    // --- 7. KOMİSYON VE KURULLAR MODÜLÜ (EKLENMEYEN KISIM BURASIYDI) ---
     function listenToCommissions() {
         if(!currentUser) return;
         db.collection("komisyonlar").where("okul_uid", "==", currentUser.uid).onSnapshot(snapshot => {
@@ -477,7 +485,6 @@
         document.getElementById('comm-name').value = '';
         document.getElementById('comm-desc').value = '';
         
-        // Personel listesini dropdown'a doldur
         const sel = document.getElementById('comm-member-select');
         sel.innerHTML = '<option value="">-- Personel Seçin --</option>';
         allPersonnel.forEach(p => {
@@ -491,11 +498,11 @@
         if(!selectEl.value) return alert("Lütfen listeden bir personel seçin!");
         if(!roleEl.value) return alert("Lütfen bu personelin kuruldaki görevini yazın (Başkan, Üye, Yazman vb.)!");
         
-        const personelIsim = selectEl.options[selectEl.selectedIndex].text.split(' (')[0]; // Parantez içindeki branşı at
+        const personelIsim = selectEl.options[selectEl.selectedIndex].text.split(' (')[0]; 
         tempMembers.push({ isim: personelIsim, gorev: roleEl.value });
         
         renderTempMembers();
-        roleEl.value = ''; // Görev kutusunu temizle (yeni ekleme için)
+        roleEl.value = ''; 
     }
 
     function renderTempMembers() {
@@ -523,43 +530,7 @@
     function saveCommission() {
         const cName = document.getElementById('comm-name').value;
         const cDesc = document.getElementById('comm-desc').value;
-        <!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-width=1.0">
-    <title>İdari Çalışma Planı Yönetim Sistemi</title>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-
-    <style>
-        :root {
-            --primary: #1e3a8a; --primary-light: #3b82f6; --bg: #f8fafc;
-            --text-main: #0f172a; --text-sub: #475569; --border: #e2e8f0;
-            --yapilacak-bg: #ffffff; --yapilacak-border: #cbd5e1;
-            --islemde-bg: #fef08a; --islemde-border: #eab308;
-            --bitti-bg: #dcfce7; --bitti-border: #22c55e;
-            --gecikmis-bg: #fee2e2; --gecikmis-border: #ef4444;
-            --sidebar-bg: #0f172a; --sidebar-hover: #1e293b;
-        }
-
-        body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--bg); color: var(--text-main); margin: 0; overflow: hidden; height: 100vh; }
         
-        /* GİRİŞ EKRANI */
-        #auth-container { max-width: 420px; margin: 80px auto; background: white; padding: 35px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
-        #auth-container h2 { color: var(--primary); margin-top: 0; margin-bottom: 25px;}
-        .auth-input, .auth-select { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid var(--border); border-radius: 6px; box-sizing: border-box; font-size: 14px;}
-        .auth-btn { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; margin-bottom: 15px; font-size: 14px; transition: 0.2s;}
-        .auth-btn:hover { background: var(--primary-light); }
-        .auth-links { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
-        .toggle-auth { color: var(--primary-light); cursor: pointer; font-size: 14px; text-decoration: underline; }
-        .forgot-password { color: var(--text-sub); cursor: pointer; font-size: 13px; text-decoration: underline; }
-
-        /* UYGULAMA İSKELETİ */
-        #app-container { display: none; height: 100vh; width: 100vw; }
-        .sidebar { width: 260px; background: var(--sidebar-bg); color: #cbd5e1; display: flex; flex-direction: column; flex-shrink: 0; }
-
         if(!cName) return alert("Komisyon / Kurul adı zorunludur.");
         
         db.collection("komisyonlar").add({
