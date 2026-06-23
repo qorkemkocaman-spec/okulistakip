@@ -21,7 +21,6 @@
 
         body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--bg); color: var(--text-main); margin: 0; overflow: hidden; height: 100vh; }
         
-        /* GİRİŞ EKRANI */
         #auth-container { max-width: 420px; margin: 80px auto; background: white; padding: 35px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
         #auth-container h2 { color: var(--primary); margin-top: 0; margin-bottom: 25px;}
         .auth-input, .auth-select { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid var(--border); border-radius: 6px; box-sizing: border-box; font-size: 14px;}
@@ -31,7 +30,6 @@
         .toggle-auth { color: var(--primary-light); cursor: pointer; font-size: 14px; text-decoration: underline; }
         .forgot-password { color: var(--text-sub); cursor: pointer; font-size: 13px; text-decoration: underline; }
 
-        /* UYGULAMA İSKELETİ */
         #app-container { display: none; height: 100vh; width: 100vw; display: flex; }
         .sidebar { width: 260px; background: var(--sidebar-bg); color: #cbd5e1; display: flex; flex-direction: column; flex-shrink: 0; }
         .sidebar-header { padding: 25px 20px; font-size: 18px; font-weight: bold; color: white; border-bottom: 1px solid #334155; line-height: 1.4; }
@@ -50,12 +48,11 @@
         .view-section { display: none; }
         .view-section.active { display: block; }
 
-        /* KARTLAR VE TABLOLAR */
         .dash-title { font-size: 24px; color: var(--primary); margin-top: 0; margin-bottom: 20px; }
         .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
-        .dash-card { background: white; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 2px 5px rgba(0,0,0,0.02); overflow: hidden; }
+        .dash-card { background: white; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 2px 5px rgba(0,0,0,0.02); overflow: hidden; align-self: start; }
         .dash-card-header { background: #f1f5f9; padding: 15px 20px; border-bottom: 1px solid var(--border); font-weight: bold; color: var(--primary); font-size: 15px; display: flex; justify-content: space-between;}
-        .dash-card-body { padding: 20px; font-size: 14px; color: var(--text-sub); line-height: 1.6; min-height: 120px; }
+        .dash-card-body { padding: 20px; font-size: 14px; color: var(--text-sub); line-height: 1.6; min-height: 120px; max-height: 400px; overflow-y: auto; }
         .empty-state { text-align: center; color: #94a3b8; font-style: italic; margin-top: 20px; }
 
         .data-table-container { background: white; border-radius: 12px; border: 1px solid var(--border); overflow: hidden; margin-top: 20px; }
@@ -64,7 +61,6 @@
         .data-table td { padding: 14px 20px; border-bottom: 1px solid var(--border); color: var(--text-sub); }
         .data-table tr:hover td { background: #f1f5f9; }
 
-        /* KANBAN */
         .month-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 20px; border-bottom: 2px solid var(--border);}
         .month-tab { background: white; border: 1px solid var(--border); padding: 10px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 13px; color: var(--text-sub); transition: 0.2s; }
         .month-tab.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 4px 6px rgba(30, 58, 138, 0.15);}
@@ -100,7 +96,6 @@
         .btn-group { display: flex; gap: 6px; }
         button.action-btn { cursor: pointer; padding: 6px 12px; border: 1px solid #cbd5e1; background: white; border-radius: 6px; font-size: 12px; font-weight: 600; }
 
-        /* MODALLAR */
         .modal-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:1000; align-items:center; justify-content:center; }
         .modal-content { background:white; width:90%; max-width:600px; border-radius:12px; padding:25px; max-height:90vh; overflow-y:auto; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
         .modal-header { display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid var(--border); padding-bottom:15px; margin-bottom:20px; }
@@ -108,35 +103,26 @@
         .tool-result { margin-top:15px; padding: 12px; background: #e0f2fe; border-left: 4px solid var(--primary-light); border-radius: 4px; font-size: 14px; font-weight: 500; display: none; }
         .commission-member-row { display:flex; justify-content:space-between; padding:8px 12px; border-bottom:1px solid #e2e8f0; background:white; margin-bottom:4px; border-radius:4px; }
 
-        /* ========================================================== */
-        /* 🌟 SİHİRLİ BÖLÜM: YAZDIRMA (PRINT) CSS FİLTRELERİ          */
-        /* ========================================================== */
         @media print {
             body { background: white !important; color: black !important; overflow: visible !important; height: auto !important; }
-            /* Ekrandaki tüm gereksiz modülleri yazıcıdan gizle */
             .sidebar, .top-bar, .controls-row, .no-print, .month-tabs, .upper-layout, #auth-container, .dash-title, button, .logout-btn { display: none !important; }
             .main-content { padding: 0 !important; overflow: visible !important; }
-            /* Sadece aktif olan paneli göster, diğer gizli paneller basılmasın */
             .view-section { display: none !important; }
             .view-section.active { display: block !important; }
             .data-table-container { border: none !important; box-shadow: none !important; margin-top: 0 !important; overflow: visible !important;}
-            /* Tablo çizgilerini resmi evraka uygun simsiyah yap */
             table { width: 100% !important; border-collapse: collapse !important; margin-top: 15px !important; }
             th, td { border: 1px solid #000 !important; padding: 10px !important; color: #000 !important; font-size: 13px !important; }
             th { background-color: #f1f5f9 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            /* Geçici antet başlığını yazıcıda görünür yap */
             .print-header { display: block !important; text-align: center !important; margin-bottom: 30px !important; border-bottom: 2px solid #000 !important; padding-bottom: 10px !important; }
             .print-header h2 { margin: 0 !important; font-size: 20px !important; text-transform: uppercase !important; line-height: 1.4 !important; }
             .print-header p { margin: 10px 0 0 0 !important; font-size: 15px !important; font-weight: bold !important; letter-spacing: 1px !important; }
         }
-        @media screen {
-            /* Ekran modundayken antet başlığı gizli kalsın */
-            .print-header { display: none !important; }
-        }
+        @media screen { .print-header { display: none !important; } }
     </style>
 </head>
 <body>
 
+    <!-- GİRİŞ EKRANI -->
     <div id="auth-container">
         <h2 id="auth-title">İdari Panele Giriş Yap</h2>
         <input type="email" id="email" class="auth-input" placeholder="Okul E-posta Adresiniz">
@@ -157,6 +143,7 @@
         <div id="auth-message" style="padding: 12px; border-radius: 6px; font-size: 13px; display: none; margin-top: 15px;"></div>
     </div>
 
+    <!-- MODALLAR -->
     <div id="admin-modal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header"><h2 style="margin:0; color:var(--primary); font-size: 20px;">⚙️ Merkezi Şablon Yönetimi</h2><button onclick="document.getElementById('admin-modal').style.display='none'" style="background:none; border:none; font-size:24px; cursor:pointer;">✖</button></div>
@@ -171,13 +158,35 @@
         </div>
     </div>
 
+    <!-- YENİLENMİŞ PERSONEL MODALI -->
     <div id="personnel-modal" class="modal-overlay">
         <div class="modal-content" style="max-width: 500px;">
-            <div class="modal-header"><h2 style="margin:0; color:var(--primary); font-size: 20px;">👤 Yeni Personel Ekle</h2><button onclick="document.getElementById('personnel-modal').style.display='none'" style="background:none; border:none; font-size:24px; cursor:pointer;">✖</button></div>
+            <div class="modal-header"><h2 style="margin:0; color:var(--primary); font-size: 20px;">👤 Personel Kartı</h2><button onclick="document.getElementById('personnel-modal').style.display='none'" style="background:none; border:none; font-size:24px; cursor:pointer;">✖</button></div>
+            
             <input type="text" id="pers-name" class="auth-input" placeholder="Adı Soyadı">
             <select id="pers-role" class="auth-select"><option value="Öğretmen">Öğretmen</option><option value="Müdür">Müdür</option><option value="Müdür Başyardımcısı">Müdür Başyardımcısı</option><option value="Müdür Yardımcısı">Müdür Yardımcısı</option><option value="Memur">Memur</option><option value="Hizmetli">Hizmetli</option></select>
             <input type="text" id="pers-branch" class="auth-input" placeholder="Branşı / Alanı">
             <input type="text" id="pers-phone" class="auth-input" placeholder="Telefon Numarası">
+            
+            <div style="background:#f8fafc; padding:15px; border-radius:8px; border:1px solid var(--border); margin-bottom:15px;">
+                <label style="font-size:12px; font-weight:bold; color:var(--text-sub); display:block; margin-bottom:5px;">Doğum Tarihi:</label>
+                <input type="date" id="pers-birthdate" class="auth-input">
+                
+                <label style="font-size:12px; font-weight:bold; color:var(--text-sub); display:block; margin-bottom:5px;">Mevcut Durumu (İzin/Rapor):</label>
+                <select id="pers-status" class="auth-select" onchange="document.getElementById('pers-return-div').style.display = (this.value === 'Aktif Görevde') ? 'none' : 'block';">
+                    <option value="Aktif Görevde">Aktif Görevde</option>
+                    <option value="Raporlu">Raporlu</option>
+                    <option value="Mazeret İzni">Mazeret İzninde</option>
+                    <option value="Doğum İzni">Doğum İzninde</option>
+                    <option value="Aylıksız İzin">Ücretsiz İzinde</option>
+                </select>
+                
+                <div id="pers-return-div" style="display:none;">
+                    <label style="font-size:12px; font-weight:bold; color:var(--text-sub); display:block; margin-bottom:5px;">Göreve Başlama (Dönüş) Tarihi:</label>
+                    <input type="date" id="pers-return-date" class="auth-input" style="margin-bottom:0;">
+                </div>
+            </div>
+
             <button onclick="savePersonnel()" class="auth-btn" style="margin-bottom: 0;">Personeli Kaydet</button>
         </div>
     </div>
@@ -212,8 +221,10 @@
         </div>
     </div>
 
+    <!-- ANA UYGULAMA İSKELETİ -->
     <div id="app-container">
         
+        <!-- SOL MENÜ -->
         <div class="sidebar">
             <div class="sidebar-header">
                 İdari Takip Sistemi
@@ -226,9 +237,10 @@
             <div class="menu-item" onclick="switchView('view-commissions', this)">🏛️ Kurul & Komisyonlar</div>
             <div class="menu-item" onclick="switchView('view-inventory', this)">📦 Demirbaş Takibi</div>
             <div class="menu-item" onclick="switchView('view-tools', this)">🧮 Hesaplama Araçları</div>
-            <div class="sidebar-footer"><div style="font-size: 11px; color:#64748b;">Versiyon 3.2 (Yerel Baskı)</div></div>
+            <div class="sidebar-footer"><div style="font-size: 11px; color:#64748b;">Versiyon 4.0 (Otomasyon)</div></div>
         </div>
 
+        <!-- SAĞ İÇERİK ALANI -->
         <div class="main-content">
             <div class="top-bar">
                 <div style="font-size: 18px; font-weight: bold; color: var(--primary);" id="page-title">Yönetici Özeti</div>
@@ -239,12 +251,25 @@
                 </div>
             </div>
 
+            <!-- GÖRÜNÜM 1: DASHBOARD (OTOMATİK LİSTELER BURADA) -->
             <div id="view-dashboard" class="view-section active">
                 <h2 class="dash-title" id="main-app-title">Okul İdari Çalışma Planı</h2>
                 <div class="dashboard-grid">
                     <div class="dash-card"><div class="dash-card-header">📋 Bu Ayın Öncelikli İşleri</div><div class="dash-card-body" id="dash-urgent-tasks"></div></div>
-                    <div class="dash-card"><div class="dash-card-header">🏥 Okulda Olmayanlar (İzin/Rapor)</div><div class="dash-card-body"><div class="empty-state">Yakında eklenecek...</div></div></div>
-                    <div class="dash-card"><div class="dash-card-header">🎂 Yaklaşan Doğum Günleri</div><div class="dash-card-body"><div class="empty-state">Yakında eklenecek...</div></div></div>
+                    
+                    <div class="dash-card">
+                        <div class="dash-card-header">🏥 Okulda Olmayanlar (İzin/Rapor)</div>
+                        <div class="dash-card-body" id="dash-absent-list" style="padding:10px;">
+                            <div class="empty-state">Yükleniyor...</div>
+                        </div>
+                    </div>
+                    
+                    <div class="dash-card">
+                        <div class="dash-card-header">🎂 Yaklaşan Doğum Günleri (15 Gün)</div>
+                        <div class="dash-card-body" id="dash-birthday-list" style="padding:10px;">
+                            <div class="empty-state">Yükleniyor...</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -288,7 +313,7 @@
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                     <h2 class="dash-title" style="margin: 0;">Okul Personel Veritabanı</h2>
                     <div style="display:flex;">
-                        <button class="add-task-btn" onclick="document.getElementById('personnel-modal').style.display='flex'">+ Yeni Personel</button>
+                        <button class="add-task-btn" onclick="openPersonnelModal()">+ Yeni Personel</button>
                         <button class="print-btn" onclick="printReport('Okul Personel Listesi', 'table-personnel')">🖨️ Yazdır / PDF Al</button>
                     </div>
                 </div>
@@ -354,7 +379,7 @@
     const d = new Date(); const standardMonthsMap = {0:"Ocak", 1:"Şubat", 2:"Mart", 3:"Nisan", 4:"Mayıs", 5:"Haziran", 6:"Temmuz", 7:"Ağustos", 8:"Eylül", 9:"Ekim", 10:"Kasım", 11:"Aralık"};
     let currentSelectedMonth = standardMonthsMap[d.getMonth()]; if(!months.includes(currentSelectedMonth)) currentSelectedMonth = "Eylül";
 
-    // --- 3. MENÜ GEÇİŞİ VE 🌟 UNUTULMAZ YAZDIRMA MOTORU ---
+    // --- 3. MENÜ GEÇİŞİ VE YAZDIRMA (PDF) MOTORU ---
     function switchView(viewId, element) {
         document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active')); document.getElementById(viewId).classList.add('active');
         document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active')); element.classList.add('active');
@@ -362,31 +387,20 @@
         document.getElementById('page-title').innerText = titleMap[viewId];
     }
 
-    // 🚀 Yeni Pop-up Olmayan Akıllı Yazdırma Motoru
     function printReport(title, tableId) {
         let schoolName = document.getElementById('school-info-name').value || document.getElementById('display-school-type').innerText;
         let activeView = document.querySelector('.view-section.active');
-        
-        // Varsa eski dinamik başlığı temizle
         let oldHeader = document.getElementById('dynamic-print-header');
         if(oldHeader) oldHeader.remove();
         
-        // Yazıcı için antet kutusu oluştur
         let printHeader = document.createElement('div');
         printHeader.id = 'dynamic-print-header';
         printHeader.className = 'print-header';
         printHeader.innerHTML = `<h2>T.C.<br>${schoolName}</h2><p>${title}</p>`;
         
-        // Anteti sadece yazdırılırken görünmesi için aktif ekranın en tepesine şırınga et
         activeView.insertBefore(printHeader, activeView.firstChild);
-        
-        // Tarayıcının ana yazdırma ekranını çağır (Pop-up engeline takılamaz!)
         window.print();
-        
-        // Ekran moduna geri dönüldüğünde anteti kaldır (Kullanıcı fark etmez bile)
-        setTimeout(() => {
-            if(printHeader) printHeader.remove();
-        }, 1000);
+        setTimeout(() => { if(printHeader) printHeader.remove(); }, 1000);
     }
 
     // --- 4. AUTH & PROFiL ---
@@ -435,7 +449,112 @@
         db.collection("profiller").doc(currentUser.uid).set({ kurum_adi: name, kurum_kodu: document.getElementById('school-info-code').value, okul_muduru: document.getElementById('school-info-director').value, kep_adresi: document.getElementById('school-info-kep').value, okul_telefon: document.getElementById('school-info-phone').value, okul_eposta: document.getElementById('school-info-email').value, okul_adresi: document.getElementById('school-info-address').value }, {merge: true}).then(() => { if(name) document.getElementById('main-app-title').innerText = name; alert("✅ Kurumsal bilgiler kaydedildi!"); });
     }
 
-    // --- 5. DEMİRBAŞ MODÜLÜ ---
+    // --- 5. PERSONEL VE YENİ ANA EKRAN OTOMASYONU ---
+    function openPersonnelModal() {
+        document.getElementById('personnel-modal').style.display = 'flex';
+        // Formu sıfırla
+        document.getElementById('pers-name').value = '';
+        document.getElementById('pers-branch').value = '';
+        document.getElementById('pers-phone').value = '';
+        document.getElementById('pers-birthdate').value = '';
+        document.getElementById('pers-status').value = 'Aktif Görevde';
+        document.getElementById('pers-return-date').value = '';
+        document.getElementById('pers-return-div').style.display = 'none';
+    }
+
+    function savePersonnel() { 
+        const pName = document.getElementById('pers-name').value; 
+        const pRole = document.getElementById('pers-role').value; 
+        const pBranch = document.getElementById('pers-branch').value; 
+        const pPhone = document.getElementById('pers-phone').value;
+        const pBirth = document.getElementById('pers-birthdate').value;
+        const pStatus = document.getElementById('pers-status').value;
+        const pReturn = document.getElementById('pers-return-date').value;
+
+        if(!pName) { alert("Personel adını yazın."); return; } 
+        
+        db.collection("personeller").add({ 
+            ad_soyad: pName, gorev: pRole, brans: pBranch, telefon: pPhone, 
+            dogum_tarihi: pBirth, durum: pStatus, donus_tarihi: pReturn,
+            okul_uid: currentUser.uid, eklenme_tarihi: firebase.firestore.FieldValue.serverTimestamp() 
+        }).then(() => { 
+            document.getElementById('personnel-modal').style.display = 'none'; 
+        }); 
+    }
+
+    function listenToPersonnel() { 
+        if(!currentUser) return; 
+        db.collection("personeller").where("okul_uid", "==", currentUser.uid).onSnapshot(snapshot => { 
+            allPersonnel = []; 
+            snapshot.forEach(doc => allPersonnel.push({ id: doc.id, ...doc.data() })); 
+            allPersonnel.sort((a, b) => (a.ad_soyad || "").localeCompare((b.ad_soyad || ""), 'tr')); 
+            renderPersonnel(); 
+            updateDashboardPersonnel(); // Ana ekranı güncelle!
+        }); 
+    }
+
+    function renderPersonnel() { 
+        const tbody = document.getElementById('personnel-list-tbody'); 
+        tbody.innerHTML = ''; 
+        allPersonnel.forEach(p => { 
+            // Durum rozeti oluştur
+            let statusBadge = (p.durum === 'Aktif Görevde' || !p.durum) 
+                ? '<span style="color:#10b981; font-size:11px; font-weight:bold;">● Aktif</span>' 
+                : `<span style="color:#ef4444; font-size:11px; font-weight:bold;">● ${p.durum}</span>`;
+                
+            tbody.innerHTML += `<tr>
+                <td style="font-weight:600; color:var(--primary);">${p.ad_soyad || 'Bilinmiyor'} <br> ${statusBadge}</td>
+                <td>${p.gorev || '-'}</td>
+                <td>${p.brans || '-'}</td>
+                <td>${p.telefon || '-'}</td>
+                <td class="no-print"><button onclick="deletePersonnel('${p.id}')" style="background:none; border:none; color:#ef4444; font-weight:bold; cursor:pointer; padding:5px;">SİL</button></td>
+            </tr>`; 
+        }); 
+        document.getElementById('personnel-count').innerText = allPersonnel.length; 
+    }
+
+    function deletePersonnel(id) { if(confirm("Silmek istediğinize emin misiniz?")) db.collection("personeller").doc(id).delete(); }
+
+    // 🌟 SİHİRLİ BÖLÜM: YÖNETİCİ ÖZETİ (DASHBOARD) OTOMASYONU
+    function updateDashboardPersonnel() {
+        let absentHtml = '';
+        let bdayHtml = '';
+        const today = new Date();
+        const currentMonth = today.getMonth();
+        const currentDay = today.getDate();
+
+        allPersonnel.forEach(p => {
+            // 1. Okulda Olmayanlar (İzinli / Raporlu)
+            if(p.durum && p.durum !== 'Aktif Görevde') {
+                let donusTarihi = p.donus_tarihi ? new Date(p.donus_tarihi).toLocaleDateString('tr-TR') : 'Belirtilmedi';
+                absentHtml += `<div style="padding:10px; border-bottom:1px solid #e2e8f0; font-size:13px; background:#fef2f2; border-left:3px solid #ef4444; margin-bottom:6px; border-radius:4px;">
+                    <strong style="color:#b91c1c;">${p.ad_soyad}</strong> - ${p.durum} <br>
+                    <span style="font-size:11px; color:#64748b;">Göreve Başlama: ${donusTarihi}</span>
+                </div>`;
+            }
+
+            // 2. Doğum Günleri (Bu ay içinde ve önümüzdeki 15 gün olanlar)
+            if(p.dogum_tarihi) {
+                const bDate = new Date(p.dogum_tarihi);
+                // Sadece ay ve gün karşılaştırması yapıyoruz (Yıl önemli değil)
+                if(bDate.getMonth() === currentMonth) {
+                    let gunFarki = bDate.getDate() - currentDay;
+                    if(gunFarki >= 0 && gunFarki <= 15) { 
+                        let ekBilgi = gunFarki === 0 ? '<span style="color:#f59e0b; font-weight:bold;">(Bugün!)</span>' : `(${gunFarki} gün sonra)`;
+                        bdayHtml += `<div style="padding:10px; border-bottom:1px solid #e2e8f0; font-size:13px; background:#f0fdf4; border-left:3px solid #22c55e; margin-bottom:6px; border-radius:4px;">
+                            <strong style="color:#15803d;">${p.ad_soyad}</strong> <br>
+                            <span style="font-size:11px; color:#64748b;">Tarih: ${bDate.getDate()} ${months[bDate.getMonth()]} ${ekBilgi}</span>
+                        </div>`;
+                    }
+                }
+            }
+        });
+
+        document.getElementById('dash-absent-list').innerHTML = absentHtml || '<div class="empty-state">Şu an tüm personel aktif görevde.</div>';
+        document.getElementById('dash-birthday-list').innerHTML = bdayHtml || '<div class="empty-state">Yakın zamanda doğum günü olan personel yok.</div>';
+    }
+
+    // --- 6. DEMİRBAŞ MODÜLÜ ---
     function listenToInventory() { if(!currentUser) return; db.collection("demirbaslar").where("okul_uid", "==", currentUser.uid).onSnapshot(snapshot => { allInventory = []; snapshot.forEach(doc => allInventory.push({ id: doc.id, ...doc.data() })); allInventory.sort((a, b) => (a.ad || "").localeCompare((b.ad || ""), 'tr')); renderInventory(); }); }
     function renderInventory() {
         const tbody = document.getElementById('inventory-list-tbody'); tbody.innerHTML = '';
@@ -449,28 +568,22 @@
     function saveInventory() { const iName = document.getElementById('inv-name').value; const iQty = document.getElementById('inv-qty').value; const iBrand = document.getElementById('inv-brand').value; const iLoc = document.getElementById('inv-location').value; const iPers = document.getElementById('inv-personnel').value || "Ortak Kullanım"; if(!iName || !iQty) { alert("Malzeme Adı ve Adet alanları zorunludur."); return; } db.collection("demirbaslar").add({ ad: iName, adet: iQty, marka: iBrand, yer: iLoc, zimmetli_kisi: iPers, okul_uid: currentUser.uid, eklenme_tarihi: firebase.firestore.FieldValue.serverTimestamp() }).then(() => { document.getElementById('inventory-modal').style.display = 'none'; }).catch(err => alert("Hata: " + err.message)); }
     function deleteInventory(id) { if(confirm("Silmek istediğinize emin misiniz?")) db.collection("demirbaslar").doc(id).delete(); }
 
-    // --- 6. HESAPLAMA ARAÇLARI ---
-    function calcDateAddSub() { const d1 = document.getElementById('tool-add-date').value; const days = parseInt(document.getElementById('tool-add-days').value); const resBox = document.getElementById('res-date-add'); if(!d1 || isNaN(days)) { alert("Lütfen geçerli bir tarih ve gün sayısı girin."); return; } const date = new Date(d1); date.setDate(date.getDate() + days); resBox.style.display = 'block'; resBox.innerHTML = `Hesaplanan Yeni Tarih:<br><span style="font-size:18px; color:var(--primary);">${date.toLocaleDateString('tr-TR')}</span>`; }
-    function calcDateDiff() { const endVal = document.getElementById('tool-diff-end').value; const startVal = document.getElementById('tool-diff-start').value; const resBox = document.getElementById('res-date-diff'); if(!endVal || !startVal) { alert("Lütfen her iki tarihi de seçin."); return; } const dEnd = new Date(endVal); const dStart = new Date(startVal); if(dEnd < dStart) { alert("Büyük tarih küçük tarihten eski olamaz."); return; } let years = dEnd.getFullYear() - dStart.getFullYear(); let months = dEnd.getMonth() - dStart.getMonth(); let days = dEnd.getDate() - dStart.getDate(); if(days < 0) { months--; const prevMonth = new Date(dEnd.getFullYear(), dEnd.getMonth(), 0); days += prevMonth.getDate(); } if(months < 0) { years--; months += 12; } resBox.style.display = 'block'; resBox.innerHTML = `Toplam Süre:<br><span style="font-size:18px; color:var(--primary);">${years} Yıl, ${months} Ay, ${days} Gün</span>`; }
-    function calcMaternity() { const matVal = document.getElementById('tool-mat-date').value; const typeVal = document.getElementById('tool-mat-type').value; const resBox = document.getElementById('res-mat'); if(!matVal) { alert("Lütfen muhtemel doğum tarihini seçin."); return; } const expectedDate = new Date(matVal); const preDays = (typeVal === 'tek') ? 56 : 70; const leaveStart = new Date(expectedDate); leaveStart.setDate(leaveStart.getDate() - preDays); const leaveEnd = new Date(expectedDate); leaveEnd.setDate(leaveEnd.getDate() + 56); resBox.style.display = 'block'; resBox.innerHTML = `<strong>Kanuni Doğum İzni Takvimi</strong><br>⏳ İzne Ayrılma Zorunluluğu: <span style="color:#eab308;">${leaveStart.toLocaleDateString('tr-TR')}</span><br>👶 Beklenen Doğum: <span style="color:var(--primary);">${expectedDate.toLocaleDateString('tr-TR')}</span><br>✅ İzin Bitişi: <span style="color:#10b981;">${leaveEnd.toLocaleDateString('tr-TR')}</span>`; }
-
-    // --- 7. PERSONEL LİSTESİ ---
-    function listenToPersonnel() { if(!currentUser) return; db.collection("personeller").where("okul_uid", "==", currentUser.uid).onSnapshot(snapshot => { allPersonnel = []; snapshot.forEach(doc => allPersonnel.push({ id: doc.id, ...doc.data() })); allPersonnel.sort((a, b) => (a.ad_soyad || "").localeCompare((b.ad_soyad || ""), 'tr')); renderPersonnel(); }); }
-    function renderPersonnel() { const tbody = document.getElementById('personnel-list-tbody'); tbody.innerHTML = ''; allPersonnel.forEach(p => { tbody.innerHTML += `<tr><td style="font-weight:600; color:var(--primary);">${p.ad_soyad || 'Bilinmiyor'}</td><td>${p.gorev || '-'}</td><td>${p.brans || '-'}</td><td>${p.telefon || '-'}</td><td class="no-print"><button onclick="deletePersonnel('${p.id}')" style="background:none; border:none; color:#ef4444; font-weight:bold; cursor:pointer; padding:5px;">SİL</button></td></tr>`; }); document.getElementById('personnel-count').innerText = allPersonnel.length; }
-    function savePersonnel() { const pName = document.getElementById('pers-name').value; const pRole = document.getElementById('pers-role').value; const pBranch = document.getElementById('pers-branch').value; const pPhone = document.getElementById('pers-phone').value; if(!pName) { alert("Personel adını yazın."); return; } db.collection("personeller").add({ ad_soyad: pName, gorev: pRole, brans: pBranch, telefon: pPhone, okul_uid: currentUser.uid, eklenme_tarihi: firebase.firestore.FieldValue.serverTimestamp() }).then(() => { document.getElementById('personnel-modal').style.display = 'none'; }); }
-    function deletePersonnel(id) { if(confirm("Silmek istediğinize emin misiniz?")) db.collection("personeller").doc(id).delete(); }
-
-    // --- 8. KOMİSYONLAR ---
+    // --- 7. KOMİSYONLAR ---
     function listenToCommissions() { if(!currentUser) return; db.collection("komisyonlar").where("okul_uid", "==", currentUser.uid).onSnapshot(snapshot => { allCommissions = []; snapshot.forEach(doc => allCommissions.push({ id: doc.id, ...doc.data() })); renderCommissions(); }); }
     function renderCommissions() { const container = document.getElementById('commissions-list-container'); container.innerHTML = ''; if(allCommissions.length === 0) { container.innerHTML = '<div class="empty-state" style="grid-column: 1 / -1;">Henüz komisyon yok.</div>'; return; } allCommissions.forEach(c => { let uyelerHtml = ''; if(c.uyeler && c.uyeler.length > 0) { c.uyeler.forEach(u => { uyelerHtml += `<div class="commission-member-row"><span style="font-weight:600; font-size:13px;">${u.isim}</span><span style="font-size:12px; color:var(--primary-light);">${u.gorev}</span></div>`; }); } else { uyelerHtml = '<div style="font-size:12px; color:#94a3b8; font-style:italic;">Üye eklenmemiş.</div>'; } container.innerHTML += `<div class="dash-card"><div class="dash-card-header" style="justify-content:space-between;"><span>${c.ad}</span><button onclick="deleteCommission('${c.id}')" style="background:#ef4444; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:11px; cursor:pointer;">Sil</button></div><div class="dash-card-body" style="background:#f8fafc; min-height:auto;"><div style="font-size:12px; color:#64748b; margin-bottom:12px;">Dayanak/Açıklama: ${c.aciklama || '-'}</div>${uyelerHtml}</div></div>`; }); }
     function openCommissionModal() { document.getElementById('commission-modal').style.display = 'flex'; tempMembers = []; renderTempMembers(); document.getElementById('comm-name').value = ''; document.getElementById('comm-desc').value = ''; const sel = document.getElementById('comm-member-select'); sel.innerHTML = '<option value="">-- Personel Seçin --</option>'; allPersonnel.forEach(p => { sel.innerHTML += `<option value="${p.id}">${p.ad_soyad} (${p.brans || p.gorev})</option>`; }); }
     function addMemberToTempList() { const selectEl = document.getElementById('comm-member-select'); const roleEl = document.getElementById('comm-member-role'); if(!selectEl.value || !roleEl.value) return alert("Eksik bilgi!"); const personelIsim = selectEl.options[selectEl.selectedIndex].text.split(' (')[0]; tempMembers.push({ isim: personelIsim, gorev: roleEl.value }); renderTempMembers(); roleEl.value = ''; }
     function renderTempMembers() { const listEl = document.getElementById('temp-members-list'); listEl.innerHTML = ''; if(tempMembers.length === 0) { listEl.innerHTML = '<div class="empty-state" style="margin-top:0; font-size:12px;">Üyeler burada görünecek...</div>'; return; } tempMembers.forEach((m, idx) => { listEl.innerHTML += `<div style="display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid #e2e8f0; font-size:13px;"><div><strong>${m.isim}</strong> (${m.gorev})</div><button onclick="removeTempMember(${idx})" style="color:#ef4444; background:none; border:none; cursor:pointer; font-size:16px;">✖</button></div>`; }); }
     function removeTempMember(idx) { tempMembers.splice(idx, 1); renderTempMembers(); }
-    function saveCommission() { const cName = document.getElementById('comm-name').value; const cDesc = document.getElementById('comm-desc').value; if(!cName) return alert("Ad zorunludur."); db.collection("komisyonlar").add({ ad: cName, aciklama: cDesc, uyeler: tempMembers, okul_uid: currentUser.uid, eclenme_tarihi: firebase.firestore.FieldValue.serverTimestamp() }).then(() => { document.getElementById('commission-modal').style.display = 'none'; }); }
+    function saveCommission() { const cName = document.getElementById('comm-name').value; const cDesc = document.getElementById('comm-desc').value; if(!cName) return alert("Ad zorunludur."); db.collection("komisyonlar").add({ ad: cName, aciklama: cDesc, uyeler: tempMembers, okul_uid: currentUser.uid, eklenme_tarihi: firebase.firestore.FieldValue.serverTimestamp() }).then(() => { document.getElementById('commission-modal').style.display = 'none'; }); }
     function deleteCommission(id) { if(confirm("Emin misiniz?")) db.collection("komisyonlar").doc(id).delete(); }
 
-    // --- 9. ADMIN MERKEZi ŞABLON ---
+    // --- 8. HESAPLAMA ARAÇLARI ---
+    function calcDateAddSub() { const d1 = document.getElementById('tool-add-date').value; const days = parseInt(document.getElementById('tool-add-days').value); const resBox = document.getElementById('res-date-add'); if(!d1 || isNaN(days)) { alert("Lütfen geçerli bir tarih ve gün sayısı girin."); return; } const date = new Date(d1); date.setDate(date.getDate() + days); resBox.style.display = 'block'; resBox.innerHTML = `Hesaplanan Yeni Tarih:<br><span style="font-size:18px; color:var(--primary);">${date.toLocaleDateString('tr-TR')}</span>`; }
+    function calcDateDiff() { const endVal = document.getElementById('tool-diff-end').value; const startVal = document.getElementById('tool-diff-start').value; const resBox = document.getElementById('res-date-diff'); if(!endVal || !startVal) { alert("Lütfen her iki tarihi de seçin."); return; } const dEnd = new Date(endVal); const dStart = new Date(startVal); if(dEnd < dStart) { alert("Büyük tarih küçük tarihten eski olamaz."); return; } let years = dEnd.getFullYear() - dStart.getFullYear(); let months = dEnd.getMonth() - dStart.getMonth(); let days = dEnd.getDate() - dStart.getDate(); if(days < 0) { months--; const prevMonth = new Date(dEnd.getFullYear(), dEnd.getMonth(), 0); days += prevMonth.getDate(); } if(months < 0) { years--; months += 12; } resBox.style.display = 'block'; resBox.innerHTML = `Toplam Süre:<br><span style="font-size:18px; color:var(--primary);">${years} Yıl, ${months} Ay, ${days} Gün</span>`; }
+    function calcMaternity() { const matVal = document.getElementById('tool-mat-date').value; const typeVal = document.getElementById('tool-mat-type').value; const resBox = document.getElementById('res-mat'); if(!matVal) { alert("Lütfen muhtemel doğum tarihini seçin."); return; } const expectedDate = new Date(matVal); const preDays = (typeVal === 'tek') ? 56 : 70; const leaveStart = new Date(expectedDate); leaveStart.setDate(leaveStart.getDate() - preDays); const leaveEnd = new Date(expectedDate); leaveEnd.setDate(leaveEnd.getDate() + 56); resBox.style.display = 'block'; resBox.innerHTML = `<strong>Kanuni Doğum İzni Takvimi</strong><br>⏳ İzne Ayrılma Zorunluluğu: <span style="color:#eab308;">${leaveStart.toLocaleDateString('tr-TR')}</span><br>👶 Beklenen Doğum: <span style="color:var(--primary);">${expectedDate.toLocaleDateString('tr-TR')}</span><br>✅ İzin Bitişi: <span style="color:#10b981;">${leaveEnd.toLocaleDateString('tr-TR')}</span>`; }
+
+    // --- 9. ADMIN ŞABLON ---
     function openAdminPanel() { document.getElementById('admin-modal').style.display = 'flex'; loadTemplates(); }
     function saveTemplate() { const sType = document.getElementById('admin-school-type').value; const sMonth = document.getElementById('admin-month').value; const tName = document.getElementById('admin-task-name').value; const tAssignee = document.getElementById('admin-assignee').value || "Belirtilmedi"; if(!tName) return alert("Görev adı yazın."); db.collection("sablon_gorevler").add({ okul_turu: sType, Ay: sMonth, Gorev: tName, Sorumlu: tAssignee, ekleyici: currentUser.email }).then(() => { document.getElementById('admin-task-name').value = ''; loadTemplates(); }); }
     function loadTemplates() { const sType = document.getElementById('admin-school-type').value; const sMonth = document.getElementById('admin-month').value; const listEl = document.getElementById('admin-template-list'); listEl.innerHTML = 'Yükleniyor...'; db.collection("sablon_gorevler").where("okul_turu", "==", sType).where("Ay", "==", sMonth).get().then(snapshot => { listEl.innerHTML = ''; if(snapshot.empty) return listEl.innerHTML = '<div style="text-align:center; padding:20px; color:#64748b;">Şablon yok.</div>'; snapshot.forEach(doc => { const data = doc.data(); listEl.innerHTML += `<div class="template-item"><div><strong>📌 ${data.Gorev}</strong><div style="font-size:12px; color:#475569;">👤 ${data.Sorumlu}</div></div><button onclick="deleteTemplate('${doc.id}')" style="background:#ef4444; color:white; border:none; padding:6px 12px; border-radius:4px; cursor:pointer;">SİL</button></div>`; }); }); }
@@ -481,7 +594,7 @@
     function updateUpperPanel() { const meta = monthMeta[currentSelectedMonth] || { days: "-", info: "-" }; document.getElementById('info-month-name').innerText = currentSelectedMonth; document.getElementById('info-work-days').innerText = meta.days; document.getElementById('info-celebrations').innerText = meta.info; const dateInfo = calendarDateMap[currentSelectedMonth]; if (!dateInfo) return; const firstDay = new Date(dateInfo.y, dateInfo.m, 1); let startDayIndex = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1; const totalDays = new Date(dateInfo.y, dateInfo.m + 1, 0).getDate(); const today = new Date(); let calHtml = `<div class="calendar-title">${currentSelectedMonth} ${dateInfo.y}</div><table class="calendar-grid"><thead><tr><th>Pt</th><th>Sa</th><th>Ça</th><th>Pe</th><th>Cu</th><th class="weekend">Ct</th><th class="weekend">Pz</th></tr></thead><tbody><tr>`; let j = 0; for (; j < startDayIndex; j++) calHtml += '<td></td>'; for (let dayCounter = 1; dayCounter <= totalDays; dayCounter++, j++) { if (j === 7) { j = 0; calHtml += '</tr><tr>'; } calHtml += `<td class="${(j === 5 || j === 6 ? 'weekend ' : '') + (today.getDate() === dayCounter && today.getMonth() === dateInfo.m && today.getFullYear() === dateInfo.y ? 'today' : '')}">${dayCounter}</td>`; } for (; j < 7 && j !== 0; j++) calHtml += '<td></td>'; document.getElementById('calendar-container').innerHTML = calHtml + '</tr></tbody></table>'; }
     function listenToMyTasks() { if(!currentUser) return; db.collection("gorevler").where("okul_uid", "==", currentUser.uid).onSnapshot(snapshot => { allTasks = []; snapshot.forEach(doc => allTasks.push({ id: doc.id, ...doc.data() })); renderBoard(); updateDashboardSummary(); }); }
     function updateDashboardSummary() { const currentMonthIndex = months.indexOf(standardMonthsMap[new Date().getMonth()]); const currentMonthName = months[currentMonthIndex]; let urgentTasksHtml = ''; allTasks.forEach(task => { if (task.Durum !== "Tamamlandı" && task.Ay === currentMonthName) { urgentTasksHtml += `<div style="padding: 10px; border-left: 3px solid var(--primary-light); background: #f8fafc; margin-bottom: 8px; border-radius: 4px;"><strong>${task.Gorev || ''}</strong> <br> <span style="font-size: 11px; color: var(--text-sub);">👤 ${task.Sorumlu || ''}</span></div>`; } }); document.getElementById('dash-urgent-tasks').innerHTML = urgentTasksHtml !== '' ? urgentTasksHtml : '<div class="empty-state">Bu aya ait bekleyen işiniz bulunmuyor! 🎉</div>'; }
-    function renderBoard() { const searchText = document.getElementById('searchInput').value.toLowerCase(); document.getElementById('list-yapilacak').innerHTML = ''; document.getElementById('list-islemde').innerHTML = ''; document.getElementById('list-tamamlandi').innerHTML = ''; let counts = { "Yapılacak": 0, "İşlemde": 0, "Tamamlandı": 0 }; const currentMonthIndex = months.indexOf(standardMonthsMap[new Date().getMonth()]); allTasks.forEach(task => { if(task.Ay !== currentSelectedMonth) return; const gorevAd = (task.Gorev || "").toLowerCase(); const gorevSor = (task.Sorumlu || "").toLowerCase(); if(!gorevAd.includes(searchText) && !gorevSor.includes(searchText)) return; let stateClass = ''; let alertHtml = ''; if (task.Durum === 'İşlemde') { stateClass = 'state-islemde'; counts["İшlemde"]++; } else if (task.Durum === 'Tamamlandı') { stateClass = 'state-tamamlandi'; counts["Tamamlandı"]++; } else { counts["Yapılacak"]++; if (currentMonthIndex !== -1 && months.indexOf(task.Ay) < currentMonthIndex) { stateClass = 'state-gecikmis'; alertHtml = '<div class="task-notes">⚠️ Bu görevin süresi geçti!</div>'; } } let btnHtml = ''; if(task.Durum === 'Yapılacak') { btnHtml = `<button class="action-btn" style="background:var(--primary); color:white;" onclick="updateTask('${task.id}', 'İşlemde')">Başlat ⏳</button>`; } else if(task.Durum === 'İşlemde') { btnHtml = `<button class="action-btn" onclick="updateTask('${task.id}', 'Yapılacak')">◀ Geri</button> <button class="action-btn" style="background:var(--primary); color:white;" onclick="updateTask('${task.id}', 'Tamamlandı')">Bitir ✅</button>`; } else { btnHtml = `<button class="action-btn" onclick="updateTask('${task.id}', 'İşlemde')">↩ Geri Çek</button> <button class="action-btn" style="color:red; border-color:red;" onclick="deleteTask('${task.id}')">Sil</button>`; } const card = `<div class="task-card ${stateClass}"><div class="task-title">${task.Gorev || ''}</div><div class="task-meta">👤 Sorumlu: ${task.Sorumlu || ''} ${alertHtml}</div><div class="btn-group">${btnHtml}</div></div>`; if(task.Durum === 'Yapılacak') document.getElementById('list-yapilacak').innerHTML += card; else if(task.Durum === 'İşlemde') document.getElementById('list-islemde').innerHTML += card; else document.getElementById('list-tamamlandi').innerHTML += card; }); document.getElementById('count-yapilacak').innerText = counts['Yapılacak']; document.getElementById('count-islemde').innerText = counts['İşlemde']; document.getElementById('count-tamamlandi').innerText = counts['Tamamlandı']; }
+    function renderBoard() { const searchText = document.getElementById('searchInput').value.toLowerCase(); document.getElementById('list-yapilacak').innerHTML = ''; document.getElementById('list-islemde').innerHTML = ''; document.getElementById('list-tamamlandi').innerHTML = ''; let counts = { "Yapılacak": 0, "İşlemde": 0, "Tamamlandı": 0 }; const currentMonthIndex = months.indexOf(standardMonthsMap[new Date().getMonth()]); allTasks.forEach(task => { if(task.Ay !== currentSelectedMonth) return; const gorevAd = (task.Gorev || "").toLowerCase(); const gorevSor = (task.Sorumlu || "").toLowerCase(); if(!gorevAd.includes(searchText) && !gorevSor.includes(searchText)) return; let stateClass = ''; let alertHtml = ''; if (task.Durum === 'İşlemde') { stateClass = 'state-islemde'; counts["İşlemde"]++; } else if (task.Durum === 'Tamamlandı') { stateClass = 'state-tamamlandi'; counts["Tamamlandı"]++; } else { counts["Yapılacak"]++; if (currentMonthIndex !== -1 && months.indexOf(task.Ay) < currentMonthIndex) { stateClass = 'state-gecikmis'; alertHtml = '<div class="task-notes">⚠️ Bu görevin süresi geçti!</div>'; } } let btnHtml = ''; if(task.Durum === 'Yapılacak') { btnHtml = `<button class="action-btn" style="background:var(--primary); color:white;" onclick="updateTask('${task.id}', 'İşlemde')">Başlat ⏳</button>`; } else if(task.Durum === 'İşlemde') { btnHtml = `<button class="action-btn" onclick="updateTask('${task.id}', 'Yapılacak')">◀ Geri</button> <button class="action-btn" style="background:var(--primary); color:white;" onclick="updateTask('${task.id}', 'Tamamlandı')">Bitir ✅</button>`; } else { btnHtml = `<button class="action-btn" onclick="updateTask('${task.id}', 'İşlemde')">↩ Geri Çek</button> <button class="action-btn" style="color:red; border-color:red;" onclick="deleteTask('${task.id}')">Sil</button>`; } const card = `<div class="task-card ${stateClass}"><div class="task-title">${task.Gorev || ''}</div><div class="task-meta">👤 Sorumlu: ${task.Sorumlu || ''} ${alertHtml}</div><div class="btn-group">${btnHtml}</div></div>`; if(task.Durum === 'Yapılacak') document.getElementById('list-yapilacak').innerHTML += card; else if(task.Durum === 'İşlemde') document.getElementById('list-islemde').innerHTML += card; else document.getElementById('list-tamamlandi').innerHTML += card; }); document.getElementById('count-yapilacak').innerText = counts['Yapılacak']; document.getElementById('count-islemde').innerText = counts['İşlemde']; document.getElementById('count-tamamlandi').innerText = counts['Tamamlandı']; }
     function updateTask(taskId, newStatus) { db.collection("gorevler").doc(taskId).update({ Durum: newStatus }); }
     function deleteTask(taskId) { if(confirm("Emin misiniz?")) db.collection("gorevler").doc(taskId).delete(); }
     function addNewTask() { const taskName = prompt(`${currentSelectedMonth} ayına eklenecek yeni görevi yazın:`); if(!taskName) return; const assignee = prompt("Sorumlu kişiyi yazın:") || "Belirtilmedi"; db.collection("gorevler").add({ Gorev: taskName, Sorumlu: assignee, Ay: currentSelectedMonth, Durum: "Yapılacak", okul_uid: currentUser.uid, olusturulmaTarihi: firebase.firestore.FieldValue.serverTimestamp() }); }
