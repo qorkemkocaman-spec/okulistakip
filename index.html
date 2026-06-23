@@ -100,6 +100,8 @@
         .modal-content { background:white; width:90%; max-width:600px; border-radius:12px; padding:25px; max-height:90vh; overflow-y:auto; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
         .modal-header { display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid var(--border); padding-bottom:15px; margin-bottom:20px; }
         .template-item { background:#f8fafc; padding:12px 15px; border:1px solid var(--border); border-radius:8px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; }
+        
+        .tool-result { margin-top:15px; padding: 12px; background: #e0f2fe; border-left: 4px solid var(--primary-light); border-radius: 4px; font-size: 14px; font-weight: 500; display: none; }
     </style>
 </head>
 <body>
@@ -161,16 +163,10 @@
             </div>
             <input type="text" id="pers-name" class="auth-input" placeholder="Adı Soyadı (Örn: Ahmet Yılmaz)">
             <select id="pers-role" class="auth-select">
-                <option value="Öğretmen">Öğretmen</option>
-                <option value="Müdür">Müdür</option>
-                <option value="Müdür Başyardımcısı">Müdür Başyardımcısı</option>
-                <option value="Müdür Yardımcısı">Müdür Yardımcısı</option>
-                <option value="Memur">Memur</option>
-                <option value="Hizmetli">Hizmetli</option>
+                <option value="Öğretmen">Öğretmen</option><option value="Müdür">Müdür</option><option value="Müdür Başyardımcısı">Müdür Başyardımcısı</option><option value="Müdür Yardımcısı">Müdür Yardımcısı</option><option value="Memur">Memur</option><option value="Hizmetli">Hizmetli</option>
             </select>
             <input type="text" id="pers-branch" class="auth-input" placeholder="Branşı / Alanı (Örn: Matematik)">
             <input type="text" id="pers-phone" class="auth-input" placeholder="Telefon Numarası (İsteğe Bağlı)">
-            
             <button onclick="savePersonnel()" class="auth-btn" style="margin-bottom: 0;">Personeli Kaydet</button>
         </div>
     </div>
@@ -187,7 +183,7 @@
             <div class="menu-item" onclick="switchView('view-personnel', this)">👥 Personel Listesi</div>
             <div class="menu-item" onclick="switchView('view-commissions', this)">🏛️ Kurul & Komisyonlar</div>
             <div class="menu-item" onclick="switchView('view-tools', this)">🧮 Hesaplama Araçları</div>
-            <div class="sidebar-footer"><div style="font-size: 11px; color:#64748b;">Versiyon 2.1 (SaaS)</div></div>
+            <div class="sidebar-footer"><div style="font-size: 11px; color:#64748b;">Versiyon 2.2 (SaaS)</div></div>
         </div>
 
         <div class="main-content">
@@ -204,9 +200,8 @@
                 <h2 class="dash-title">Hoş Geldiniz!</h2>
                 <div class="dashboard-grid">
                     <div class="dash-card"><div class="dash-card-header">📋 Bu Ayın Öncelikli İşleri</div><div class="dash-card-body" id="dash-urgent-tasks"><div class="empty-state">Yükleniyor...</div></div></div>
-                    <div class="dash-card"><div class="dash-card-header">🏥 Okulda Olmayanlar (İzin/Rapor)</div><div class="dash-card-body"><div class="empty-state">Yakında eklenecek...</div></div></div>
-                    <div class="dash-card"><div class="dash-card-header">🎂 Yaklaşan Doğum Günleri</div><div class="dash-card-body"><div class="empty-state">Yakında eklenecek...</div></div></div>
-                    <div class="dash-card"><div class="dash-card-header">📈 Terfi / Kademe İlerlemeleri</div><div class="dash-card-body"><div class="empty-state">Yakında eklenecek...</div></div></div>
+                    <div class="dash-card"><div class="dash-card-header">🏥 Okulda Olmayanlar (İzin/Rapor)</div><div class="dash-card-body"><div class="empty-state">Otomatik çekilecek...</div></div></div>
+                    <div class="dash-card"><div class="dash-card-header">🎂 Yaklaşan Doğum Günleri</div><div class="dash-card-body"><div class="empty-state">Otomatik çekilecek...</div></div></div>
                 </div>
             </div>
 
@@ -232,34 +227,65 @@
                     <h2 class="dash-title" style="margin: 0;">Okul Personel Veritabanı</h2>
                     <button class="add-task-btn" onclick="document.getElementById('personnel-modal').style.display='flex'">+ Yeni Personel Ekle</button>
                 </div>
-                
                 <div style="margin-bottom: 15px; color: var(--text-sub); font-size: 14px;">Toplam Kayıtlı Personel: <strong id="personnel-count">0</strong></div>
-                
                 <div class="data-table-container">
                     <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Adı Soyadı</th>
-                                <th>Görev / Ünvan</th>
-                                <th>Branşı / Alanı</th>
-                                <th>Telefon No</th>
-                                <th style="width: 80px;">İşlem</th>
-                            </tr>
-                        </thead>
-                        <tbody id="personnel-list-tbody">
-                            </tbody>
+                        <thead><tr><th>Adı Soyadı</th><th>Görev / Ünvan</th><th>Branşı / Alanı</th><th>Telefon No</th><th style="width: 80px;">İşlem</th></tr></thead>
+                        <tbody id="personnel-list-tbody"></tbody>
                     </table>
                 </div>
             </div>
             
             <div id="view-commissions" class="view-section">
                 <h2 class="dash-title">Kurul ve Komisyonlar</h2>
-                <div class="dash-card"><div class="dash-card-body">🚀 Aşama 3'te eklenecektir. Personel sekmesine eklediğiniz öğretmenleri buradan komisyonlara dağıtabileceksiniz.</div></div>
+                <div class="dash-card"><div class="dash-card-body">🚀 Aşama 5'te (Son Aşama) eklenecektir.</div></div>
             </div>
 
             <div id="view-tools" class="view-section">
-                <h2 class="dash-title">Hesaplama Araçları</h2>
-                <div class="dash-card"><div class="dash-card-body">🚀 Aşama 4'te eklenecektir. Doğum izni, terfi hesaplama motorları burada yer alacaktır.</div></div>
+                <h2 class="dash-title">🧮 İdari Hesaplama Araçları</h2>
+                
+                <div class="dashboard-grid">
+                    
+                    <div class="dash-card">
+                        <div class="dash-card-header">📅 Tarih Ekleme / Çıkarma</div>
+                        <div class="dash-card-body">
+                            <label style="font-weight:bold; font-size:12px;">Bilinen Başlangıç Tarihi:</label>
+                            <input type="date" id="tool-add-date" class="auth-input">
+                            <label style="font-weight:bold; font-size:12px;">Eklenecek veya Çıkarılacak Gün:</label>
+                            <input type="number" id="tool-add-days" class="auth-input" placeholder="Eklenecekse 10, Çıkarılacaksa -10 yazın">
+                            <button class="auth-btn" style="margin-bottom:0;" onclick="calcDateAddSub()">Hesapla</button>
+                            <div id="res-date-add" class="tool-result"></div>
+                        </div>
+                    </div>
+
+                    <div class="dash-card">
+                        <div class="dash-card-header">⏳ İki Tarih Arasındaki Fark</div>
+                        <div class="dash-card-body">
+                            <label style="font-weight:bold; font-size:12px;">Büyük (Sonraki) Tarih:</label>
+                            <input type="date" id="tool-diff-end" class="auth-input">
+                            <label style="font-weight:bold; font-size:12px;">Küçük (Önceki) Tarih:</label>
+                            <input type="date" id="tool-diff-start" class="auth-input">
+                            <button class="auth-btn" style="margin-bottom:0;" onclick="calcDateDiff()">Farkı Bul</button>
+                            <div id="res-date-diff" class="tool-result"></div>
+                        </div>
+                    </div>
+
+                    <div class="dash-card">
+                        <div class="dash-card-header">👶 Doğum İzni Hesaplama</div>
+                        <div class="dash-card-body">
+                            <label style="font-weight:bold; font-size:12px;">Doktorun Verdiği Muhtemel Doğum Tarihi:</label>
+                            <input type="date" id="tool-mat-date" class="auth-input">
+                            <label style="font-weight:bold; font-size:12px;">Gebelik Türü:</label>
+                            <select id="tool-mat-type" class="auth-select">
+                                <option value="tek">Tekil Gebelik</option>
+                                <option value="cogul">Çoğul Gebelik</option>
+                            </select>
+                            <button class="auth-btn" style="margin-bottom:0;" onclick="calcMaternity()">İzin Takvimini Çıkar</button>
+                            <div id="res-mat" class="tool-result" style="line-height:1.8;"></div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
 
         </div>
@@ -334,18 +360,87 @@
         } else if (choice) { alert("❌ Geçersiz numara."); }
     }
 
-    // --- PERSONEL MODÜLÜ (GÜNCELLENDİ) ---
+    // --- HESAPLAMA ARAÇLARI (YENİ JS FONKSİYONLARI) ---
+
+    // 1. Tarih Ekleme / Çıkarma
+    function calcDateAddSub() {
+        const d1 = document.getElementById('tool-add-date').value;
+        const days = parseInt(document.getElementById('tool-add-days').value);
+        const resBox = document.getElementById('res-date-add');
+        
+        if(!d1 || isNaN(days)) { alert("Lütfen geçerli bir tarih ve gün sayısı girin."); return; }
+        
+        const date = new Date(d1);
+        date.setDate(date.getDate() + days);
+        
+        resBox.style.display = 'block';
+        resBox.innerHTML = `Hesaplanan Yeni Tarih:<br><span style="font-size:18px; color:var(--primary);">${date.toLocaleDateString('tr-TR')}</span>`;
+    }
+
+    // 2. İki Tarih Arası Fark
+    function calcDateDiff() {
+        const endVal = document.getElementById('tool-diff-end').value;
+        const startVal = document.getElementById('tool-diff-start').value;
+        const resBox = document.getElementById('res-date-diff');
+        
+        if(!endVal || !startVal) { alert("Lütfen her iki tarihi de seçin."); return; }
+        
+        const dEnd = new Date(endVal);
+        const dStart = new Date(startVal);
+        
+        if(dEnd < dStart) { alert("Büyük (sonraki) tarih, küçük (önceki) tarihten daha eski olamaz."); return; }
+        
+        let years = dEnd.getFullYear() - dStart.getFullYear();
+        let months = dEnd.getMonth() - dStart.getMonth();
+        let days = dEnd.getDate() - dStart.getDate();
+        
+        if(days < 0) {
+            months--;
+            const prevMonth = new Date(dEnd.getFullYear(), dEnd.getMonth(), 0);
+            days += prevMonth.getDate();
+        }
+        if(months < 0) { years--; months += 12; }
+        
+        resBox.style.display = 'block';
+        resBox.innerHTML = `Toplam Süre:<br><span style="font-size:18px; color:var(--primary);">${years} Yıl, ${months} Ay, ${days} Gün</span>`;
+    }
+
+    // 3. Doğum İzni Hesaplama
+    function calcMaternity() {
+        const matVal = document.getElementById('tool-mat-date').value;
+        const typeVal = document.getElementById('tool-mat-type').value;
+        const resBox = document.getElementById('res-mat');
+        
+        if(!matVal) { alert("Lütfen beklenen doğum tarihini seçin."); return; }
+        
+        const expectedDate = new Date(matVal);
+        // MEB'de doğum öncesi izin tekilde 8 hafta (56 gün), çoğulda 10 hafta (70 gün) önceden başlar.
+        const preDays = (typeVal === 'tek') ? 56 : 70;
+        
+        const leaveStart = new Date(expectedDate);
+        leaveStart.setDate(leaveStart.getDate() - preDays);
+        
+        // Doğum sonrası standart 8 haftadır (56 gün)
+        const leaveEnd = new Date(expectedDate);
+        leaveEnd.setDate(leaveEnd.getDate() + 56);
+        
+        resBox.style.display = 'block';
+        resBox.innerHTML = `
+            <strong>Kanuni Doğum İzni Takvimi</strong><br>
+            ⏳ İzne Ayrılma Zorunluluğu: <span style="color:#eab308;">${leaveStart.toLocaleDateString('tr-TR')}</span> (32/30. Hafta)<br>
+            👶 Beklenen Doğum (40. Hft): <span style="color:var(--primary);">${expectedDate.toLocaleDateString('tr-TR')}</span><br>
+            ✅ Doğum Sonrası İzin Bitişi: <span style="color:#10b981;">${leaveEnd.toLocaleDateString('tr-TR')}</span> (Göreve Başlama)
+        `;
+    }
+
+
+    // --- PERSONEL MODÜLÜ ---
     function listenToPersonnel() {
         if(!currentUser) return;
-        
-        // DİKKAT: Firebase 'orderBy' komutu Index(Dizin) hatasına yol açtığı için kaldırıldı.
         db.collection("personeller").where("okul_uid", "==", currentUser.uid).onSnapshot(snapshot => {
             allPersonnel = [];
             snapshot.forEach(doc => allPersonnel.push({ id: doc.id, ...doc.data() }));
-            
-            // Sıralamayı Firebase yerine doğrudan tarayıcıya (Türkçe karakter destekli) yaptırıyoruz:
             allPersonnel.sort((a, b) => a.ad_soyad.localeCompare(b.ad_soyad, 'tr'));
-            
             renderPersonnel();
         });
     }
@@ -354,43 +449,17 @@
         const tbody = document.getElementById('personnel-list-tbody');
         tbody.innerHTML = '';
         allPersonnel.forEach(p => {
-            tbody.innerHTML += `
-                <tr>
-                    <td style="font-weight:600; color:var(--primary);">${p.ad_soyad}</td>
-                    <td>${p.gorev}</td>
-                    <td>${p.brans || '-'}</td>
-                    <td>${p.telefon || '-'}</td>
-                    <td><button onclick="deletePersonnel('${p.id}')" style="background:none; border:none; color:#ef4444; font-weight:bold; cursor:pointer; padding:5px;">SİL</button></td>
-                </tr>
-            `;
+            tbody.innerHTML += `<tr><td style="font-weight:600; color:var(--primary);">${p.ad_soyad}</td><td>${p.gorev}</td><td>${p.brans || '-'}</td><td>${p.telefon || '-'}</td><td><button onclick="deletePersonnel('${p.id}')" style="background:none; border:none; color:#ef4444; font-weight:bold; cursor:pointer; padding:5px;">SİL</button></td></tr>`;
         });
         document.getElementById('personnel-count').innerText = allPersonnel.length;
     }
 
     function savePersonnel() {
-        const pName = document.getElementById('pers-name').value;
-        const pRole = document.getElementById('pers-role').value;
-        const pBranch = document.getElementById('pers-branch').value;
-        const pPhone = document.getElementById('pers-phone').value;
-
+        const pName = document.getElementById('pers-name').value; const pRole = document.getElementById('pers-role').value; const pBranch = document.getElementById('pers-branch').value; const pPhone = document.getElementById('pers-phone').value;
         if(!pName) { alert("Lütfen personelin adını ve soyadını yazın."); return; }
-
-        db.collection("personeller").add({
-            ad_soyad: pName, gorev: pRole, brans: pBranch, telefon: pPhone,
-            okul_uid: currentUser.uid, eklenme_tarihi: firebase.firestore.FieldValue.serverTimestamp()
-        }).then(() => {
-            document.getElementById('pers-name').value = ''; document.getElementById('pers-branch').value = ''; document.getElementById('pers-phone').value = '';
-            document.getElementById('personnel-modal').style.display = 'none';
-        }).catch(err => {
-            alert("❌ Firebase Hatası! Lütfen 1. Adımdaki veritabanı kurallarını güncellediğinizden emin olun.\nDetay: " + err.message);
-        });
+        db.collection("personeller").add({ ad_soyad: pName, gorev: pRole, brans: pBranch, telefon: pPhone, okul_uid: currentUser.uid, eklenme_tarihi: firebase.firestore.FieldValue.serverTimestamp() }).then(() => { document.getElementById('pers-name').value = ''; document.getElementById('pers-branch').value = ''; document.getElementById('pers-phone').value = ''; document.getElementById('personnel-modal').style.display = 'none'; }).catch(err => { alert("❌ Hata! " + err.message); });
     }
-
-    function deletePersonnel(id) {
-        if(confirm("Bu personeli silmek istediğinize emin misiniz?")) {
-            db.collection("personeller").doc(id).delete();
-        }
-    }
+    function deletePersonnel(id) { if(confirm("Bu personeli silmek istediğinize emin misiniz?")) { db.collection("personeller").doc(id).delete(); } }
 
     // --- ADMİN PANELİ ---
     function openAdminPanel() { document.getElementById('admin-modal').style.display = 'flex'; document.getElementById('admin-month').value = currentSelectedMonth; loadTemplates(); }
