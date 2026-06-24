@@ -19,7 +19,7 @@
             --bitti-bg: #dcfce7; --bitti-border: #22c55e;
             --gecikmis-bg: #fee2e2; --gecikmis-border: #ef4444;
             --sidebar-bg: #0f172a; --sidebar-hover: #1e293b;
-            --accent: #6366f1; --whatsapp: #25D366;
+            --accent: #6366f1; --whatsapp: #25D366; --pdf-color: #ef4444; --excel-color: #10b981;
         }
 
         * { box-sizing: border-box; } 
@@ -44,22 +44,17 @@
         .hero-left p { font-size: 16px; color: var(--text-sub); line-height: 1.8; margin-bottom: 30px; }
         .hero-right { flex: 1 1 40%; min-width: 300px; background: #ffffff; padding: 35px; border-radius: 16px; box-shadow: 0 10px 30px rgba(30,58,138,0.08); border: 1px solid var(--border); }
         
-        .landing-features { padding: 60px 5%; background: #f8fafc; text-align: center; }
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 40px; }
-        .feature-box { background: #ffffff; padding: 30px; border-radius: 12px; border: 1px solid var(--border); text-align: left; box-shadow: 0 4px 6px rgba(0,0,0,0.01); transition: 0.3s; }
-        .feature-box:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.04); }
-        .feature-icon { font-size: 28px; margin-bottom: 15px; background: #eff6ff; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 10px; color: var(--primary-light); }
-        .feature-box h3 { margin: 0 0 10px 0; color: var(--primary); font-size: 18px; }
-        .feature-box p { margin: 0; color: var(--text-sub); font-size: 14px; line-height: 1.6; }
-
         /* ========================================================== */
         /* 🏢 İÇ PANEL (DASHBOARD) SİSTEM MİMARİSİ                     */
         /* ========================================================== */
         #app-container { display: none; height: 100vh; width: 100%; flex-direction: row; overflow: hidden; }
-        .sidebar { width: 260px; background: var(--sidebar-bg); color: #cbd5e1; display: flex; flex-direction: column; flex-shrink: 0; overflow-y: auto;}
+        
+        /* Gelişmiş Sidebar */
+        .sidebar { width: 280px; background: var(--sidebar-bg); color: #cbd5e1; display: flex; flex-direction: column; flex-shrink: 0; overflow-y: auto;}
         .sidebar-header { padding: 25px 20px; font-size: 18px; font-weight: bold; color: white; border-bottom: 1px solid #334155; line-height: 1.4; }
         .sidebar-header span { display: block; font-size: 12px; font-weight: normal; color: #94a3b8; margin-top: 5px; cursor: pointer; text-decoration: underline; }
-        .menu-item { padding: 14px 20px; cursor: pointer; transition: 0.2s; border-left: 4px solid transparent; font-size: 14px; display: flex; align-items: center; gap: 12px; }
+        .sidebar-category { margin: 15px 20px 5px 20px; font-size: 11px; font-weight: 800; color: #64748b; letter-spacing: 1px; text-transform: uppercase; }
+        .menu-item { padding: 12px 20px; cursor: pointer; transition: 0.2s; border-left: 4px solid transparent; font-size: 14px; display: flex; align-items: center; gap: 12px; }
         .menu-item:hover, .menu-item.active { background: var(--sidebar-hover); color: white; border-left-color: var(--primary-light); }
         .sidebar-footer { margin-top: auto; padding: 20px; border-top: 1px solid #334155; }
 
@@ -76,18 +71,32 @@
         .dash-card-header { padding: 15px; background: #f8fafc; font-weight: bold; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;}
         .dash-card-body { padding: 15px; }
         
-        .whatsapp-btn { background: var(--whatsapp); color: white; border: none; padding: 10px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; width: 100%; justify-content: center; transition: 0.2s; }
-        .whatsapp-btn:hover { background: #1da851; }
-        .file-upload-box { border: 2px dashed var(--border); padding: 20px; text-align: center; border-radius: 8px; background: #f8fafc; margin-bottom: 15px; color: var(--text-sub); font-size: 13px; }
+        /* YENİ MODÜL ARAYÜZLERİ (SaaS GÖRÜNÜMÜ) */
+        .module-container { display: flex; flex-wrap: wrap; gap: 20px; background: white; border: 1px solid var(--border); border-radius: 12px; padding: 25px; box-shadow: 0 2px 10px rgba(0,0,0,0.02); margin-bottom: 25px; }
+        .module-features { flex: 1; min-width: 300px; padding-right: 20px; border-right: 1px solid var(--border); }
+        .module-features h3 { color: var(--primary); margin-top: 0; display: flex; align-items: center; gap: 10px; font-size: 20px; }
+        .feature-list { list-style: none; padding: 0; margin: 20px 0 0 0; }
+        .feature-list li { margin-bottom: 12px; font-size: 14px; color: var(--text-sub); display: flex; align-items: flex-start; gap: 10px; line-height: 1.5; }
+        .feature-list li::before { content: '✔'; color: var(--primary-light); font-weight: bold; }
+        
+        .module-action { flex: 1; min-width: 300px; display: flex; flex-direction: column; justify-content: center; padding-left: 10px; }
+        .whatsapp-btn { background: var(--whatsapp); color: white; border: none; padding: 14px 20px; border-radius: 8px; font-weight: bold; font-size:15px; cursor: pointer; display: flex; align-items: center; gap: 8px; width: 100%; justify-content: center; transition: 0.2s; box-shadow: 0 4px 6px rgba(37, 211, 102, 0.2); margin-top: 15px;}
+        .whatsapp-btn:hover { background: #1da851; transform: translateY(-2px); }
+        .action-btn-primary { background: var(--primary); color: white; border: none; padding: 14px 20px; border-radius: 8px; font-weight: bold; font-size:15px; cursor: pointer; display: flex; align-items: center; gap: 8px; width: 100%; justify-content: center; transition: 0.2s; margin-top: 15px;}
+        .action-btn-primary:hover { background: var(--primary-light); transform: translateY(-2px); }
+        
+        .file-upload-box { border: 2px dashed #cbd5e1; padding: 30px 20px; text-align: center; border-radius: 8px; background: #f8fafc; color: var(--text-sub); font-size: 14px; font-weight: 500; cursor: pointer; transition: 0.2s; }
+        .file-upload-box:hover { border-color: var(--primary-light); background: #eff6ff; }
+        .file-upload-box input[type="file"] { display: none; }
+        .file-icon { font-size: 32px; margin-bottom: 10px; display: block; }
 
-        /* TABLOLAR */
+        /* TABLOLAR VE KANBAN */
         .data-table-container { width: 100%; overflow-x: auto; background: white; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); border: 1px solid var(--border); margin-top: 20px;}
         .data-table, .info-table { width: 100%; border-collapse: collapse; min-width: 600px; }
         .data-table th, .data-table td, .info-table th, .info-table td { padding: 12px 15px; border-bottom: 1px solid var(--border); text-align: left; font-size: 14px; }
         .data-table th, .info-table th { background: #f8fafc; font-weight: bold; color: var(--text-sub); }
         .data-table tbody tr:hover { background: #f1f5f9; }
 
-        /* KANBAN VE AYLAR */
         .month-tabs { display: flex; gap: 10px; overflow-x: auto; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--border); }
         .month-tab { padding: 10px 20px; background: white; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; white-space: nowrap; font-weight: 600; color: var(--text-sub); transition: 0.2s;}
         .month-tab.active, .month-tab:hover { background: var(--primary); color: white; border-color: var(--primary); }
@@ -134,11 +143,11 @@
         <div class="landing-hero">
             <div class="hero-left">
                 <h1>Okulunuzun Tüm İdari Süreçleri Tek Bir Güçlü Bulut Sisteminde.</h1>
-                <p>Müdür ve müdür yardımcıları için özel olarak tasarlanan yeni nesil yönetim yazılımı. İdari iş takvimlerinden WhatsApp veli/öğretmen bilgilendirmelerine, nöbet planlamadan demirbaş yönetimine kadar her şey elinizin altında.</p>
+                <p>Müdür ve müdür yardımcıları için özel olarak tasarlanan yeni nesil yönetim yazılımı. İdari iş takvimlerinden WhatsApp veli bilgilendirmelerine, Kelebek sınav planlamasından Maaş/Ek ders dağıtımına kadar her şey elinizin altında.</p>
                 <div style="display:flex; gap:20px; font-weight: bold; color: var(--primary); flex-wrap: wrap;">
-                    <span>✔ E-Okul & KBS Uyumlu Çıktılar</span>
+                    <span>✔ E-Okul & KBS Uyumlu</span>
                     <span>✔ Otomatik WhatsApp Raporları</span>
-                    <span>✔ %100 Güvenli Bulut Mimari</span>
+                    <span>✔ Yapay Zeka Destekli Sınav</span>
                 </div>
             </div>
             
@@ -157,39 +166,42 @@
                 </div>
             </div>
         </div>
-
-        <div class="landing-features">
-            <h2 style="color:var(--primary); font-size:28px; margin:0;">Entegre Profesyonel Modüller</h2>
-            <div class="features-grid">
-                <div class="feature-box"><div class="feature-icon">💬</div><h3>Öğrenci & Veli İşlemleri</h3><p>Devamsızlık, evci izni ve karne PDF'lerini velilere WhatsApp üzerinden saniyeler içinde otomatik olarak gönderin.</p></div>
-                <div class="feature-box"><div class="feature-icon">💰</div><h3>Öğretmen Bordro İşlemleri</h3><p>KBS maaş, ek ders bordroları ve MEBBİS puantajlarını ayrıştırarak öğretmenlerinize WhatsApp ile tek tek özel olarak iletin.</p></div>
-                <div class="feature-box"><div class="feature-icon">📝</div><h3>Sınav & Nöbet Programı</h3><p>Kelebek ve sorumluluk sınavlarını planlayın. Kat nöbet çizelgelerini MEB mevzuatına uygun şekilde adil bir şekilde dağıtın.</p></div>
-                <div class="feature-box"><div class="feature-icon">👥</div><h3>Hiyerarşik Personel Ağı</h3><p>Resmi MEB norm kadro hiyerarşisine göre dizilen personel veritabanı. İzin, rapor ve dönüş tarihlerinin anlık takibi.</p></div>
-            </div>
-        </div>
     </div>
 
     <!-- ========================================================== -->
     <!-- 🏢 SİSTEM İÇİ PANEL (GİRİŞ YAPILDIĞINDA AÇILIR)           -->
     <!-- ========================================================== -->
     <div id="app-container">
+        <!-- SOL MENÜ (KATEGORİZE EDİLMİŞ) -->
         <div class="sidebar">
             <div class="sidebar-header">
                 Yönetim Paneli
                 <span id="display-school-type" onclick="changeSchoolType()">Yükleniyor...</span>
             </div>
+            
+            <div class="sidebar-category">📌 YÖNETİM & PLANLAMA</div>
             <div class="menu-item active" onclick="switchView('view-dashboard', this)">🏠 Yönetici Özeti</div>
             <div class="menu-item" onclick="switchView('view-school-info', this)">🏢 Kurumsal Bilgiler</div>
             <div class="menu-item" onclick="switchView('view-tasks', this)">📋 Çalışma Planı</div>
-            <div class="menu-item" onclick="switchView('view-personnel', this)">👥 Personel Listesi</div>
+            <div class="menu-item" onclick="switchView('view-personnel', this)">👥 Personel Veritabanı</div>
             
-            <div style="margin: 15px 20px 5px 20px; font-size: 11px; font-weight: bold; color: #64748b; letter-spacing: 1px;">OKUL İŞLEMLERİ</div>
-            <div class="menu-item" onclick="switchView('view-student', this)">👨‍🎓 Veli / Öğrenci (WhatsApp)</div>
-            <div class="menu-item" onclick="switchView('view-payroll', this)">💰 Maaş & Ek Ders Dağıtımı</div>
-            <div class="menu-item" onclick="switchView('view-exams', this)">📝 Sınav & Gözetmen Yön.</div>
-            <div class="menu-item" onclick="switchView('view-duty', this)">🛡️ Kat Nöbet Planlama</div>
+            <div class="sidebar-category">📝 SINAV & NÖBET İŞLEMLERİ</div>
+            <div class="menu-item" onclick="switchView('view-kelebek', this)">🔀 Kelebek Sınav Prog.</div>
+            <div class="menu-item" onclick="switchView('view-sorumluluk', this)">📑 Sorumluluk Sınavları</div>
+            <div class="menu-item" onclick="switchView('view-nobet', this)">🛡️ Kat Nöbet Programı</div>
             
-            <div style="margin: 15px 20px 5px 20px; font-size: 11px; font-weight: bold; color: #64748b; letter-spacing: 1px;">DİĞER MODÜLLER</div>
+            <div class="sidebar-category">💬 WHATSAPP & BİLDİRİM</div>
+            <div class="menu-item" onclick="switchView('view-wa-toplu', this)">✉️ WhatsApp Toplu Mesaj</div>
+            <div class="menu-item" onclick="switchView('view-wa-devamsizlik', this)">📉 Devamsızlık Bildirimi</div>
+            <div class="menu-item" onclick="switchView('view-wa-mektup', this)">📩 Devamsızlık Mektubu</div>
+            <div class="menu-item" onclick="switchView('view-wa-karne', this)">📄 Karne / Ara Karne</div>
+            <div class="menu-item" onclick="switchView('view-wa-evci', this)">🏕️ Evci / Çarşı İzni</div>
+
+            <div class="sidebar-category">💰 BORDRO & EK DERS</div>
+            <div class="menu-item" onclick="switchView('view-ekders', this)">💵 Ek Ders Dağıtımı</div>
+            <div class="menu-item" onclick="switchView('view-maas', this)">💳 Maaş Mesaj Gönderimi</div>
+            
+            <div class="sidebar-category">🗂️ DİĞER MODÜLLER</div>
             <div class="menu-item" onclick="switchView('view-commissions', this)">🏛️ Kurul & Komisyonlar</div>
             <div class="menu-item" onclick="switchView('view-inventory', this)">📦 Demirbaş Takibi</div>
             <div class="menu-item" onclick="switchView('view-tools', this)">🧮 Hesaplama Araçları</div>
@@ -197,6 +209,7 @@
             <div class="sidebar-footer"><div style="font-size: 11px; color:#64748b;">OBS Ultimate v5.0</div></div>
         </div>
 
+        <!-- SAĞ İÇERİK ALANI -->
         <div class="main-content">
             <div class="top-bar">
                 <div style="font-size: 18px; font-weight: bold; color: var(--primary);" id="page-title">Yönetici Özeti</div>
@@ -217,7 +230,8 @@
                 </div>
             </div>
 
-            <!-- GÖRÜNÜM 2: KURUMSAL BİLGİLER -->
+            <!-- DİĞER MEVCUT MODÜLLER (Kurumsal, Plan, Personel, Komisyon, Demirbaş, Araçlar) -->
+            <!-- Bunlar kod yapısını bozmamak için aynen korundu -->
             <div id="view-school-info" class="view-section">
                 <div class="dash-card" style="max-width: 800px;">
                     <div class="dash-card-header">Okul Resmi Başlık ve İletişim Detayları</div>
@@ -232,217 +246,371 @@
                 </div>
             </div>
 
-            <!-- GÖRÜNÜM 3: ÇALIŞMA PLANI -->
             <div id="view-tasks" class="view-section">
                 <div class="month-tabs" id="monthTabs"></div>
-                <div style="display:flex; gap:10px; margin-bottom:20px;">
-                    <input type="text" id="searchInput" class="search-input" placeholder="Görev Ara..." onkeyup="renderBoard()" style="max-width:300px; margin:0;">
-                    <button class="add-task-btn" onclick="addNewTask()">+ Görev Ekle</button>
-                </div>
-                <div class="board">
-                    <div class="column"><h3>📌 Yapılacaklar <span id="count-yapilacak" class="task-count">0</span></h3><div id="list-yapilacak"></div></div>
-                    <div class="column"><h3>⏳ İşlemde <span id="count-islemde" class="task-count">0</span></h3><div id="list-islemde"></div></div>
-                    <div class="column"><h3>✅ Tamamlandı <span id="count-tamamlandi" class="task-count">0</span></h3><div id="list-tamamlandi"></div></div>
-                </div>
+                <div style="display:flex; gap:10px; margin-bottom:20px;"><input type="text" id="searchInput" class="search-input" placeholder="Görev Ara..." onkeyup="renderBoard()" style="max-width:300px; margin:0;"><button class="add-task-btn" onclick="addNewTask()">+ Görev Ekle</button></div>
+                <div class="board"><div class="column"><h3>📌 Yapılacaklar <span id="count-yapilacak" class="task-count">0</span></h3><div id="list-yapilacak"></div></div><div class="column"><h3>⏳ İşlemde <span id="count-islemde" class="task-count">0</span></h3><div id="list-islemde"></div></div><div class="column"><h3>✅ Tamamlandı <span id="count-tamamlandi" class="task-count">0</span></h3><div id="list-tamamlandi"></div></div></div>
             </div>
 
-            <!-- GÖRÜNÜM 4: PERSONEL -->
             <div id="view-personnel" class="view-section">
-                <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
-                    <h2 style="margin:0; color:var(--primary);">Personel Veritabanı</h2>
-                    <div style="display:flex; gap:10px;"><button class="add-task-btn" onclick="openPersonnelModal()">+ Personel Ekle</button><button class="print-btn" onclick="printReport('Okul Personel Listesi', 'table-personnel')">🖨️ Yazdır</button></div>
-                </div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:20px;"><h2 style="margin:0; color:var(--primary);">Personel Veritabanı</h2><div style="display:flex; gap:10px;"><button class="add-task-btn" onclick="openPersonnelModal()">+ Personel Ekle</button><button class="print-btn" onclick="printReport('Okul Personel Listesi', 'table-personnel')">🖨️ Yazdır</button></div></div>
                 <div class="data-table-container"><table class="data-table" id="table-personnel"><thead><tr><th>Adı Soyadı</th><th>Görev</th><th>Branş</th><th>Telefon</th><th class="no-print">İşlem</th></tr></thead><tbody id="personnel-list-tbody"></tbody></table></div>
             </div>
 
-            <!-- GÖRÜNÜM YENİ 1: ÖĞRENCİ VE VELİ İŞLEMLERİ (WHATSAPP) -->
-            <div id="view-student" class="view-section">
-                <h2 style="margin-top:0; color:var(--primary);">👨‍🎓 Öğrenci ve Veli Bilgilendirme (WhatsApp)</h2>
-                <div class="dashboard-grid">
-                    <div class="dash-card">
-                        <div class="dash-card-header">📉 Günlük Devamsızlık Bildirimi</div>
-                        <div class="dash-card-body">
-                            <p style="font-size:12px;">E-Okul'dan aldığınız günlük devamsızlık Excel dosyasını yükleyin.</p>
-                            <div class="file-upload-box">📥 Excel Dosyası Seç (.xlsx) <br><br><input type="file" accept=".xlsx, .csv"></div>
-                            <button class="whatsapp-btn" onclick="alert('SaaS Demo: WhatsApp Sunucusuna Bağlanılamadı. (API Key Gerekli)')">📱 Velilere WhatsApp'tan İlet</button>
-                        </div>
-                    </div>
-                    <div class="dash-card">
-                        <div class="dash-card-header">✉️ Devamsızlık Mektubu</div>
-                        <div class="dash-card-body">
-                            <p style="font-size:12px;">E-Okul Devamsızlık Mektubu PDF'sini yükleyin, sistem öğrencilere göre ayırıp velilere göndersin.</p>
-                            <div class="file-upload-box">📥 PDF Dosyası Seç (.pdf) <br><br><input type="file" accept=".pdf"></div>
-                            <button class="whatsapp-btn" onclick="alert('SaaS Demo: WhatsApp Sunucusuna Bağlanılamadı.')">📱 Velilere WhatsApp'tan İlet</button>
-                        </div>
-                    </div>
-                    <div class="dash-card">
-                        <div class="dash-card-header">📄 Ara Karne / Dönem Karnesi</div>
-                        <div class="dash-card-body">
-                            <p style="font-size:12px;">Toplu karne PDF'sini yükleyin, her veliye sadece kendi çocuğunun karnesi gitsin.</p>
-                            <div class="file-upload-box">📥 Karne PDF Seç (.pdf) <br><br><input type="file" accept=".pdf"></div>
-                            <button class="whatsapp-btn" onclick="alert('SaaS Demo: WhatsApp Sunucusuna Bağlanılamadı.')">📱 Velilere WhatsApp'tan İlet</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- GÖRÜNÜM YENİ 2: ÖĞRETMEN EK DERS VE BORDRO İŞLEMLERİ -->
-            <div id="view-payroll" class="view-section">
-                <h2 style="margin-top:0; color:var(--primary);">💰 Maaş, Ek Ders ve Puantaj Dağıtımı</h2>
-                <div class="dashboard-grid">
-                    <div class="dash-card">
-                        <div class="dash-card-header">🕒 MEBBİS Puantaj Gönderimi</div>
-                        <div class="dash-card-body">
-                            <p style="font-size:12px;">MEBBİS'ten alınan puantaj Excel'ini yükleyin. Sistem ayrıştırıp hocalara özel atar.</p>
-                            <div class="file-upload-box">📥 Puantaj Excel Seç <br><br><input type="file" accept=".xlsx, .csv"></div>
-                            <button class="whatsapp-btn" onclick="alert('SaaS Demo: Öğretmen Numaraları Eşleşmedi.')">📱 Öğretmenlere Gönder</button>
-                        </div>
-                    </div>
-                    <div class="dash-card">
-                        <div class="dash-card-header">💸 KBS Ek Ders Bordro</div>
-                        <div class="dash-card-body">
-                            <p style="font-size:12px;">KBS sisteminden aldığınız Ek Ders Bordrosu dosyasını yükleyin.</p>
-                            <div class="file-upload-box">📥 Ek Ders Bordro Seç <br><br><input type="file" accept=".xlsx, .csv"></div>
-                            <button class="whatsapp-btn" onclick="alert('SaaS Demo: İşlem API Tarafından Reddedildi.')">📱 Öğretmenlere Gönder</button>
-                        </div>
-                    </div>
-                    <div class="dash-card">
-                        <div class="dash-card-header">💵 KBS Maaş Bordrosu</div>
-                        <div class="dash-card-body">
-                            <p style="font-size:12px;">Maaş bordrolarını öğretmenlerin panosuna asmak yerine şahsi numaralarına iletin.</p>
-                            <div class="file-upload-box">📥 Maaş Bordrosu Seç <br><br><input type="file" accept=".xlsx, .csv"></div>
-                            <button class="whatsapp-btn" onclick="alert('SaaS Demo: WhatsApp Bağlantısı Kurulamadı.')">📱 Öğretmenlere Gönder</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- GÖRÜNÜM YENİ 3: SINAV YÖNETİMİ -->
-            <div id="view-exams" class="view-section">
-                <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
-                    <h2 style="margin:0; color:var(--primary);">📝 Sınav ve Gözetmen Yönetimi</h2>
-                    <button class="add-task-btn" onclick="openExamModal()">+ Sınav Oturumu Ekle</button>
-                </div>
-                <div class="data-table-container">
-                    <table class="data-table">
-                        <thead><tr><th>Sınav Adı (Ders)</th><th>Tarih / Saat</th><th>Sınav Salonu</th><th>Gözetmen Öğretmen</th><th class="no-print">İşlem</th></tr></thead>
-                        <tbody id="exam-list-tbody">
-                            <tr><td colspan="5" style="text-align:center; font-style:italic;">Henüz planlanmış bir sınav yok.</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- GÖRÜNÜM YENİ 4: KAT NÖBET PLANI -->
-            <div id="view-duty" class="view-section">
-                <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
-                    <h2 style="margin:0; color:var(--primary);">🛡️ Kat Nöbet Çizelgesi</h2>
-                    <div style="display:flex; gap:10px;">
-                        <button class="add-task-btn" onclick="openDutyModal()">+ Nöbet Ekle</button>
-                        <button class="print-btn" onclick="printReport('Aylık Kat Nöbet Çizelgesi', 'table-duty')">🖨️ Yazdır</button>
-                    </div>
-                </div>
-                <div class="data-table-container">
-                    <table class="data-table" id="table-duty">
-                        <thead><tr><th>Nöbet Yeri / Katı</th><th>Pazartesi</th><th>Salı</th><th>Çarşamba</th><th>Perşembe</th><th>Cuma</th><th class="no-print">İşlem</th></tr></thead>
-                        <tbody id="duty-list-tbody">
-                            <tr><td colspan="7" style="text-align:center; font-style:italic;">Henüz nöbet planlaması yapılmadı.</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- GÖRÜNÜM DİĞERLERİ (KOMİSYON, DEMİRBAŞ, ARAÇLAR) -->
             <div id="view-commissions" class="view-section">
                 <div style="display:flex; justify-content:space-between; margin-bottom:20px;"><h2 style="margin:0; color:var(--primary);">Kurul ve Komisyonlar</h2><button class="add-task-btn" onclick="openCommissionModal()">+ Kurul Oluştur</button></div>
                 <div id="commissions-list-container" class="dashboard-grid"></div>
             </div>
 
             <div id="view-inventory" class="view-section">
-                <div style="display:flex; justify-content:space-between; margin-bottom:20px;"><h2 style="margin:0; color:var(--primary);">📦 Demirbaş Takibi</h2><div style="display:flex; gap:10px;"><button class="add-task-btn" onclick="openInventoryModal()">+ Demirbaş</button><button class="print-btn" onclick="printReport('Zimmet Listesi', 'table-inventory')">🖨️ Yazdır</button></div></div>
-                <div class="data-table-container"><table class="data-table" id="table-inventory"><thead><tr><th>Malzeme Adı</th><th>Adet</th><th>Marka/Model</th><th>Yer</th><th>Zimmetli Personel</th><th class="no-print">İşlem</th></tr></thead><tbody id="inventory-list-tbody"></tbody></table></div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:20px;"><h2 style="margin:0; color:var(--primary);">📦 Demirbaş Takibi</h2><div style="display:flex; gap:10px;"><button class="add-task-btn" onclick="openInventoryModal()">+ Demirbaş</button><button class="print-btn" onclick="printReport('Demirbaş Listesi', 'table-inventory')">🖨️ Yazdır</button></div></div>
+                <div class="data-table-container"><table class="data-table" id="table-inventory"><thead><tr><th>Malzeme Adı</th><th>Adet</th><th>Marka/Model</th><th>Bulunduğu Yer</th><th>Zimmetli Personel</th><th class="no-print">İşlem</th></tr></thead><tbody id="inventory-list-tbody"></tbody></table></div>
             </div>
 
             <div id="view-tools" class="view-section">
                 <h2 style="margin-top:0; color:var(--primary);">🧮 Hesaplama Araçları</h2>
                 <div class="dashboard-grid">
                     <div class="dash-card"><div class="dash-card-header">📅 Tarih Hesapla</div><div class="dash-card-body"><input type="date" id="tool-add-date" class="auth-input"><input type="number" id="tool-add-days" class="auth-input" placeholder="Gün Ekle"><button class="auth-btn" onclick="calcDateAddSub()">Hesapla</button><div id="res-date-add" style="margin-top:10px; color:var(--primary);"></div></div></div>
+                    <div class="dash-card"><div class="dash-card-header">👶 İzin Hesaplama</div><div class="dash-card-body"><input type="date" id="tool-mat-date" class="auth-input"><select id="tool-mat-type" class="auth-select"><option value="tek">Tekil Gebelik</option><option value="cogul">Çoğul Gebelik</option></select><button class="auth-btn" onclick="calcMaternity()">Hesapla</button><div id="res-mat" style="margin-top:10px; line-height:1.8; color:var(--primary); font-weight:bold;"></div></div></div>
                 </div>
             </div>
+
+            <!-- ========================================================== -->
+            <!-- 🌟 YENİ 10 ADET ÖZEL SAAS MODÜLÜ (GÖRSELDEN BİREBİR)       -->
+            <!-- ========================================================== -->
+            
+            <!-- 1. Kelebek Sınav Programı -->
+            <div id="view-kelebek" class="view-section">
+                <div class="module-container">
+                    <div class="module-features">
+                        <h3><span style="background:#f59e0b; color:white; padding:5px 10px; border-radius:8px;">📋</span> Kelebek Sınav Programı</h3>
+                        <ul class="feature-list">
+                            <li>Yapay zeka destekli yerleştirme sistemi</li>
+                            <li>ÖSYM formatında kişiye özel sınav kağıdı basımı</li>
+                            <li>Sabit öğrenci - sabit sınıf sistemi otomatik yerleştirilmesi</li>
+                            <li>Bina, salon ve gözetmen yönetimi</li>
+                            <li>Sınav takvimi oluşturma ve otomatik planlama</li>
+                            <li>Öğrencilerin kurum kodu + öğrenci no ile sınav bilgilerini görüntülemesi</li>
+                        </ul>
+                    </div>
+                    <div class="module-action">
+                        <label class="file-upload-box" for="kelebek-file">
+                            <span class="file-icon" style="color:var(--excel-color);">📊</span>
+                            E-Okul Sınav Öğrenci Listesi (Excel)<br><span style="font-size:11px; font-weight:normal;">Yüklemek için tıklayın</span>
+                            <input type="file" id="kelebek-file" accept=".xlsx, .csv">
+                        </label>
+                        <button class="action-btn-primary" onclick="simulateProcessing(this, 'Yapay Zeka Dağıtımı Tamamlandı. Çıktı Alınabilir.')">Otomatik Dağıtımı Başlat</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Sorumluluk Sınav Programı -->
+            <div id="view-sorumluluk" class="view-section">
+                <div class="module-container">
+                    <div class="module-features">
+                        <h3><span style="background:#8b5cf6; color:white; padding:5px 10px; border-radius:8px;">📑</span> Sorumluluk Sınav Programı</h3>
+                        <ul class="feature-list">
+                            <li>E-Okul uyumlu tam otomatik işleyiş</li>
+                            <li>E-Okul'dan indirilen sorumluluk sınavı excel dosyasını sisteme yükleme</li>
+                            <li>Sistem tarafından tüm düzenlemelerin otomatik yapılması</li>
+                            <li>Hataları otomatik tespit edip düzeltme desteği</li>
+                            <li>Tek tıkla rapor ve liste oluşturma</li>
+                            <li>Tüm sürecin hızlı, hatasız ve eksiksiz tamamlanması</li>
+                        </ul>
+                    </div>
+                    <div class="module-action">
+                        <label class="file-upload-box" for="sorumluluk-file">
+                            <span class="file-icon" style="color:var(--excel-color);">📊</span>
+                            Sorumluluk Sınavları Listesi (Excel)<br><span style="font-size:11px; font-weight:normal;">Yüklemek için tıklayın</span>
+                            <input type="file" id="sorumluluk-file" accept=".xlsx, .csv">
+                        </label>
+                        <button class="action-btn-primary" onclick="simulateProcessing(this, 'Program Hazırlandı. Hata Bulunmadı.')">Programı Otomatik Hazırla</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Kat Nöbet Programı -->
+            <div id="view-nobet" class="view-section">
+                <div class="module-container">
+                    <div class="module-features">
+                        <h3><span style="background:#10b981; color:white; padding:5px 10px; border-radius:8px;">🛡️</span> Kat Nöbet Programı</h3>
+                        <ul class="feature-list">
+                            <li>MEBBİS uyumlu tam otomatik çalışma sistemi</li>
+                            <li>Kat nöbet çizelgesinin dönerli olarak otomatik oluşturulması</li>
+                            <li>Tüm öğretmenlerin adil ve dengeli yerleştirilmesi</li>
+                            <li>Otomatik rapor ve çizelge üretimi</li>
+                            <li>Hata payını ortadan kaldıran planlama sistemi</li>
+                            <li>Nöbet süreçlerinin düzenli, hızlı ve eksiksiz yönetilmesi</li>
+                        </ul>
+                    </div>
+                    <div class="module-action">
+                        <label style="font-size:13px; font-weight:bold; color:var(--text-sub);">Nöbet Katları/Bölgeleri:</label>
+                        <input type="text" class="auth-input" placeholder="Zemin, 1.Kat, 2.Kat, Bahçe vb." value="Zemin Kat, 1. Kat, 2. Kat, Bahçe">
+                        <label style="font-size:13px; font-weight:bold; color:var(--text-sub);">Nöbetçi Personel Havuzu:</label>
+                        <select class="auth-select" disabled><option>Sistemdeki Aktif Öğretmenler Seçili</option></select>
+                        <button class="action-btn-primary" onclick="simulateProcessing(this, 'Nöbet Çizelgesi Adil Bir Şekilde Dağıtıldı.')">Dönerli Nöbet Çizelgesi Oluştur</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. WhatsApp Toplu Mesaj -->
+            <div id="view-wa-toplu" class="view-section">
+                <div class="module-container">
+                    <div class="module-features">
+                        <h3><span style="background:var(--whatsapp); color:white; padding:5px 10px; border-radius:8px;">💬</span> WhatsApp Tekli ve Toplu Mesaj</h3>
+                        <ul class="feature-list">
+                            <li>Veli ve öğrenci iletişimini tek tıkla yönetme</li>
+                            <li>Veli bilgilendirme mesajlarının otomatik gönderimi</li>
+                            <li>Öğrenci bilgilendirme mesajlarının otomatik gönderimi</li>
+                            <li>Veli toplantısı duyurularının iletilmesi</li>
+                            <li>Davetiye ve özel içerikli mesaj gönderimi</li>
+                            <li>Tüm mesajların WhatsApp üzerinden hızlı, kişiye özel ve otomatik iletilmesi</li>
+                        </ul>
+                    </div>
+                    <div class="module-action">
+                        <textarea class="auth-input" style="height: 100px; resize:none;" placeholder="Gönderilecek Mesajınızı Yazın..."></textarea>
+                        <label class="file-upload-box" for="wa-toplu-file" style="padding:15px;">
+                            <span class="file-icon" style="font-size:20px; color:var(--excel-color);">📊 Veli / Öğrenci Listesi (Excel)</span>
+                            <input type="file" id="wa-toplu-file" accept=".xlsx, .csv">
+                        </label>
+                        <button class="whatsapp-btn" onclick="simulateWhatsApp(this)">WhatsApp'tan Gönderimi Başlat</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Günlük Devamsızlık Mesaj -->
+            <div id="view-wa-devamsizlik" class="view-section">
+                <div class="module-container">
+                    <div class="module-features">
+                        <h3><span style="background:#06b6d4; color:white; padding:5px 10px; border-radius:8px;">📉</span> Günlük Devamsızlık Mesaj Gönderimi</h3>
+                        <ul class="feature-list">
+                            <li>E-Okul uyumlu tam otomatik işleyiş</li>
+                            <li>Günlük devamsızlık listesinin sisteme yüklenmesi</li>
+                            <li>Öğrencilerin otomatik ayrıştırılması</li>
+                            <li>Velilere günlük devamsızlık mesajının WhatsApp üzerinden gönderilmesi</li>
+                            <li>Her veliye sadece kendi çocuğuna ait bilginin iletilmesi</li>
+                            <li>Hızlı, güvenli ve anlık devamsızlık bildirimi sistemi</li>
+                        </ul>
+                    </div>
+                    <div class="module-action">
+                        <label class="file-upload-box" for="wa-dev-file">
+                            <span class="file-icon" style="color:var(--excel-color);">📊</span>
+                            E-Okul Günlük Devamsızlık Raporu (Excel)<br><span style="font-size:11px; font-weight:normal;">Yüklemek için tıklayın</span>
+                            <input type="file" id="wa-dev-file" accept=".xlsx, .csv">
+                        </label>
+                        <button class="whatsapp-btn" onclick="simulateWhatsApp(this)">Velilere Bildirim Başlat</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. Devamsızlık Mektubu -->
+            <div id="view-wa-mektup" class="view-section">
+                <div class="module-container">
+                    <div class="module-features">
+                        <h3><span style="background:#ec4899; color:white; padding:5px 10px; border-radius:8px;">📩</span> Devamsızlık Mektubu Mesaj Gönderimi</h3>
+                        <ul class="feature-list">
+                            <li>E-Okul uyumlu tam otomatik çalışma</li>
+                            <li>Devamsızlık mektubu PDF'inin sisteme yüklenmesi</li>
+                            <li>PDF'in öğrencilere göre otomatik ayrıştırılması</li>
+                            <li>Her veliye kendi çocuğuna ait PDF'in iletilmesi</li>
+                            <li>Bildirimlerin WhatsApp üzerinden otomatik gönderimi</li>
+                            <li>Hızlı, kolay ve hatasız devamsızlık mektubu yönetimi</li>
+                        </ul>
+                    </div>
+                    <div class="module-action">
+                        <label class="file-upload-box" for="wa-mektup-file">
+                            <span class="file-icon" style="color:var(--pdf-color);">📑</span>
+                            E-Okul Devamsızlık Mektupları (Toplu PDF)<br><span style="font-size:11px; font-weight:normal;">Yüklemek için tıklayın</span>
+                            <input type="file" id="wa-mektup-file" accept=".pdf">
+                        </label>
+                        <button class="whatsapp-btn" onclick="simulateWhatsApp(this)">PDF'leri Parçala ve Gönder</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. Karne / Ara Karne -->
+            <div id="view-wa-karne" class="view-section">
+                <div class="module-container">
+                    <div class="module-features">
+                        <h3><span style="background:#3b82f6; color:white; padding:5px 10px; border-radius:8px;">📄</span> Ara Karne ve Karne Mesaj Gönderimi</h3>
+                        <ul class="feature-list">
+                            <li>E-Okul uyumlu tam otomatik sistem</li>
+                            <li>Ara karne PDF'inin sisteme yüklenmesi</li>
+                            <li>PDF'in öğrencilere göre otomatik ayrıştırılması</li>
+                            <li>Velilere kişiye özel ara karne PDF'inin WhatsApp üzerinden gönderilmesi</li>
+                            <li>Her veliye yalnızca kendi öğrencisinin bilgisine erişim sağlanması</li>
+                            <li>Hızlı, güvenli ve eksiksiz ara karne dağıtım süreci</li>
+                        </ul>
+                    </div>
+                    <div class="module-action">
+                        <label class="file-upload-box" for="wa-karne-file">
+                            <span class="file-icon" style="color:var(--pdf-color);">📑</span>
+                            E-Okul Karne Çıktıları (Toplu PDF)<br><span style="font-size:11px; font-weight:normal;">Yüklemek için tıklayın</span>
+                            <input type="file" id="wa-karne-file" accept=".pdf">
+                        </label>
+                        <button class="whatsapp-btn" onclick="simulateWhatsApp(this)">Karneleri Velilere Dağıt</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. Evci / Çarşı İzin -->
+            <div id="view-wa-evci" class="view-section">
+                <div class="module-container">
+                    <div class="module-features">
+                        <h3><span style="background:#8b5cf6; color:white; padding:5px 10px; border-radius:8px;">🏕️</span> Evci ve Çarşı İzin Mesaj Gönderimi</h3>
+                        <ul class="feature-list">
+                            <li>E-Okul uyumlu tam otomatik işleyiş</li>
+                            <li>Evci ve Çarşı İzin Listesi excel olarak yüklenir</li>
+                            <li>İzinlerin tarih seçimi</li>
+                            <li>İzinlerin öğrencilere göre otomatik ayrıştırılması</li>
+                            <li>Velilere kişiye özel WhatsApp üzerinden iletilmesi</li>
+                            <li>Süreçler hızlı ve kolay tamamlanır</li>
+                        </ul>
+                    </div>
+                    <div class="module-action">
+                        <input type="date" class="auth-input" title="İzin Başlangıç Tarihi">
+                        <label class="file-upload-box" for="wa-evci-file" style="padding:15px;">
+                            <span class="file-icon" style="font-size:20px; color:var(--excel-color);">📊 Yurt/İzin Listesi (Excel)</span>
+                            <input type="file" id="wa-evci-file" accept=".xlsx, .csv">
+                        </label>
+                        <button class="whatsapp-btn" onclick="simulateWhatsApp(this)">İzinleri Onayla ve Bildir</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9. Ek Ders Mesaj Gönderimi -->
+            <div id="view-ekders" class="view-section">
+                <div class="module-container">
+                    <div class="module-features">
+                        <h3><span style="background:#ef4444; color:white; padding:5px 10px; border-radius:8px;">💵</span> Ek Ders Mesaj Gönderimi</h3>
+                        <ul class="feature-list">
+                            <li>KBS ve MEBBİS uyumlu çalışma sistemi</li>
+                            <li>Ek ders bordrosu veya MEBBİS puantajının excel olarak yüklenmesi</li>
+                            <li>Her öğretmene özel ek ders evrağının otomatik oluşturulması</li>
+                            <li>Gizlilik: Kimse başkasının bilgilerini göremez</li>
+                            <li>Belgelerin WhatsApp üzerinden öğretmenlere otomatik iletilmesi</li>
+                            <li>Hızlı, güvenli ve hatasız ek ders süreci yönetimi</li>
+                        </ul>
+                    </div>
+                    <div class="module-action">
+                        <label class="file-upload-box" for="ekders-file">
+                            <span class="file-icon" style="color:var(--excel-color);">📊</span>
+                            KBS / MEBBİS Ek Ders Puantajı (Excel)<br><span style="font-size:11px; font-weight:normal;">Yüklemek için tıklayın</span>
+                            <input type="file" id="ekders-file" accept=".xlsx, .csv">
+                        </label>
+                        <button class="whatsapp-btn" onclick="simulateWhatsApp(this)">Öğretmenlere Özel Gönder</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10. Maaş Mesaj Gönderimi -->
+            <div id="view-maas" class="view-section">
+                <div class="module-container">
+                    <div class="module-features">
+                        <h3><span style="background:#f59e0b; color:white; padding:5px 10px; border-radius:8px;">💳</span> Maaş Mesaj Gönderimi</h3>
+                        <ul class="feature-list">
+                            <li>KBS uyumlu hızlı ve güvenli çalışma sistemi</li>
+                            <li>KBS'den indirilen maaş excelinin sisteme yüklenmesi</li>
+                            <li>Her öğretmene özel maaş dökümünün otomatik oluşturulması</li>
+                            <li>Bilgi gizliliği: Kimse başka birinin maaş bilgilerini göremez</li>
+                            <li>Maaş dökümlerinin WhatsApp üzerinden otomatik iletilmesi</li>
+                            <li>Sürecin tamamen otomatik, güvenli ve hatasız şekilde yürütülmesi</li>
+                        </ul>
+                    </div>
+                    <div class="module-action">
+                        <label class="file-upload-box" for="maas-file">
+                            <span class="file-icon" style="color:var(--excel-color);">📊</span>
+                            KBS Maaş Bordrosu Dökümü (Excel)<br><span style="font-size:11px; font-weight:normal;">Yüklemek için tıklayın</span>
+                            <input type="file" id="maas-file" accept=".xlsx, .csv">
+                        </label>
+                        <button class="whatsapp-btn" onclick="simulateWhatsApp(this)">Maaş Bordrolarını Dağıt</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
-    <!-- HAREKETLİ MODALLAR (AÇILIR PENCERELER) -->
+    <!-- HAREKETLİ MODALLAR (Şablon, Personel, Komisyon, Demirbaş vb. korundu) -->
+    <!-- Admin Şablon -->
+    <div id="admin-modal" class="modal-overlay"><div class="modal-content"><div class="modal-header"><h2 style="margin:0; color:var(--primary);">⚙️ Şablon Yönetimi</h2><button onclick="document.getElementById('admin-modal').style.display='none'" style="background:none; border:none; font-size:24px; cursor:pointer;">✖</button></div><div style="display:flex; gap:10px; margin-bottom:15px;"><select id="admin-school-type" class="auth-select" style="margin-bottom:0;" onchange="loadTemplates()"><option value="Çok Programlı Anadolu Lisesi" selected>Çok Programlı Anadolu Lisesi</option></select><select id="admin-month" class="auth-select" style="margin-bottom:0;" onchange="loadTemplates()"><option value="Eylül">Eylül</option></select></div><div style="display:flex; gap:10px; margin-bottom:20px;"><input type="text" id="admin-task-name" class="auth-input" style="margin-bottom:0; flex:2;" placeholder="Görev Adı"><input type="text" id="admin-assignee" class="auth-input" style="margin-bottom:0; flex:1;" placeholder="Sorumlu"><button onclick="saveTemplate()" class="add-task-btn" style="height: 42px;">Ekle</button></div><div id="admin-template-list"></div></div></div>
     <!-- Personel Ekleme -->
-    <div id="personnel-modal" class="modal-overlay">
-        <div class="modal-content">
-            <div class="modal-header"><h2 style="margin:0; color:var(--primary);" id="personnel-modal-title">👤 Personel Kartı</h2><button onclick="document.getElementById('personnel-modal').style.display='none'" style="background:none; border:none; font-size:24px; cursor:pointer;">✖</button></div>
-            <input type="text" id="pers-name" class="auth-input" placeholder="Adı Soyadı">
-            <select id="pers-role" class="auth-select"><option value="Müdür">Müdür</option><option value="Müdür Başyardımcısı">Müdür Başyardımcısı</option><option value="Müdür Yardımcısı">Müdür Yardımcısı</option><option value="Öğretmen">Öğretmen</option><option value="Memur">Memur</option><option value="Hizmetli">Hizmetli</option></select>
-            <input type="text" id="pers-branch" class="auth-input" placeholder="Branşı / Alanı"><input type="text" id="pers-phone" class="auth-input" placeholder="Telefon Numarası">
-            <div style="background:#f8fafc; padding:15px; border-radius:8px; border:1px solid var(--border); margin-bottom:15px;">
-                <label style="font-size:12px; font-weight:bold;">Doğum Tarihi:</label><input type="date" id="pers-birthdate" class="auth-input">
-                <label style="font-size:12px; font-weight:bold;">Mevcut Durumu:</label>
-                <select id="pers-status" class="auth-select" onchange="document.getElementById('pers-return-div').style.display = (this.value === 'Aktif Görevde') ? 'none' : 'block';"><option value="Aktif Görevde">Aktif Görevde</option><option value="Raporlu">Raporlu</option><option value="Mazeret İzni">Mazeret İzninde</option><option value="Doğum İzni">Doğum İzninde</option></select>
-                <div id="pers-return-div" style="display:none;"><label style="font-size:12px; font-weight:bold;">Dönüş Tarihi:</label><input type="date" id="pers-return-date" class="auth-input"></div>
-            </div>
-            <button onclick="savePersonnel()" class="auth-btn">Kaydet</button>
-        </div>
-    </div>
-
-    <!-- Sınav Modalı -->
-    <div id="exam-modal" class="modal-overlay">
-        <div class="modal-content">
-            <div class="modal-header"><h2 style="margin:0; color:var(--primary);">📝 Sınav Oturumu Planla</h2><button onclick="document.getElementById('exam-modal').style.display='none'" style="background:none; border:none; font-size:24px; cursor:pointer;">✖</button></div>
-            <input type="text" id="ex-name" class="auth-input" placeholder="Sınav / Ders Adı (Örn: Matematik Sorumluluk)">
-            <div style="display:flex; gap:10px;"><input type="date" id="ex-date" class="auth-input"><input type="time" id="ex-time" class="auth-input"></div>
-            <input type="text" id="ex-room" class="auth-input" placeholder="Sınav Salonu (Örn: 9/A veya Çok Amaçlı Salon)">
-            <label style="font-size:12px; font-weight:bold;">Gözetmen Öğretmen:</label>
-            <select id="ex-invigilator" class="auth-select"><option value="">-- Personel Seçin --</option></select>
-            <button onclick="saveExam()" class="auth-btn">Sınavı Kaydet</button>
-        </div>
-    </div>
-
-    <!-- Nöbet Modalı -->
-    <div id="duty-modal" class="modal-overlay">
-        <div class="modal-content">
-            <div class="modal-header"><h2 style="margin:0; color:var(--primary);">🛡️ Nöbet Yeri Ekle</h2><button onclick="document.getElementById('duty-modal').style.display='none'" style="background:none; border:none; font-size:24px; cursor:pointer;">✖</button></div>
-            <input type="text" id="du-location" class="auth-input" placeholder="Nöbet Yeri (Örn: Zemin Kat veya Bahçe)">
-            <div style="background:#f8fafc; padding:15px; border-radius:8px; border:1px solid var(--border); margin-bottom:15px;">
-                <label style="font-size:12px; font-weight:bold;">Pazartesi Nöbetçisi:</label><select id="du-mon" class="auth-select duty-select"><option value="-">-</option></select>
-                <label style="font-size:12px; font-weight:bold;">Salı Nöbetçisi:</label><select id="du-tue" class="auth-select duty-select"><option value="-">-</option></select>
-                <label style="font-size:12px; font-weight:bold;">Çarşamba Nöbetçisi:</label><select id="du-wed" class="auth-select duty-select"><option value="-">-</option></select>
-                <label style="font-size:12px; font-weight:bold;">Perşembe Nöbetçisi:</label><select id="du-thu" class="auth-select duty-select"><option value="-">-</option></select>
-                <label style="font-size:12px; font-weight:bold;">Cuma Nöbetçisi:</label><select id="du-fri" class="auth-select duty-select"><option value="-">-</option></select>
-            </div>
-            <button onclick="saveDuty()" class="auth-btn">Nöbet Planını Kaydet</button>
-        </div>
-    </div>
-
-    <div id="commission-modal" class="modal-overlay"><div class="modal-content"><div class="modal-header"><h2 style="margin:0; color:var(--primary);">🏛️ Kurul/Komisyon</h2><button onclick="document.getElementById('commission-modal').style.display='none'" style="background:none; border:none; font-size:24px; cursor:pointer;">✖</button></div><input type="text" id="comm-name" class="auth-input" placeholder="Komisyon Adı"><div style="background:#f8fafc; padding:15px; border-radius:8px; border:1px solid var(--border); margin-bottom:20px;"><div style="display:flex; gap:10px;"><select id="comm-member-select" class="auth-select" style="margin-bottom:0; flex:2;"></select><input type="text" id="comm-member-role" class="auth-input" style="margin-bottom:0; flex:1;" placeholder="Görevi"><button onclick="addMemberToTempList()" class="add-task-btn" style="height:42px;">Ekle</button></div><div id="temp-members-list" style="margin-top:15px; border-top:1px dashed #cbd5e1; padding-top:10px; line-height:2;"></div></div><button onclick="saveCommission()" class="auth-btn">Kaydet</button></div></div>
-    
-    <div id="inventory-modal" class="modal-overlay"><div class="modal-content"><div class="modal-header"><h2 style="margin:0; color:var(--primary);">📦 Demirbaş</h2><button onclick="document.getElementById('inventory-modal').style.display='none'" style="background:none; border:none; font-size:24px; cursor:pointer;">✖</button></div><input type="text" id="inv-name" class="auth-input" placeholder="Adı"><div style="display:flex; gap:10px;"><input type="number" id="inv-qty" class="auth-input" placeholder="Adet"><input type="text" id="inv-brand" class="auth-input" placeholder="Marka"></div><input type="text" id="inv-location" class="auth-input" placeholder="Yer"><select id="inv-personnel" class="auth-select"><option value="Ortak Kullanım">Zimmetsiz</option></select><button onclick="saveInventory()" class="auth-btn">Kaydet</button></div></div>
+    <div id="personnel-modal" class="modal-overlay"><div class="modal-content"><div class="modal-header"><h2 style="margin:0; color:var(--primary);" id="personnel-modal-title">👤 Personel Kartı</h2><button onclick="document.getElementById('personnel-modal').style.display='none'" style="background:none; border:none; font-size:24px; cursor:pointer;">✖</button></div><input type="text" id="pers-name" class="auth-input" placeholder="Adı Soyadı"><select id="pers-role" class="auth-select"><option value="Müdür">Müdür</option><option value="Müdür Başyardımcısı">Müdür Başyardımcısı</option><option value="Müdür Yardımcısı">Müdür Yardımcısı</option><option value="Öğretmen">Öğretmen</option><option value="Memur">Memur</option><option value="Hizmetli">Hizmetli</option></select><input type="text" id="pers-branch" class="auth-input" placeholder="Branşı / Alanı"><input type="text" id="pers-phone" class="auth-input" placeholder="Telefon Numarası"><div style="background:#f8fafc; padding:15px; border-radius:8px; border:1px solid var(--border); margin-bottom:15px;"><label style="font-size:12px; font-weight:bold;">Doğum Tarihi:</label><input type="date" id="pers-birthdate" class="auth-input"><label style="font-size:12px; font-weight:bold;">Mevcut Durumu:</label><select id="pers-status" class="auth-select" onchange="document.getElementById('pers-return-div').style.display = (this.value === 'Aktif Görevde') ? 'none' : 'block';"><option value="Aktif Görevde">Aktif Görevde</option><option value="Raporlu">Raporlu</option><option value="Mazeret İzni">Mazeret İzninde</option><option value="Doğum İzni">Doğum İzninde</option></select><div id="pers-return-div" style="display:none;"><label style="font-size:12px; font-weight:bold;">Dönüş Tarihi:</label><input type="date" id="pers-return-date" class="auth-input"></div></div><button onclick="savePersonnel()" class="auth-btn">Kaydet</button></div></div>
+    <!-- Kurul/Komisyon Ekleme -->
+    <div id="commission-modal" class="modal-overlay"><div class="modal-content"><div class="modal-header"><h2 style="margin:0; color:var(--primary);">🏛️ Yeni Kurul / Komisyon</h2><button onclick="document.getElementById('commission-modal').style.display='none'" style="background:none; border:none; font-size:24px; cursor:pointer;">✖</button></div><input type="text" id="comm-name" class="auth-input" placeholder="Komisyon Adı"><input type="text" id="comm-desc" class="auth-input" placeholder="Açıklama/Dayanak"><div style="background:#f8fafc; padding:15px; border-radius:8px; border:1px solid var(--border); margin-bottom:20px;"><h4 style="margin-top:0; font-size:14px; margin-bottom:10px;">Üye Ekle</h4><div style="display:flex; gap:10px;"><select id="comm-member-select" class="auth-select" style="margin-bottom:0; flex:2;"><option value="">-- Personel Seçin --</option></select><input type="text" id="comm-member-role" class="auth-input" style="margin-bottom:0; flex:1;" placeholder="Görevi"><button onclick="addMemberToTempList()" class="add-task-btn" style="height:42px;">Ekle</button></div><div id="temp-members-list" style="margin-top:15px; border-top:1px dashed #cbd5e1; padding-top:10px; line-height:2;"></div></div><button onclick="saveCommission()" class="auth-btn">Komisyonu Kaydet</button></div></div>
+    <!-- Demirbaş Ekleme -->
+    <div id="inventory-modal" class="modal-overlay"><div class="modal-content"><div class="modal-header"><h2 style="margin:0; color:var(--primary);">📦 Yeni Demirbaş</h2><button onclick="document.getElementById('inventory-modal').style.display='none'" style="background:none; border:none; font-size:24px; cursor:pointer;">✖</button></div><input type="text" id="inv-name" class="auth-input" placeholder="Malzemenin Adı"><input type="number" id="inv-qty" class="auth-input" placeholder="Adet"><input type="text" id="inv-brand" class="auth-input" placeholder="Marka / Model Bilgisi"><input type="text" id="inv-location" class="auth-input" placeholder="Bulunduğu Yer"><select id="inv-personnel" class="auth-select"><option value="Ortak Kullanım">-- Ortak Kullanım --</option></select><button onclick="saveInventory()" class="auth-btn">Kaydet</button></div></div>
 
 <script>
-    // JS VE FİREBASE MİMARİSİ
+    // ==========================================
+    // JS, FİREBASE VE SAAS SİMÜLASYONLARI
+    // ==========================================
     const firebaseConfig = { apiKey: "AIzaSyCcJuZ6GCZIuhpvBjZqNrQOmnYiYxVmeHM", authDomain: "idaritakip-416fb.firebaseapp.com", projectId: "idaritakip-416fb", storageBucket: "idaritakip-416fb.firebasestorage.app", messagingSenderId: "200643373609", appId: "1:200643373609:web:7f7fa28016920ecb9aca38" };
     if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
     const auth = firebase.auth(); const db = firebase.firestore();
+    const ADMIN_EMAIL = "qorkemkocaman@gmail.com";
 
     let isLoginMode = true; let currentUser = null; 
-    let allTasks = [], allPersonnel = [], allCommissions = [], tempMembers = [], allInventory = [], allExams = [], allDuties = [];
+    let allTasks = [], allPersonnel = [], allCommissions = [], tempMembers = [], allInventory = [];
     let editingPersonnelId = null;
 
     const months = ["Eylül", "Ekim", "Kasım", "Aralık", "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos"];
+    const monthMeta = { "Eylül": { days: "17 İşgünü", info: "08 Eylül 2025 ÖĞRETİM YILININ BAŞLAMASI" }, "Ekim": { days: "21 İşgünü", info: "29 Ekim Cumhuriyet Bayramı" }, "Kasım": { days: "20 İşgünü", info: "10-14 Kasım 2025 ARA TATİL" }, "Aralık": { days: "23 İşgünü", info: "Yerli Malı Haftası" }, "Ocak": { days: "11 İşgünü", info: "16 Ocak 1. Dönem Sonu" }, "Şubat": { days: "20 İşgünü", info: "02 Şubat 2. Dönem Başlangıcı" }, "Mart": { days: "19 İşgünü", info: "16-20 Mart ARA TATİL" }, "Nisan": { days: "21 İşgünü", info: "23 Nisan Ulusal Egemenlik ve Çocuk Bayramı" }, "Mayıs": { days: "15 İşgünü", info: "19 Mayis Atatürk'ü Anma Gençlik ve Spor Bayramı" }, "Haziran": { days: "20 İşgünü", info: "26 Haziran 2. Dönem Bitişi" }, "Temmuz": { days: "- İşgünü", info: "Yaz Tatili" }, "Ağustos": { days: "- İşgünü", info: "30 Ağustos Zafer Bayramı" } };
     const standardMonthsMap = {0:"Ocak", 1:"Şubat", 2:"Mart", 3:"Nisan", 4:"Mayıs", 5:"Haziran", 6:"Temmuz", 7:"Ağustos", 8:"Eylül", 9:"Ekim", 10:"Kasım", 11:"Aralık"};
     let currentSelectedMonth = standardMonthsMap[new Date().getMonth()]; if(!months.includes(currentSelectedMonth)) currentSelectedMonth = "Eylül";
 
-    function toggleAuthMode() { isLoginMode = !isLoginMode; document.getElementById('auth-title').innerText = isLoginMode ? "Giriş Yap" : "Kayıt Ol"; document.getElementById('auth-submit-btn').innerText = isLoginMode ? "Giriş Yap" : "Kayıt Ol"; document.getElementById('schoolType').style.display = isLoginMode ? "none" : "block"; document.querySelector('.toggle-auth').innerText = isLoginMode ? "Yeni Kayıt" : "Zaten hesabınız var mı?"; }
+    // 🚀 YENİ SAAS ANİMASYONLARI (İşlem Simülasyonu)
+    function simulateWhatsApp(btn) {
+        const originalText = btn.innerHTML;
+        btn.innerHTML = "⏳ Dosya Ayrıştırılıyor...";
+        btn.style.opacity = "0.7";
+        btn.disabled = true;
+        
+        setTimeout(() => {
+            btn.innerHTML = "🔗 WhatsApp API Bağlanıyor...";
+            setTimeout(() => {
+                alert("SaaS Modül Uyarısı:\n\nDosya başarıyla parçalandı ve şahıslara atandı.\nGerçek bir WhatsApp mesajı gönderebilmek için Meta (Facebook) Business onaylı bir Cloud API anahtarına ihtiyacınız bulunmaktadır.");
+                btn.innerHTML = originalText;
+                btn.style.opacity = "1";
+                btn.disabled = false;
+            }, 1500);
+        }, 1500);
+    }
+
+    function simulateProcessing(btn, successMsg) {
+        const originalText = btn.innerHTML;
+        btn.innerHTML = "⏳ Yapay Zeka İşliyor...";
+        btn.style.opacity = "0.7";
+        btn.disabled = true;
+        
+        setTimeout(() => {
+            alert("Başarılı:\n\n" + successMsg);
+            btn.innerHTML = originalText;
+            btn.style.opacity = "1";
+            btn.disabled = false;
+        }, 2000);
+    }
+
+    // AUTH (GİRİŞ) SİSTEMİ
+    function toggleAuthMode() {
+        isLoginMode = !isLoginMode;
+        document.getElementById('auth-title').innerText = isLoginMode ? "Yönetim Paneline Giriş" : "Yeni Okul Kaydı Oluştur";
+        document.getElementById('auth-submit-btn').innerText = isLoginMode ? "Sisteme Giriş Yap" : "Sistemi Kur";
+        document.getElementById('schoolType').style.display = isLoginMode ? "none" : "block";
+        document.querySelector('.toggle-auth').innerText = isLoginMode ? "Sisteme Yeni Okul Kaydet" : "Zaten hesabınız var mı? Giriş Yapın";
+    }
+
     function handleAuth() {
         const email = document.getElementById('email').value; const password = document.getElementById('password').value; const schoolType = document.getElementById('schoolType').value;
-        if(isLoginMode) { auth.signInWithEmailAndPassword(email, password).catch(err => alert("Hata!")); } 
-        else { if(!schoolType) return alert("Okul türünü seçin."); auth.createUserWithEmailAndPassword(email, password).then((u) => { db.collection("profiller").doc(u.user.uid).set({ okul_turu: schoolType }); }).catch(err => alert(err.message)); }
+        if(isLoginMode) { auth.signInWithEmailAndPassword(email, password).catch(err => alert("Giriş başarısız, bilgileri kontrol edin."));
+        } else {
+            if(!schoolType) return alert("Lütfen okul türünü seçin.");
+            auth.createUserWithEmailAndPassword(email, password).then((userCredential) => {
+                db.collection("profiller").doc(userCredential.user.uid).set({ okul_turu: schoolType, kayit_tarihi: firebase.firestore.FieldValue.serverTimestamp() });
+            }).catch(err => alert(err.message));
+        }
     }
+    function resetPassword() { const email = document.getElementById('email').value; if (!email) return alert("Lütfen e-posta adresinizi yazın."); auth.sendPasswordResetEmail(email).then(() => alert("Sıfırlama bağlantısı gönderildi.")); }
     function logout() { auth.signOut(); }
 
     auth.onAuthStateChanged(user => {
@@ -450,82 +618,66 @@
             currentUser = user;
             db.collection("profiller").doc(user.uid).get().then(doc => {
                 if(doc.exists) {
-                    const data = doc.data(); document.getElementById('display-school-type').innerText = data.okul_turu || "Değiştir";
+                    const data = doc.data();
+                    document.getElementById('display-school-type').innerText = data.okul_turu || "Belirlenmedi (Değiştir)";
+                    document.getElementById('school-info-name').value = data.kurum_adi || ''; document.getElementById('school-info-code').value = data.kurum_kodu || ''; document.getElementById('school-info-director').value = data.okul_muduru || ''; document.getElementById('school-info-kep').value = data.kep_adresi || ''; document.getElementById('school-info-phone').value = data.okul_telefon || ''; document.getElementById('school-info-email').value = data.okul_eposta || ''; document.getElementById('school-info-address').value = data.okul_adresi || '';
                     if(data.kurum_adi) document.getElementById('main-app-title').innerText = data.kurum_adi;
-                    document.getElementById('school-info-name').value = data.kurum_adi || '';
-                    document.getElementById('school-info-code').value = data.kurum_kodu || '';
                 }
+                document.getElementById('admin-panel-btn').style.display = (user.email === ADMIN_EMAIL) ? 'block' : 'none';
                 document.getElementById('landing-container').style.display = 'none'; document.getElementById('app-container').style.display = 'flex';
-                buildMonthTabs(); listenToMyTasks(); listenToPersonnel(); listenToCommissions(); listenToInventory(); listenToExams(); listenToDuties();
+                document.getElementById('user-email').innerText = "👤 " + user.email;
+                buildMonthTabs(); listenToMyTasks(); listenToPersonnel(); listenToCommissions(); listenToInventory();
             });
-        } else { currentUser = null; document.getElementById('landing-container').style.display = 'block'; document.getElementById('app-container').style.display = 'none'; }
+        } else {
+            currentUser = null; document.getElementById('landing-container').style.display = 'block'; document.getElementById('app-container').style.display = 'none';
+        }
     });
 
+    function changeSchoolType() { const choice = prompt("Okul türünüzü güncellemek için NUMARASINI yazın:\n1: Anaokulu, 2: İlkokul, 3: Ortaokul, 4: Anadolu Lisesi, 5: Fen Lisesi, 6: MTAL, 7: Çok Programlı Lise"); const typeMap = { "1":"Anaokulu", "2":"İlkokul", "3":"Ortaokul", "4":"Anadolu Lisesi", "5":"Fen Lisesi", "6":"Mesleki ve Teknik Anadolu Lisesi", "7":"Çok Programlı Anadolu Lisesi" }; if(choice && typeMap[choice]) db.collection("profiller").doc(currentUser.uid).set({ okul_turu: typeMap[choice] }, {merge: true}).then(() => location.reload()); }
+    function saveSchoolInfo() { const name = document.getElementById('school-info-name').value; db.collection("profiller").doc(currentUser.uid).set({ kurum_adi: name, kurum_kodu: document.getElementById('school-info-code').value, okul_muduru: document.getElementById('school-info-director').value, kep_adresi: document.getElementById('school-info-kep').value, okul_telefon: document.getElementById('school-info-phone').value, okul_eposta: document.getElementById('school-info-email').value, okul_adresi: document.getElementById('school-info-address').value }, {merge: true}).then(() => { if(name) document.getElementById('main-app-title').innerText = name; alert("Kurumsal bilgiler kaydedildi!"); }); }
+
+    // MENÜ VE YAZDIRMA
     function switchView(viewId, element) {
         document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active')); document.getElementById(viewId).classList.add('active');
         document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active')); element.classList.add('active');
-        document.getElementById('page-title').innerText = element.innerText.replace(/[🏠🏢📋👥👨‍🎓💰📝🛡️🏛️📦🧮]/g, '').trim();
+        document.getElementById('page-title').innerText = element.innerText.replace(/[🏠🏢📋👥👨‍🎓💰📝🛡️🏛️📦🧮💬📉📩📄🏕️💵💳🔀📑]/g, '').trim();
     }
-    function printReport(title, tableId) {
-        let activeView = document.querySelector('.view-section.active');
-        let printHeader = document.createElement('div'); printHeader.id = 'dynamic-print-header'; printHeader.className = 'print-header';
-        printHeader.innerHTML = `<h2>T.C.<br>${document.getElementById('school-info-name').value || "OKULU"}</h2><p>${title}</p>`;
-        activeView.insertBefore(printHeader, activeView.firstChild);
-        window.print(); setTimeout(() => printHeader.remove(), 1000);
-    }
-    function saveSchoolInfo() { const name = document.getElementById('school-info-name').value; db.collection("profiller").doc(currentUser.uid).set({ kurum_adi: name, kurum_kodu: document.getElementById('school-info-code').value }, {merge: true}).then(() => { if(name) document.getElementById('main-app-title').innerText = name; alert("Kaydedildi!"); }); }
+    function printReport(title, tableId) { let schoolName = document.getElementById('school-info-name').value || document.getElementById('display-school-type').innerText; let activeView = document.querySelector('.view-section.active'); let oldHeader = document.getElementById('dynamic-print-header'); if(oldHeader) oldHeader.remove(); let printHeader = document.createElement('div'); printHeader.id = 'dynamic-print-header'; printHeader.className = 'print-header'; printHeader.innerHTML = `<h2>T.C.<br>${schoolName}</h2><p>${title}</p>`; activeView.insertBefore(printHeader, activeView.firstChild); window.print(); setTimeout(() => { if(printHeader) printHeader.remove(); }, 1000); }
 
-    // PERSONEL
-    function listenToPersonnel() {
-        if(!currentUser) return;
-        db.collection("personeller").where("okul_uid", "==", currentUser.uid).onSnapshot(snapshot => {
-            allPersonnel = []; snapshot.forEach(doc => allPersonnel.push({ id: doc.id, ...doc.data() }));
-            allPersonnel.sort((a, b) => (a.ad_soyad || "").localeCompare((b.ad_soyad || ""), 'tr'));
-            renderPersonnel(); updateSelectBoxes();
-        });
-    }
-    function renderPersonnel() {
-        const tbody = document.getElementById('personnel-list-tbody'); tbody.innerHTML = '';
-        allPersonnel.forEach(p => { tbody.innerHTML += `<tr><td>${p.ad_soyad}</td><td>${p.gorev}</td><td>${p.brans}</td><td>${p.telefon}</td><td class="no-print"><button onclick="editPersonnel('${p.id}')">Düz</button> <button onclick="db.collection('personeller').doc('${p.id}').delete()">Sil</button></td></tr>`; });
-    }
-    function updateSelectBoxes() {
-        let opts = '<option value="">-- Personel Seçin --</option>'; let dOpts = '<option value="-">-</option>';
-        allPersonnel.forEach(p => { opts += `<option value="${p.ad_soyad}">${p.ad_soyad}</option>`; dOpts += `<option value="${p.ad_soyad}">${p.ad_soyad}</option>`; });
-        document.getElementById('ex-invigilator').innerHTML = opts; document.getElementById('comm-member-select').innerHTML = opts;
-        document.getElementById('inv-personnel').innerHTML = '<option value="Ortak Kullanım">Ortak Kullanım</option>' + opts;
-        document.querySelectorAll('.duty-select').forEach(el => el.innerHTML = dOpts);
-    }
-    function openPersonnelModal() { editingPersonnelId = null; document.getElementById('personnel-modal').style.display = 'flex'; }
-    function savePersonnel() { db.collection("personeller").add({ ad_soyad: document.getElementById('pers-name').value, gorev: document.getElementById('pers-role').value, brans: document.getElementById('pers-branch').value, telefon: document.getElementById('pers-phone').value, okul_uid: currentUser.uid }).then(() => document.getElementById('personnel-modal').style.display='none'); }
-    
-    // YENİ: SINAV YÖNETİMİ
-    function listenToExams() { if(!currentUser) return; db.collection("sinavlar").where("okul_uid", "==", currentUser.uid).onSnapshot(snapshot => { allExams = []; snapshot.forEach(doc => allExams.push({ id: doc.id, ...doc.data() })); renderExams(); }); }
-    function renderExams() { const tbody = document.getElementById('exam-list-tbody'); tbody.innerHTML = ''; if(allExams.length===0) return tbody.innerHTML='<tr><td colspan="5">Sınav yok.</td></tr>'; allExams.forEach(e => tbody.innerHTML += `<tr><td><strong>${e.ad}</strong></td><td>${e.tarih} - ${e.saat}</td><td>${e.salon}</td><td>${e.gozetmen}</td><td class="no-print"><button onclick="db.collection('sinavlar').doc('${e.id}').delete()">Sil</button></td></tr>`); }
-    function openExamModal() { document.getElementById('exam-modal').style.display = 'flex'; }
-    function saveExam() { db.collection("sinavlar").add({ ad: document.getElementById('ex-name').value, tarih: document.getElementById('ex-date').value, saat: document.getElementById('ex-time').value, salon: document.getElementById('ex-room').value, gozetmen: document.getElementById('ex-invigilator').value, okul_uid: currentUser.uid }).then(() => document.getElementById('exam-modal').style.display='none'); }
+    // PERSONEL İŞLEMLERİ
+    function listenToPersonnel() { if(!currentUser) return; db.collection("personeller").where("okul_uid", "==", currentUser.uid).onSnapshot(snapshot => { allPersonnel = []; snapshot.forEach(doc => allPersonnel.push({ id: doc.id, ...doc.data() })); const weights = { "Müdür": 1, "Müdür Başyardımcısı": 2, "Müdür Yardımcısı": 3, "Öğretmen": 4, "Memur": 5, "Hizmetli": 6 }; allPersonnel.sort((a, b) => (weights[a.gorev] || 99) - (weights[b.gorev] || 99) || (a.ad_soyad || "").localeCompare((b.ad_soyad || ""), 'tr')); renderPersonnel(); updateDashboardPersonnel(); }); }
+    function renderPersonnel() { const tbody = document.getElementById('personnel-list-tbody'); tbody.innerHTML = ''; allPersonnel.forEach(p => { let badge = (p.durum === 'Aktif Görevde' || !p.durum) ? '<span style="color:#10b981;font-weight:bold;font-size:12px;">● Aktif</span>' : `<span style="color:#ef4444;font-weight:bold;font-size:12px;">● ${p.durum}</span>`; tbody.innerHTML += `<tr><td>${p.ad_soyad || 'Bilinmiyor'}<br>${badge}</td><td><strong>${p.gorev || '-'}</strong></td><td>${p.brans || '-'}</td><td>${p.telefon || '-'}</td><td class="no-print"><button onclick="editPersonnel('${p.id}')" style="cursor:pointer; padding:5px; border-radius:4px; border:1px solid #cbd5e1;">Düzenle</button> <button onclick="deletePersonnel('${p.id}')" style="cursor:pointer; padding:5px; border-radius:4px; border:1px solid #cbd5e1; color:red;">Sil</button></td></tr>`; }); }
+    function openPersonnelModal() { editingPersonnelId = null; document.getElementById('personnel-modal-title').innerText = "👤 Yeni Personel Ekle"; document.getElementById('pers-name').value = ''; document.getElementById('pers-branch').value = ''; document.getElementById('pers-phone').value = ''; document.getElementById('pers-birthdate').value = ''; document.getElementById('personnel-modal').style.display = 'flex'; }
+    function editPersonnel(id) { const p = allPersonnel.find(item => item.id === id); if(!p) return; editingPersonnelId = id; document.getElementById('personnel-modal-title').innerText = "📝 Personel Kartını Güncelle"; document.getElementById('personnel-modal').style.display = 'flex'; document.getElementById('pers-name').value = p.ad_soyad || ''; document.getElementById('pers-role').value = p.gorev || 'Öğretmen'; document.getElementById('pers-branch').value = p.brans || ''; document.getElementById('pers-phone').value = p.telefon || ''; document.getElementById('pers-birthdate').value = p.dogum_tarihi || ''; document.getElementById('pers-status').value = p.durum || 'Aktif Görevde'; document.getElementById('pers-return-date').value = p.donus_tarihi || ''; document.getElementById('pers-return-div').style.display = (p.durum === 'Aktif Görevde' || !p.durum) ? 'none' : 'block'; }
+    function savePersonnel() { const pName = document.getElementById('pers-name').value; if(!pName) return alert("İsim girilmeli"); const pData = { ad_soyad: pName, gorev: document.getElementById('pers-role').value, brans: document.getElementById('pers-branch').value, telefon: document.getElementById('pers-phone').value, dogum_tarihi: document.getElementById('pers-birthdate').value, durum: document.getElementById('pers-status').value, donus_tarihi: document.getElementById('pers-return-date').value, okul_uid: currentUser.uid, guncelleme_tarihi: firebase.firestore.FieldValue.serverTimestamp() }; if(editingPersonnelId) { db.collection("personeller").doc(editingPersonnelId).update(pData).then(() => { document.getElementById('personnel-modal').style.display = 'none'; editingPersonnelId = null; }); } else { pData.eklenme_tarihi = firebase.firestore.FieldValue.serverTimestamp(); db.collection("personeller").add(pData).then(() => document.getElementById('personnel-modal').style.display = 'none'); } }
+    function deletePersonnel(id) { if(confirm("Personeli silmek istediğinize emin misiniz?")) db.collection("personeller").doc(id).delete(); }
 
-    // YENİ: NÖBET PLANI
-    function listenToDuties() { if(!currentUser) return; db.collection("nobetler").where("okul_uid", "==", currentUser.uid).onSnapshot(snapshot => { allDuties = []; snapshot.forEach(doc => allDuties.push({ id: doc.id, ...doc.data() })); renderDuties(); }); }
-    function renderDuties() { const tbody = document.getElementById('duty-list-tbody'); tbody.innerHTML = ''; if(allDuties.length===0) return tbody.innerHTML='<tr><td colspan="7">Nöbet planı yok.</td></tr>'; allDuties.forEach(d => tbody.innerHTML += `<tr><td><strong>${d.yer}</strong></td><td>${d.pzt}</td><td>${d.sal}</td><td>${d.car}</td><td>${d.per}</td><td>${d.cum}</td><td class="no-print"><button onclick="db.collection('nobetler').doc('${d.id}').delete()">Sil</button></td></tr>`); }
-    function openDutyModal() { document.getElementById('duty-modal').style.display = 'flex'; }
-    function saveDuty() { db.collection("nobetler").add({ yer: document.getElementById('du-location').value, pzt: document.getElementById('du-mon').value, sal: document.getElementById('du-tue').value, car: document.getElementById('du-wed').value, per: document.getElementById('du-thu').value, cum: document.getElementById('du-fri').value, okul_uid: currentUser.uid }).then(() => document.getElementById('duty-modal').style.display='none'); }
+    function updateDashboardPersonnel() { let absentHtml = ''; let bdayHtml = ''; const today = new Date(); const currentMonth = today.getMonth(); const currentDay = today.getDate(); allPersonnel.forEach(p => { if(p.durum && p.durum !== 'Aktif Görevde') { absentHtml += `<div style="padding:10px; border-bottom:1px solid #e2e8f0; font-size:13px; background:#fef2f2; border-left:3px solid #ef4444; margin-bottom:6px; border-radius:4px;"><strong>${p.ad_soyad}</strong> (${p.gorev}) - ${p.durum}<br><span style="font-size:11px;color:#64748b;">Dönüş: ${p.donus_tarihi || 'Belirtilmedi'}</span></div>`; } if(p.dogum_tarihi) { const bDate = new Date(p.dogum_tarihi); if(bDate.getMonth() === currentMonth) { let diff = bDate.getDate() - currentDay; if(diff >= 0 && diff <= 15) { bdayHtml += `<div style="padding:10px; border-bottom:1px solid #e2e8f0; font-size:13px; background:#f0fdf4; border-left:3px solid #22c55e; margin-bottom:6px; border-radius:4px;"><strong>${p.ad_soyad}</strong><br><span style="font-size:11px;color:#64748b;">Tarih: ${bDate.getDate()} ${standardMonthsMap[bDate.getMonth()]} ${diff === 0 ? '(Bugün!)' : '('+diff+' gün sonra)'}</span></div>`; } } } }); document.getElementById('dash-absent-list').innerHTML = absentHtml || '<div style="color:var(--text-sub);">Tüm personel okulda.</div>'; document.getElementById('dash-birthday-list').innerHTML = bdayHtml || '<div style="color:var(--text-sub);">Yakın zamanda doğum günü yok.</div>'; }
 
-    // (Eski Kanban, Komisyon, Demirbaş fonksiyonları aynen çalışmaktadır)
-    function buildMonthTabs() { const c = document.getElementById('monthTabs'); c.innerHTML = ''; months.forEach(m => { const btn = document.createElement('div'); btn.className = `month-tab ${m===currentSelectedMonth?'active':''}`; btn.innerText = m; btn.onclick = () => { currentSelectedMonth=m; buildMonthTabs(); renderBoard(); }; c.appendChild(btn); }); }
-    function listenToMyTasks() { if(!currentUser) return; db.collection("gorevler").where("okul_uid", "==", currentUser.uid).onSnapshot(snapshot => { allTasks = []; snapshot.forEach(doc => allTasks.push({ id: doc.id, ...doc.data() })); renderBoard(); }); }
-    function renderBoard() { document.getElementById('list-yapilacak').innerHTML=''; document.getElementById('list-islemde').innerHTML=''; document.getElementById('list-tamamlandi').innerHTML=''; allTasks.forEach(t => { if(t.Ay !== currentSelectedMonth) return; const card = `<div class="task-card"><div class="task-title">${t.Gorev}</div><div class="btn-group"><button onclick="db.collection('gorevler').doc('${t.id}').update({Durum:'İşlemde'})">⏳</button> <button onclick="db.collection('gorevler').doc('${t.id}').update({Durum:'Tamamlandı'})">✅</button> <button onclick="db.collection('gorevler').doc('${t.id}').delete()">SİL</button></div></div>`; if(t.Durum === 'İşlemde') document.getElementById('list-islemde').innerHTML += card; else if(t.Durum === 'Tamamlandı') document.getElementById('list-tamamlandi').innerHTML += card; else document.getElementById('list-yapilacak').innerHTML += card; }); }
-    function addNewTask() { const name = prompt("Görev Adı:"); if(name) db.collection("gorevler").add({ Gorev: name, Ay: currentSelectedMonth, Durum: "Yapılacak", okul_uid: currentUser.uid }); }
-    function listenToInventory() { if(!currentUser) return; db.collection("demirbaslar").where("okul_uid", "==", currentUser.uid).onSnapshot(snapshot => { allInventory = []; snapshot.forEach(doc => allInventory.push({ id: doc.id, ...doc.data() })); renderInventory(); }); }
-    function renderInventory() { const tbody = document.getElementById('inventory-list-tbody'); tbody.innerHTML = ''; allInventory.forEach(item => { tbody.innerHTML += `<tr><td><strong>${item.ad}</strong></td><td>${item.adet}</td><td>${item.marka || '-'}</td><td>${item.yer || '-'}</td><td>${item.zimmetli_kisi}</td><td class="no-print"><button onclick="db.collection('demirbaslar').doc('${item.id}').delete()">SİL</button></td></tr>`; }); }
-    function openInventoryModal() { document.getElementById('inventory-modal').style.display = 'flex'; }
-    function saveInventory() { db.collection("demirbaslar").add({ ad: document.getElementById('inv-name').value, adet: document.getElementById('inv-qty').value, marka: document.getElementById('inv-brand').value, yer: document.getElementById('inv-location').value, zimmetli_kisi: document.getElementById('inv-personnel').value, okul_uid: currentUser.uid }).then(() => { document.getElementById('inventory-modal').style.display='none'; document.getElementById('inv-name').value=''; }); }
+    // DİĞER MODÜLLER (Demirbaş, Komisyon, Araçlar, Kanban) Aynen Korundu
+    function listenToInventory() { if(!currentUser) return; db.collection("demirbaslar").where("okul_uid", "==", currentUser.uid).onSnapshot(snapshot => { allInventory = []; snapshot.forEach(doc => allInventory.push({ id: doc.id, ...doc.data() })); allInventory.sort((a,b) => (a.ad||"").localeCompare((b.ad||""), 'tr')); renderInventory(); }); }
+    function renderInventory() { const tbody = document.getElementById('inventory-list-tbody'); tbody.innerHTML = ''; allInventory.forEach(item => { const isAssigned = item.zimmetli_kisi && item.zimmetli_kisi !== "Ortak Kullanım"; const zimmetRenk = isAssigned ? "var(--primary)" : "#64748b"; tbody.innerHTML += `<tr><td style="font-weight:600; color:var(--text-main);">${item.ad}</td><td><span style="background:#e2e8f0; padding:2px 8px; border-radius:12px; font-size:12px; font-weight:bold;">${item.adet}</span></td><td>${item.marka || '-'}</td><td>${item.yer || '-'}</td><td style="color:${zimmetRenk}; font-weight:${isAssigned ? 'bold' : 'normal'};">${item.zimmetli_kisi}</td><td class="no-print"><button onclick="deleteInventory('${item.id}')" style="cursor:pointer; padding:5px; border-radius:4px; border:1px solid #cbd5e1; color:red;">SİL</button></td></tr>`; }); }
+    function openInventoryModal() { document.getElementById('inventory-modal').style.display = 'flex'; document.getElementById('inv-name').value = ''; document.getElementById('inv-qty').value = ''; document.getElementById('inv-brand').value = ''; document.getElementById('inv-location').value = ''; const sel = document.getElementById('inv-personnel'); sel.innerHTML = '<option value="Ortak Kullanım">-- Ortak Kullanım --</option>'; allPersonnel.forEach(p => { sel.innerHTML += `<option value="${p.ad_soyad}">${p.ad_soyad}</option>`; }); }
+    function saveInventory() { const iName = document.getElementById('inv-name').value; const iQty = document.getElementById('inv-qty').value; if(!iName || !iQty) { alert("Ad ve Adet zorunludur."); return; } db.collection("demirbaslar").add({ ad: iName, adet: iQty, marka: document.getElementById('inv-brand').value, yer: document.getElementById('inv-location').value, zimmetli_kisi: document.getElementById('inv-personnel').value || "Ortak Kullanım", okul_uid: currentUser.uid }).then(() => document.getElementById('inventory-modal').style.display='none'); }
+    function deleteInventory(id) { if(confirm("Silinsin mi?")) db.collection("demirbaslar").doc(id).delete(); }
+
     function listenToCommissions() { if(!currentUser) return; db.collection("komisyonlar").where("okul_uid", "==", currentUser.uid).onSnapshot(snapshot => { allCommissions = []; snapshot.forEach(doc => allCommissions.push({ id: doc.id, ...doc.data() })); renderCommissions(); }); }
-    function renderCommissions() { const container = document.getElementById('commissions-list-container'); container.innerHTML = ''; allCommissions.forEach(c => { let uHtml = ''; c.uyeler.forEach(u => uHtml += `<div>${u.isim} (${u.gorev})</div>`); container.innerHTML += `<div class="dash-card"><div class="dash-card-header"><span>${c.ad}</span><button onclick="db.collection('komisyonlar').doc('${c.id}').delete()">Sil</button></div><div class="dash-card-body">${uHtml}</div></div>`; }); }
-    function openCommissionModal() { document.getElementById('commission-modal').style.display = 'flex'; tempMembers = []; renderTempMembers(); }
+    function renderCommissions() { const container = document.getElementById('commissions-list-container'); container.innerHTML = ''; allCommissions.forEach(c => { let uHtml = ''; c.uyeler.forEach(u => uHtml += `<div style="display:flex; justify-content:space-between; border-bottom:1px solid #e2e8f0; padding:5px 0;"><span>${u.isim}</span><span style="color:var(--primary-light); font-weight:bold;">${u.gorev}</span></div>`); container.innerHTML += `<div class="dash-card"><div class="dash-card-header"><span>${c.ad}</span><button onclick="db.collection('komisyonlar').doc('${c.id}').delete()" style="cursor:pointer; border:none; background:#ef4444; color:white; border-radius:4px; padding:3px 8px;">Sil</button></div><div class="dash-card-body" style="background:#f8fafc;">${uHtml}</div></div>`; }); }
+    function openCommissionModal() { document.getElementById('commission-modal').style.display = 'flex'; const sel = document.getElementById('comm-member-select'); sel.innerHTML = ''; allPersonnel.forEach(p => sel.innerHTML += `<option value="${p.ad_soyad}">${p.ad_soyad}</option>`); tempMembers = []; renderTempMembers(); }
     function addMemberToTempList() { tempMembers.push({ isim: document.getElementById('comm-member-select').value, gorev: document.getElementById('comm-member-role').value || 'Üye' }); renderTempMembers(); }
-    function renderTempMembers() { const container = document.getElementById('temp-members-list'); container.innerHTML = ''; tempMembers.forEach((m, i) => container.innerHTML += `<div>${m.isim} <span onclick="tempMembers.splice(${i},1);renderTempMembers();">✖</span></div>`); }
-    function saveCommission() { db.collection("komisyonlar").add({ ad: document.getElementById('comm-name').value, uyeler: tempMembers, okul_uid: currentUser.uid }).then(() => { document.getElementById('commission-modal').style.display='none'; document.getElementById('comm-name').value=''; }); }
+    function renderTempMembers() { const container = document.getElementById('temp-members-list'); container.innerHTML = ''; tempMembers.forEach((m, i) => container.innerHTML += `<div><strong>${m.isim}</strong> (${m.gorev}) <span style="color:red;cursor:pointer;float:right;" onclick="tempMembers.splice(${i},1);renderTempMembers();">Kaldır ✖</span></div>`); }
+    function saveCommission() { db.collection("komisyonlar").add({ ad: document.getElementById('comm-name').value, aciklama: document.getElementById('comm-desc').value, uyeler: tempMembers, okul_uid: currentUser.uid }).then(() => { document.getElementById('commission-modal').style.display='none'; document.getElementById('comm-name').value=''; }); }
+
     function calcDateAddSub() { const d = new Date(document.getElementById('tool-add-date').value); d.setDate(d.getDate() + parseInt(document.getElementById('tool-add-days').value)); document.getElementById('res-date-add').innerText = "Sonuç: " + d.toLocaleDateString('tr-TR'); }
+    function calcDateDiff() { const diff = Math.abs(new Date(document.getElementById('tool-diff-end').value) - new Date(document.getElementById('tool-diff-start').value)); document.getElementById('res-date-diff').innerText = "Fark: " + Math.ceil(diff / (1000 * 60 * 60 * 24)) + " Gün"; }
+    function calcMaternity() { const ed = new Date(document.getElementById('tool-mat-date').value); const pre = document.getElementById('tool-mat-type').value === 'tek' ? 56 : 70; const start = new Date(ed); start.setDate(start.getDate() - pre); const end = new Date(ed); end.setDate(end.getDate() + 56); document.getElementById('res-mat').innerHTML = `İzne Ayrılma Tarihi: ${start.toLocaleDateString('tr-TR')}<br>Beklenen Doğum: ${ed.toLocaleDateString('tr-TR')}<br>İzin Bitiş Tarihi: ${end.toLocaleDateString('tr-TR')}`; }
+
+    function buildMonthTabs() { const c = document.getElementById('monthTabs'); c.innerHTML = ''; months.forEach(m => { const btn = document.createElement('div'); btn.className = `month-tab ${m===currentSelectedMonth?'active':''}`; btn.innerText = m; btn.onclick = () => { currentSelectedMonth=m; buildMonthTabs(); renderBoard(); }; c.appendChild(btn); }); updateUpperPanel(); }
+    function updateUpperPanel() { const meta = monthMeta[currentSelectedMonth] || { days: "-", info: "-" }; document.getElementById('info-month-name').innerText = currentSelectedMonth; document.getElementById('info-work-days').innerText = meta.days; document.getElementById('info-celebrations').innerText = meta.info; const dateInfo = calendarDateMap[currentSelectedMonth]; if (!dateInfo) return; const firstDay = new Date(dateInfo.y, dateInfo.m, 1); let startDayIndex = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1; const totalDays = new Date(dateInfo.y, dateInfo.m + 1, 0).getDate(); const today = new Date(); let calHtml = `<div class="calendar-title">${currentSelectedMonth} ${dateInfo.y}</div><table class="calendar-grid"><thead><tr><th>Pt</th><th>Sa</th><th>Ça</th><th>Pe</th><th>Cu</th><th class="weekend">Ct</th><th class="weekend">Pz</th></tr></thead><tbody><tr>`; let j = 0; for (; j < startDayIndex; j++) calHtml += '<td></td>'; for (let dayCounter = 1; dayCounter <= totalDays; dayCounter++, j++) { if (j === 7) { j = 0; calHtml += '</tr><tr>'; } calHtml += `<td class="${(j === 5 || j === 6 ? 'weekend ' : '') + (today.getDate() === dayCounter && today.getMonth() === dateInfo.m && today.getFullYear() === dateInfo.y ? 'today' : '')}">${dayCounter}</td>`; } for (; j < 7 && j !== 0; j++) calHtml += '<td></td>'; document.getElementById('calendar-container').innerHTML = calHtml + '</tr></tbody></table>'; }
+    function listenToMyTasks() { if(!currentUser) return; db.collection("gorevler").where("okul_uid", "==", currentUser.uid).onSnapshot(snapshot => { allTasks = []; snapshot.forEach(doc => allTasks.push({ id: doc.id, ...doc.data() })); renderBoard(); updateDashboardSummary(); }); }
+    function updateDashboardSummary() { let h = ''; allTasks.forEach(t => { if(t.Ay === currentSelectedMonth && t.Durum !== 'Tamamlandı') h += `<div style="padding:10px;background:#f8fafc;border-left:3px solid var(--primary-light);margin-bottom:6px; font-size:14px; border-radius:4px;">${t.Gorev}</div>`; }); document.getElementById('dash-urgent-tasks').innerHTML = h || '<div style="color:var(--text-sub);">Bu aya ait acil görev bulunmuyor.</div>'; }
+    function renderBoard() { document.getElementById('list-yapilacak').innerHTML = ''; document.getElementById('list-islemde').innerHTML = ''; document.getElementById('list-tamamlandi').innerHTML = ''; let counts = { "Yapılacak": 0, "İşlemde": 0, "Tamamlandı": 0 }; const currentMonthIndex = months.indexOf(standardMonthsMap[new Date().getMonth()]); allTasks.forEach(t => { if(t.Ay !== currentSelectedMonth) return; let stateClass = ''; if(t.Durum === 'İşlemde') { stateClass = 'state-islemde'; counts["İşlemde"]++; } else if(t.Durum === 'Tamamlandı') { stateClass = 'state-tamamlandi'; counts["Tamamlandı"]++; } else { counts["Yapılacak"]++; if(currentMonthIndex !== -1 && months.indexOf(t.Ay) < currentMonthIndex) stateClass = 'state-gecikmis'; } const card = `<div class="task-card ${stateClass}"><div class="task-title">${t.Gorev}</div><div style="font-size:12px;margin-bottom:10px; color:var(--text-sub);">👤 ${t.Sorumlu}</div><div style="display:flex; gap:5px;"><button style="cursor:pointer; border:1px solid #cbd5e1; background:white; border-radius:4px; padding:4px;" onclick="db.collection('gorevler').doc('${t.id}').update({Durum:'İşlemde'})">⏳ İşlemde</button> <button style="cursor:pointer; border:1px solid #cbd5e1; background:white; border-radius:4px; padding:4px;" onclick="db.collection('gorevler').doc('${t.id}').update({Durum:'Tamamlandı'})">✅ Bitti</button> <button style="cursor:pointer; border:1px solid #cbd5e1; background:white; border-radius:4px; padding:4px; color:red;" onclick="db.collection('gorevler').doc('${t.id}').delete()">Sil</button></div></div>`; if(t.Durum === 'İşlemde') document.getElementById('list-islemde').innerHTML += card; else if(t.Durum === 'Tamamlandı') document.getElementById('list-tamamlandi').innerHTML += card; else document.getElementById('list-yapilacak').innerHTML += card; }); document.getElementById('count-yapilacak').innerText = counts['Yapılacak']; document.getElementById('count-islemde').innerText = counts['İşlemde']; document.getElementById('count-tamamlandi').innerText = counts['Tamamlandı']; }
+    function addNewTask() { const name = prompt("Görev Adı:"); if(name) db.collection("gorevler").add({ Gorev: name, Sorumlu: prompt("Sorumlu Kişi:"), Ay: currentSelectedMonth, Durum: "Yapılacak", okul_uid: currentUser.uid }); }
 </script>
 </body>
 </html>
